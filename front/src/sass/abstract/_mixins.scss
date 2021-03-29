@@ -1,0 +1,10 @@
+@import './vars';
+
+@media (max-width: #{$phone-width}) {
+}
+
+@media (min-width: #{$phone-width}) and (max-width: #{$tablet-width}) {
+}
+
+@media (min-width: #{$tablet-width}) {
+}
