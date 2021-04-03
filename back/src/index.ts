@@ -1,24 +1,25 @@
 import 'reflect-metadata';
-import express from 'express';
 import cors from 'cors';
-import Router from './router';
+import express from 'express';
 import { connection } from './connection/Connection';
+import Router from './router';
 
 class App {
 	public app: express.Application;
 	public router: Router;
 
 	constructor() {
-		express.json();
-		express.urlencoded();
 		this.app = express();
 		this.app.use(cors());
+		this.app.use(express.json());
+		this.app.use(express.urlencoded({ extended: true }));
+
 		this.router = new Router();
 		this.router.routes(this.app);
 
 		connection
 			.then(() => {
-				this.app.listen(3000, () => {
+				this.app.listen(4000, () => {
 					console.info('Express server listening on http://localhost:4000');
 				});
 			})

@@ -1,9 +1,7 @@
 import { Request, Response } from 'express';
 
-class UserController {
+export class UserController {
 	public getAllUsers(req: Request, res: Response) {
 		res.send('Helo user');
 	}
 }
-
-export default UserController;
