@@ -54,7 +54,7 @@ export class UnitController {
 				);
 				let oldUnit: Unit = await connection.manager.findOne(
 					Unit,
-					req.params.unitId,
+					req.params.id,
 					{ relations: ['university'] },
 				);
 
@@ -77,7 +77,7 @@ export class UnitController {
 	public getUnitById(req: Request, res: Response) {
 		connection
 			.then(async (connection) => {
-				let unit = await connection.manager.findOne(Unit, req.params.unitId);
+				let unit = await connection.manager.findOne(Unit, req.params.id);
 				if (unit) {
 					res.status(200).json(unit);
 				} else {
@@ -94,7 +94,7 @@ export class UnitController {
 	public deleteUnit(req: Request, res: Response) {
 		connection
 			.then(async (connection) => {
-				const unit = await connection.manager.findOne(Unit, req.params.unitId);
+				const unit = await connection.manager.findOne(Unit, req.params.id);
 				const userUnit = await connection.manager.find(UserUnit, {
 					unit: unit,
 				});

@@ -37,7 +37,7 @@ export class UniversityController {
 			.then(async (connection) => {
 				let university = await connection.manager.findOne(
 					University,
-					req.params.universityId,
+					req.params.id,
 				);
 
 				if (university) {
@@ -60,7 +60,7 @@ export class UniversityController {
 			.then(async (connection) => {
 				let university = await connection.manager.findOne(
 					University,
-					req.params.universityId,
+					req.params.id,
 				);
 
 				if (university) {
@@ -81,7 +81,7 @@ export class UniversityController {
 			.then(async (connection) => {
 				const university = await connection.manager.findOne(
 					University,
-					req.params.universityId,
+					req.params.id,
 				);
 
 				if (university) {
