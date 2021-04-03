@@ -1,56 +1,27 @@
-import { ActivityTypeController } from '../controller/ActivityType';
-import { UnitController } from '../controller/Unit';
-import { UniversityController } from '../controller/University';
-import { UserController } from '../controller/User.controller';
+import { Router } from 'express';
+import UnitRouter from './Unit';
+import UniveristyRouter from './University';
+import ActivityTypeRouter from './ActivityType';
 
-class Router {
-	private activityTypeController: ActivityTypeController;
-	private userController: UserController;
-	private unitController: UnitController;
-	private universityController: UniversityController;
+class AppRouter {
+	private _router = Router();
+	private unitRouter = UnitRouter;
+	private univerityRouter = UniveristyRouter;
+	private activityTypeRouter = ActivityTypeRouter;
 
 	constructor() {
-		this.activityTypeController = new ActivityTypeController();
-		this.userController = new UserController();
-		this.universityController = new UniversityController();
-		this.unitController = new UnitController();
+		this.configure();
 	}
 
-	public routes(app): void {
-		app.route('/user').get(this.userController.getAllUsers);
+	get router() {
+		return this._router;
+	}
 
-		app
-			.route('/activity-type')
-			.get(this.activityTypeController.getAllActivityTypes)
-			.post(this.activityTypeController.createActivityType);
-
-		app
-			.route('/activity-type/:id')
-			.get(this.activityTypeController.getActivityTypeById)
-			.put(this.activityTypeController.updateActivityType)
-			.delete(this.activityTypeController.deleteActivityType);
-
-		app
-			.route('/university')
-			.get(this.universityController.getAllUniversities)
-			.post(this.universityController.createUniversity);
-		app
-			.route('/university/:id')
-			.get(this.universityController.getUniversityById)
-			.put(this.universityController.updateUniversity)
-			.delete(this.universityController.deleteUniversity);
-
-		app
-			.route('/unit')
-			.get(this.unitController.getAllUnits)
-			.post(this.unitController.createUnit);
-
-		app
-			.route('/unit/:id')
-			.get(this.unitController.getUnitById)
-			.put(this.unitController.updateUnit)
-			.delete(this.unitController.deleteUnit);
+	private configure() {
+		this._router.use('/activity-type', this.activityTypeRouter);
+		this._router.use('/unit', this.unitRouter);
+		this._router.use('/university', this.univerityRouter);
 	}
 }
 
-export default Router;
+export = new AppRouter().router;

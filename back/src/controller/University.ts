@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { connection } from '../connection/Connection';
 import { University } from '../entity/University';
 
-export class UniversityController {
+class UniversityController {
 	constructor() {}
 
 	public getAllUniversities(_: Request, res: Response) {
@@ -98,3 +98,5 @@ export class UniversityController {
 			});
 	}
 }
+
+export = new UniversityController();

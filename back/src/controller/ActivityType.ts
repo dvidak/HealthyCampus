@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { connection } from '../connection/Connection';
 import { ActivityType } from '../entity/ActivityType';
 
-export class ActivityTypeController {
+class ActivityTypeController {
 	constructor() {}
 
 	public getAllActivityTypes(_: Request, res: Response) {
@@ -98,3 +98,5 @@ export class ActivityTypeController {
 			});
 	}
 }
+
+export = new ActivityTypeController();

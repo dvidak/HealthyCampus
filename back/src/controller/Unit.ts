@@ -4,9 +4,7 @@ import { Unit } from '../entity/Unit';
 import { University } from '../entity/University';
 import { UserUnit } from '../entity/UserUnit';
 
-export class UnitController {
-	constructor() {}
-
+class UnitController {
 	public getAllUnits(_: Request, res: Response) {
 		connection
 			.then(async (connection) => {
@@ -118,3 +116,5 @@ export class UnitController {
 			});
 	}
 }
+
+export = new UnitController();
