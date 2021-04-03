@@ -36,7 +36,7 @@ export class User extends BaseEntity {
 	@ManyToOne((type) => Role, { eager: true })
 	role: Role;
 
-	@ManyToOne((type) => UserUnit, (UserUnit) => UserUnit.id)
+	@ManyToOne((type) => UserUnit, (UserUnit) => UserUnit.user)
 	userUnit: UserUnit;
 
 	@OneToOne((type) => FitbitAccount, (FitbitAccount) => FitbitAccount.user, {
