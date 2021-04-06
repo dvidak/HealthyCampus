@@ -15,7 +15,7 @@ export const navItems: NavItem[] = [
 		route: '/',
 		label: 'Home',
 		component: Home,
-		public: true,
+		public: false,
 	},
 	{
 		route: '/login',

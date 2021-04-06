@@ -6,11 +6,8 @@ import { useMedia } from 'react-use';
 import NavigationItem from './NavigationItem';
 import { navItems } from '../shared/navItems';
 
-interface Props {
-	isLoggedIn?: boolean;
-}
-
-const Navigation = ({ isLoggedIn }: Props) => {
+const Navigation = () => {
+	const isLoggedIn = Boolean(localStorage.getItem('username'));
 	const isMobile = useMedia('(max-width: 767px)');
 	const [isVisible, setIsVisible] = useState(true);
 

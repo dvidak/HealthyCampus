@@ -17,10 +17,15 @@ class AuthController {
 		const { user, isValid } = await this.authService.validateUser(loginData);
 
 		if (!isValid) {
-			res.status(400).json({ message: 'Incorrect email or password' });
+			res.json({ statusCode: 404, message: 'Incorrect email or password' });
 		} else {
 			const token = this.authService.createToken(user.id);
-			res.status(200).json({ message: 'Successfully logged in!', token, user });
+			res.json({
+				statusCode: 200,
+				message: 'Successfully logged in!',
+				token,
+				user,
+			});
 		}
 	}
 }

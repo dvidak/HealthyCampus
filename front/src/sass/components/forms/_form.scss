@@ -1,12 +1,12 @@
 .form-container {
-	max-width: 500px;
-	min-width: 300px;
-	max-height: 700px;
+	max-width: 30rem;
+	min-width: 20rem;
+	max-height: 40rem;
 	width: 30%;
 	height: 60%;
-	margin: 100px auto;
+	margin: 2rem auto;
 	background-color: #ffffff;
-	border-radius: 25px;
+	border-radius: 1.5rem;
 
 	> h3 {
 		text-align: center;
@@ -23,6 +23,6 @@
 
 @media (max-width: #{$phone-width}) {
 	.form-container {
-		margin: 60px auto;
+		margin: 3.75rem auto;
 	}
 }

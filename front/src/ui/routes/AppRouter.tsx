@@ -4,13 +4,13 @@ import Navigation from '../components/Navigation';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
-// import { ProtectedRoute } from './ProtectedRoute';
+import { ProtectedRoute } from './ProtectedRoute';
 
 export function AppRouter() {
 	return (
 		<BrowserRouter>
 			<Navigation></Navigation>
-			<Route exact path="/" component={Home} />
+			<ProtectedRoute exact path="/" component={Home} />
 			<Route exact path="/login" component={Login} />
 			<Route exact path="/register" component={Register} />
 		</BrowserRouter>
