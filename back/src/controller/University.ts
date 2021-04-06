@@ -3,8 +3,6 @@ import { connection } from '../connection/Connection';
 import { University } from '../entity/University';
 
 class UniversityController {
-	constructor() {}
-
 	public getAllUniversities(_: Request, res: Response) {
 		connection
 			.then(async (connection) => {

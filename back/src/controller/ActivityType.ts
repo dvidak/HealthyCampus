@@ -3,8 +3,6 @@ import { connection } from '../connection/Connection';
 import { ActivityType } from '../entity/ActivityType';
 
 class ActivityTypeController {
-	constructor() {}
-
 	public getAllActivityTypes(_: Request, res: Response) {
 		connection
 			.then(async (connection) => {
