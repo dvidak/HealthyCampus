@@ -3,97 +3,85 @@ import { connection } from '../connection/Connection';
 import { University } from '../entity/University';
 
 class UniversityController {
-	public getAllUniversities(_: Request, res: Response) {
-		connection
-			.then(async (connection) => {
-				const universities: University[] = await connection.manager.find(
-					University,
-				);
-				res.status(200).json(universities);
-			})
-			.catch((error) => {
-				res.status(400).json({ error: error });
-			});
+	public async getAllUniversities(_: Request, res: Response) {
+		const conn = await connection;
+
+		try {
+			const universities: University[] = await conn.manager.find(University);
+			res.status(200).json(universities);
+		} catch (error) {
+			res.status(400).json({ error });
+		}
 	}
 
-	public createUniversity(req: Request, res: Response) {
-		connection
-			.then(async (connection) => {
-				const university = new University();
+	public async createUniversity(req: Request, res: Response) {
+		const conn = await connection;
+
+		try {
+			const university = new University();
+			university.name = req.body.name;
+			await conn.manager.save(university);
+			res.status(201).json({ message: 'Successfully created.' });
+		} catch (error) {
+			res.status(400).json({ error });
+		}
+	}
+
+	public async updateUniversity(req: Request, res: Response) {
+		const conn = await connection;
+
+		try {
+			let university = await conn.manager.findOne(University, req.params.id);
+
+			if (university) {
 				university.name = req.body.name;
-
-				await connection.manager.save(university);
-				res.status(201).json({ message: 'Successfully created.' });
-			})
-			.catch((error) => {
-				res.status(400).json({ error: error });
-			});
+				await conn.manager.save(university);
+				res.status(204).json({ message: 'Successfully updated.' });
+			} else {
+				res
+					.status(404)
+					.json({ message: 'University with given id does not exist.' });
+			}
+		} catch (error) {
+			res.status(400).json({ error });
+		}
 	}
 
-	public updateUniversity(req: Request, res: Response) {
-		connection
-			.then(async (connection) => {
-				let university = await connection.manager.findOne(
-					University,
-					req.params.id,
-				);
+	public async getUniversityById(req: Request, res: Response) {
+		const conn = await connection;
 
-				if (university) {
-					university.name = req.body.name;
-					await connection.manager.save(university);
-					res.status(204).json({ message: 'Successfully updated.' });
-				} else {
-					res
-						.status(404)
-						.json({ message: 'University with given id does not exist.' });
-				}
-			})
-			.catch((error) => {
-				res.status(400).json({ error: error });
-			});
+		try {
+			let university = await conn.manager.findOne(University, req.params.id);
+
+			if (university) {
+				res.status(200).json(university);
+			} else {
+				res
+					.status(404)
+					.json({ message: 'University with given id does not exist.' });
+			}
+		} catch (error) {
+			res.status(400).json({ error });
+		}
 	}
 
-	public getUniversityById(req: Request, res: Response) {
-		connection
-			.then(async (connection) => {
-				let university = await connection.manager.findOne(
-					University,
-					req.params.id,
-				);
+	public async deleteUniversity(req: Request, res: Response) {
+		const conn = await connection;
 
-				if (university) {
-					res.status(200).json(university);
-				} else {
-					res
-						.status(404)
-						.json({ message: 'University with given id does not exist.' });
-				}
-			})
-			.catch((error) => {
-				res.status(400).json({ error: error });
-			});
-	}
+		try {
+			const university = await conn.manager.findOne(University, req.params.id);
 
-	public deleteUniversity(req: Request, res: Response) {
-		connection
-			.then(async (connection) => {
-				const university = await connection.manager.findOne(
-					University,
-					req.params.id,
-				);
-
-				if (university) {
-					await connection.manager.remove(University, university);
-					res.status(204).json({ message: 'Successfully removed.' });
-				} else {
-					res
-						.status(404)
-						.json({ message: 'University with given id does not exist.' });
-				}
-			})
-			.catch((error) => {
-				res.status(400).json({ error: error });
-			});
+			if (university) {
+				await conn.manager.remove(University, university);
+				res.status(204).json({ message: 'Successfully removed.' });
+			} else {
+				res
+					.status(404)
+					.json({ message: 'University with given id does not exist.' });
+			}
+		} catch (error) {
+			res.status(400).json({ error });
+		}
 	}
 }
 

@@ -68,91 +68,85 @@ class UserController {
 		}
 	}
 
-	public getAllUsers(req: Request, res: Response) {
-		connection
-			.then(async (connection) => {
-				const users: User[] = await connection.manager.find(User, {
-					relations: ['userUnit'],
-				});
-				res.status(200).json(users);
-			})
-			.catch((error) => {
-				res.status(400).json({ error: error });
+	public async getAllUsers(req: Request, res: Response) {
+		const conn = await connection;
+
+		try {
+			const users: User[] = await conn.manager.find(User, {
+				relations: ['userUnit'],
 			});
+			res.status(200).json(users);
+		} catch (error) {
+			res.status(400).json({ error });
+		}
 	}
 
-	public getUserById(req: Request, res: Response) {
-		connection
-			.then(async (connection) => {
-				let user = await connection.manager.findOne(User, req.params.id, {
-					relations: ['userUnit'],
-				});
+	public async getUserById(req: Request, res: Response) {
+		const conn = await connection;
 
-				if (user) {
-					delete user.password;
-					res.status(200).json(user);
-				} else {
-					res
-						.status(404)
-						.json({ message: 'User with given id does not exist.' });
-				}
-			})
-			.catch((error) => {
-				res.status(400).json({ error: error });
+		try {
+			let user = await conn.manager.findOne(User, req.params.id, {
+				relations: ['userUnit'],
 			});
+
+			if (user) {
+				delete user.password;
+				res.status(200).json(user);
+			} else {
+				res.status(404).json({ message: 'User with given id does not exist.' });
+			}
+		} catch (error) {
+			res.status(400).json({ error });
+		}
 	}
 
-	public updateUser(req: Request, res: Response) {
-		connection
-			.then(async (connection) => {
-				let oldUser = await connection.manager.findOne(User, req.params.id);
+	public async updateUser(req: Request, res: Response) {
+		const conn = await connection;
 
-				if (oldUser) {
-					oldUser.firstName = req.body.firstName;
-					oldUser.lastName = req.body.lastName;
-					oldUser.email = req.body.email;
-					oldUser.role = req.body.role;
+		try {
+			let oldUser = await conn.manager.findOne(User, req.params.id);
 
-					// Edit password
-					const salt = await bcrypt.genSalt(10);
-					const passwordHash = await bcrypt.hash(req.body.password, salt);
-					oldUser.password = passwordHash;
+			if (oldUser) {
+				oldUser.firstName = req.body.firstName;
+				oldUser.lastName = req.body.lastName;
+				oldUser.email = req.body.email;
+				oldUser.role = req.body.role;
 
-					await connection.manager.save(oldUser);
-					res.status(204).json({ message: 'Successfully updated.' });
-				} else {
-					res
-						.status(404)
-						.json({ message: 'User with given id does not exist.' });
-				}
-			})
-			.catch((error) => {
-				res.status(400).json({ error: error });
-			});
+				// Edit password
+				const salt = await bcrypt.genSalt(10);
+				const passwordHash = await bcrypt.hash(req.body.password, salt);
+				oldUser.password = passwordHash;
+
+				await conn.manager.save(oldUser);
+				res.status(204).json({ message: 'Successfully updated.' });
+			} else {
+				res.status(404).json({ message: 'User with given id does not exist.' });
+			}
+		} catch (error) {
+			res.status(400).json({ error });
+		}
 	}
 
 	// TODO: Delete fitbit account?
-	public deleteUser(req: Request, res: Response) {
-		connection
-			.then(async (connection) => {
-				const user = await connection.manager.findOne(User, req.params.userId);
-				const userUnit = await connection.manager.findOne(UserUnit, {
-					user: user,
-				});
+	public async deleteUser(req: Request, res: Response) {
+		const conn = await connection;
 
-				if (user) {
-					await connection.manager.remove(UserUnit, userUnit);
-					await connection.manager.remove(User, user);
-					res.status(204).json();
-				} else {
-					res
-						.status(404)
-						.json({ message: 'User with given id does not exist.' });
-				}
-			})
-			.catch((error) => {
-				res.status(400).json({ error: error });
+		try {
+			const user = await conn.manager.findOne(User, req.params.userId);
+			const userUnit = await conn.manager.findOne(UserUnit, {
+				user: user,
 			});
+
+			if (user) {
+				await conn.manager.remove(UserUnit, userUnit);
+				await conn.manager.remove(User, user);
+				res.status(204).json();
+			} else {
+				res.status(404).json({ message: 'User with given id does not exist.' });
+			}
+		} catch (error) {
+			res.status(400).json({ error });
+		}
 	}
 }
 
