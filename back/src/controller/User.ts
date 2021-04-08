@@ -1,73 +1,10 @@
 import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
 import { connection } from '../connection/Connection';
-import { Role } from '../entity/Role';
-import { Unit } from '../entity/Unit';
 import { User } from '../entity/User';
 import { UserUnit } from '../entity/UserUnit';
 
 class UserController {
-	public async createUser(req: Request, res: Response) {
-		const conn = await connection;
-		const { firstName, lastName, email, password, unitId } = req.body;
-
-		// Check if there is a user with the same email
-		const userAlreadyExists = await conn.manager.findOne(User, {
-			email: email,
-		});
-
-		if (userAlreadyExists) {
-			return res.status(409).json({ message: 'Email aready taken.' });
-		}
-
-		if (!unitId) {
-			return res.status(400).json({ message: 'Unit id is required.' });
-		}
-
-		const unit = await conn.manager.findOne(Unit, unitId);
-
-		if (!unit) {
-			return res.status(400).json({
-				message:
-					'Unit with given id does not exist. User must belong to some unit',
-			});
-		}
-
-		// Create new user
-		const newUser = new User();
-		newUser.firstName = firstName;
-		newUser.lastName = lastName;
-		newUser.email = email;
-
-		const studentRole = await conn.manager.findOne(Role, {
-			roleName: 'STUDENT',
-		});
-		newUser.role = studentRole;
-
-		// Password
-		const salt = await bcrypt.genSalt(10);
-		const passwordHash = await bcrypt.hash(password, salt);
-		newUser.password = passwordHash;
-
-		const user = await conn.manager.save(newUser);
-		delete user.password;
-
-		try {
-			const userUnit = new UserUnit();
-			userUnit.user = user;
-			userUnit.unit = unit;
-			userUnit.academicYear = 'some year';
-			await conn.manager.save(userUnit);
-
-			return res
-				.status(201)
-				.json({ message: 'User and userUnit created.', user });
-		} catch {
-			await conn.manager.remove(User, user);
-			return res.status(400).json({ message: 'Failed user unit.' });
-		}
-	}
-
 	public async getAllUsers(req: Request, res: Response) {
 		const conn = await connection;
 

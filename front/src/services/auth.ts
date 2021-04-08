@@ -1,20 +1,17 @@
-import { LoginData } from '../models/Auth';
+import { LoginData, SignUpData } from '../models/Auth';
 import { postAuth } from './api';
 
 const login = async (data: LoginData) => {
-	const response = await postAuth('auth/login', data);
+	return await postAuth('auth/login', data);
+};
 
-	if (response.token) {
-		localStorage.setItem('token', response.token);
-		localStorage.setItem('id', response.user.id);
-		let str = response.user.email;
-		localStorage.setItem('username', str.substring(0, str.lastIndexOf('@')));
-	}
-	return response;
+const signUp = async (data: SignUpData) => {
+	return await postAuth('auth/signUp', data);
 };
 
 const authService = {
 	login,
+	signUp,
 };
 
 export default authService;

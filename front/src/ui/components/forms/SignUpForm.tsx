@@ -1,21 +1,25 @@
 import { Button } from '@material-ui/core';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { SignUpData } from '../../../models/Auth';
 import FormInput from './FormInput';
+import FormSelect from './FormSelect';
 
-const RegisterForm = () => {
+interface Props {
+	signUp: (data: SignUpData) => void;
+	options: Record<string, Record<number, string>>;
+}
+
+const SignUpForm = ({ signUp, options }: Props) => {
 	const { handleSubmit, register, errors } = useForm();
 
 	const onSubmit = handleSubmit((data) => {
-		console.log('on register submit');
-		console.log(data);
+		signUp(data as SignUpData);
 	});
-
-	console.log(errors);
 
 	return (
 		<form className="form-container" onSubmit={onSubmit} noValidate>
-			<h3>Please blabla</h3>
+			<h3>Please sign up</h3>
 			<FormInput
 				label="First name"
 				name="firstName"
@@ -71,6 +75,15 @@ const RegisterForm = () => {
 				errors={errors.password}
 			></FormInput>
 
+			<FormSelect
+				label="Unit"
+				name="unitId"
+				options={options}
+				registerRef={register({
+					required: 'Unit is required!',
+				})}
+			/>
+
 			<div className="container">
 				<Button fullWidth type="submit" variant="contained" color="secondary">
 					Sign up
@@ -80,4 +93,4 @@ const RegisterForm = () => {
 	);
 };
 
-export default RegisterForm;
+export default SignUpForm;

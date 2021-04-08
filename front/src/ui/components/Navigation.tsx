@@ -6,6 +6,7 @@ import { useMedia } from 'react-use';
 import NavigationItem from './NavigationItem';
 import { navItems } from '../shared/navItems';
 
+// TODO: Refresh on login
 const Navigation = () => {
 	const isLoggedIn = Boolean(localStorage.getItem('username'));
 	const isMobile = useMedia('(max-width: 767px)');

@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
-import Register from '../pages/Register';
+import SignUp from '../pages/SignUp';
 
 export interface NavItem {
 	route: string;
@@ -24,9 +24,9 @@ export const navItems: NavItem[] = [
 		public: true,
 	},
 	{
-		route: '/register',
-		label: 'Register',
-		component: Register,
+		route: '/signUp',
+		label: 'Sign up',
+		component: SignUp,
 		public: true,
 	},
 ];

@@ -5,7 +5,8 @@
 	padding: calc(#{$padding-md}/ 2);
 	max-width: 100%;
 
-	input {
+	input,
+	select {
 		width: 80%;
 		box-sizing: border-box;
 		border: none;

@@ -13,7 +13,7 @@ export function ProtectedRoute({
 	component,
 	...routeProps
 }: ProtectedRouteProps) {
-	const isLoggedIn = localStorage.getItem('username');
+	const isLoggedIn = localStorage.getItem('token');
 	return isLoggedIn ? (
 		<Route {...routeProps} exact component={component}>
 			{children}

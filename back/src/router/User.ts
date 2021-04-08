@@ -15,8 +15,6 @@ class UserRouter {
 
 	private configure() {
 		this._router.get('', this.controller.getAllUsers);
-		this._router.post('', this.controller.createUser);
-
 		this._router.get('/:id', this.controller.getUserById);
 		this._router.put('/:id', this.controller.updateUser);
 		this._router.delete('/:id', this.controller.deleteUser);

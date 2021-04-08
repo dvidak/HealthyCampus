@@ -15,6 +15,7 @@ class AuthRouter {
 
 	private configure() {
 		this._router.post('/login', this.controller.login);
+		this._router.post('/signUp', this.controller.signUp);
 	}
 }
 
