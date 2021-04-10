@@ -1,1 +1,5 @@
-@import './login-page';
+.page-content {
+	min-height: calc(100vh - 56px);
+	width: 100%;
+	box-sizing: border-box;
+}

@@ -1,18 +1,23 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
-import Navigation from '../components/Navigation';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Layout from '../components/Layout';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
+import Profile from '../pages/Profile';
 import SignUp from '../pages/SignUp';
 import { ProtectedRoute } from './ProtectedRoute';
 
 export function AppRouter() {
 	return (
 		<BrowserRouter>
-			<Navigation></Navigation>
-			<ProtectedRoute exact path="/" component={Home} />
-			<Route exact path="/login" component={Login} />
-			<Route exact path="/signUp" component={SignUp} />
+			<Switch>
+				<Layout>
+					<Route exact path="/login" component={Login} />
+					<Route exact path="/signup" component={SignUp} />
+					<ProtectedRoute exact path="/" component={Home} />
+					<ProtectedRoute exact path="/profile" component={Profile} />
+				</Layout>
+			</Switch>
 		</BrowserRouter>
 	);
 }
