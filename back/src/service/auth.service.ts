@@ -1,6 +1,5 @@
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-
+import jwt from 'jsonwebtoken';
 import { connection } from '../connection/Connection';
 import { User } from '../entity/User';
 

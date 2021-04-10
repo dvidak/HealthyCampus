@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { SignUpData } from '../../models/Auth';
-import universityService from '../../services/univeristy';
 import authService from '../../services/auth';
+import universityService from '../../services/univeristy';
 import SignUpForm from '../components/forms/SignUpForm';
 import { universityGroupOptions } from '../shared/helpers';
-import { useHistory } from 'react-router-dom';
-import { useLocalStorage } from 'react-use';
 
 const SignUp = () => {
 	const history = useHistory();
-	const [token, setToken] = useLocalStorage<string | null>('token', null);
 	const [universityOptions, setUniversityOptions] = useState({});
 	const [errorMessage, setErrorMessage] = useState(null);
 
@@ -18,7 +16,7 @@ const SignUp = () => {
 		if (signUpResponse.statusCode === 400) {
 			setErrorMessage(signUpResponse.message);
 		} else {
-			setToken(signUpResponse.token);
+			localStorage.setItem('token', signUpResponse.token);
 		}
 	};
 
@@ -32,10 +30,10 @@ const SignUp = () => {
 	}, []);
 
 	useEffect(() => {
-		if (token) {
+		if (localStorage.getItem('token')) {
 			history.push('/home');
 		}
-	}, [history, token]);
+	}, [history]);
 
 	return (
 		<div className="register-page">
