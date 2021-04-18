@@ -84,6 +84,9 @@ class UserService {
 			userUnit.academicYear = 'some year';
 			await conn.manager.save(userUnit);
 
+			newUser.userUnit = userUnit;
+			await conn.manager.save(newUser);
+
 			return {
 				failed: false,
 				message: 'User and userUnit created.',

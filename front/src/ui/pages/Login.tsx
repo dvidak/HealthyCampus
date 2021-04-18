@@ -21,7 +21,7 @@ const Login = () => {
 		if (localStorage.getItem('token')) {
 			history.push('/home');
 		}
-	}, [history]);
+	});
 
 	return (
 		<div className="login-page">

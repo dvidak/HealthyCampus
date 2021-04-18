@@ -33,7 +33,7 @@ const SignUp = () => {
 		if (localStorage.getItem('token')) {
 			history.push('/home');
 		}
-	}, [history]);
+	});
 
 	return (
 		<div className="register-page">

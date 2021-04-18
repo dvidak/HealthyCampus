@@ -1,8 +1,15 @@
 import { Request, Response } from 'express';
 import { connection } from '../connection/Connection';
 import { ActivityType } from '../entity/ActivityType';
+import FitbitActivityService from '../service/fitbit-activity.service';
 
 class ActivityTypeController {
+	private fitbitActivityService = FitbitActivityService;
+
+	constructor() {
+		this.load = this.load.bind(this);
+	}
+
 	public async getAllActivityTypes(_: Request, res: Response) {
 		const conn = await connection;
 
@@ -93,6 +100,28 @@ class ActivityTypeController {
 			}
 		} catch (error) {
 			res.status(400).json({ error });
+		}
+	}
+
+	public async load(_: Request, res: Response) {
+		const conn = await connection;
+		const activityTypes = await this.fitbitActivityService.loadActivityTypes();
+
+		try {
+			activityTypes.forEach(async (at: any) => {
+				if (at.fitbitActivityId) {
+					const activityType = new ActivityType();
+					activityType.type = at.type;
+					activityType.subType = at.subType;
+					activityType.fitbitActivityId = at.fitbitActivityId;
+
+					await conn.manager.save(activityType);
+				}
+			});
+
+			res.status(200).json({ message: 'Loaded' });
+		} catch (error) {
+			res.status(400).json(error);
 		}
 	}
 }

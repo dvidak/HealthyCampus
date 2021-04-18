@@ -14,6 +14,7 @@ class ActivityTypeRouter {
 	}
 
 	private configure() {
+		this._router.get('/load', this.controller.load);
 		this._router.get('', this.controller.getAllActivityTypes);
 		this._router.post('', this.controller.createActivityType);
 
