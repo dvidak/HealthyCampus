@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useMedia } from 'react-use';
 import NavigationItem from './NavigationItem';
 import { navItems } from '../shared/navItems';
+import classNames from 'classnames';
 
 const Navigation = () => {
 	const isMobile = useMedia('(max-width: 767px)');
@@ -29,7 +30,11 @@ const Navigation = () => {
 	};
 
 	return (
-		<div className="navigation-container">
+		<div
+			className={classNames('navigation-container', {
+				top: !isVisible,
+			})}
+		>
 			{!isVisible && (
 				<IconButton color="secondary" onClick={onClick} aria-label="open-menu">
 					<MenuIcon />

@@ -17,6 +17,8 @@ const SignUp = () => {
 			setErrorMessage(signUpResponse.message);
 		} else {
 			localStorage.setItem('token', signUpResponse.token);
+			localStorage.setItem('userId', signUpResponse.user.id);
+			history.push('/profile');
 		}
 	};
 
