@@ -13,4 +13,15 @@ export interface User {
 			name: string;
 		};
 	};
+	role: {
+		id: string;
+		roleName: Role;
+	};
+}
+
+export enum Role {
+	ADMIN = 'ADMIN',
+	STUDENT = 'STUDENT',
+	PROFESOR = 'PROFESOR',
+	NONE = 'NONE',
 }

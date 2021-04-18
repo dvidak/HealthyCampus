@@ -3,9 +3,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ClearIcon from '@material-ui/icons/Clear';
 import React, { useEffect, useState } from 'react';
 import { useMedia } from 'react-use';
-import NavigationItem from './NavigationItem';
-import { navItems } from '../shared/navItems';
+
 import classNames from 'classnames';
+import NavigationMenu from './NavigationMenu';
 
 const Navigation = () => {
 	const isMobile = useMedia('(max-width: 767px)');
@@ -45,32 +45,7 @@ const Navigation = () => {
 					<ClearIcon />
 				</IconButton>
 			)}
-			{isVisible && (
-				<div className={`navigation`}>
-					{Boolean(localStorage.getItem('token')) &&
-						navItems
-							.filter((navItem) => !navItem.public)
-							.map((navItem) => {
-								return (
-									<NavigationItem
-										onClick={onNavItemClick}
-										navItem={navItem}
-									></NavigationItem>
-								);
-							})}
-					{!Boolean(localStorage.getItem('token')) &&
-						navItems
-							.filter((navItem) => navItem.public)
-							.map((navItem) => {
-								return (
-									<NavigationItem
-										onClick={onNavItemClick}
-										navItem={navItem}
-									></NavigationItem>
-								);
-							})}
-				</div>
-			)}
+			{isVisible && <NavigationMenu onNavItemClick={onNavItemClick} />}
 		</div>
 	);
 };

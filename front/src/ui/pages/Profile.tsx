@@ -20,12 +20,12 @@ const Profile = () => {
 	const size = useWindowSize();
 	const [user, setUser] = useState<User | undefined>(undefined);
 
-	const fetchUser = async () => {
-		const fetchedUser = await userService.getUserById();
-		setUser(fetchedUser);
-	};
-
 	useEffect(() => {
+		async function fetchUser() {
+			const fetchedUser = await userService.getUserById();
+			setUser(fetchedUser);
+		}
+
 		fetchUser();
 	}, []);
 
@@ -60,7 +60,7 @@ const Profile = () => {
 						<EmailIcon color="secondary" /> {user?.email}
 					</Typography>
 					<Typography className="card-data">
-						<HouseIcon color="secondary" /> {user?.userUnit.unit.name}
+						<HouseIcon color="secondary" /> {user?.userUnit?.unit?.name}
 					</Typography>
 					{user?.fitbit?.fitbitId && (
 						<Typography className="card-data">

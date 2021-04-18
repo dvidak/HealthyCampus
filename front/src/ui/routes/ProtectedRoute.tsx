@@ -1,24 +1,34 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 
 interface ProtectedRouteProps {
 	children?: React.ReactNode;
 	component?: any;
+	roles?: any;
 	exact?: boolean;
 	path: string;
 }
 
-export function ProtectedRoute({
+export const ProtectedRoute = ({
 	children,
 	component,
+	roles,
 	...routeProps
-}: ProtectedRouteProps) {
+}: ProtectedRouteProps) => {
 	const isLoggedIn = localStorage.getItem('token');
-	return isLoggedIn ? (
+	const role = localStorage.getItem('role');
+
+	if (!isLoggedIn) {
+		return <Redirect to="/login" />;
+	}
+
+	if (roles && roles.indexOf(role) === -1) {
+		return <Redirect to="/" />;
+	}
+
+	return (
 		<Route {...routeProps} exact component={component}>
 			{children}
 		</Route>
-	) : (
-		<Redirect to="/login" />
 	);
-}
+};
