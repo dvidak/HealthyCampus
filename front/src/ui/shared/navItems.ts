@@ -5,6 +5,8 @@ import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Profile from '../pages/Profile';
 import SignUp from '../pages/SignUp';
+import Unit from '../pages/Unit';
+import University from '../pages/University';
 
 export interface NavItem {
 	route: string;
@@ -18,6 +20,18 @@ export const navItems = [
 		route: '/admin',
 		label: 'Admin',
 		component: Admin,
+		roles: [Role.ADMIN],
+	},
+	{
+		route: '/unit',
+		label: 'Unit',
+		component: Unit,
+		roles: [Role.ADMIN],
+	},
+	{
+		route: '/university',
+		label: 'University',
+		component: University,
 		roles: [Role.ADMIN],
 	},
 	{

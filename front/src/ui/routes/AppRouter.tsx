@@ -7,6 +7,8 @@ import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Profile from '../pages/Profile';
 import SignUp from '../pages/SignUp';
+import Unit from '../pages/Unit';
+import University from '../pages/University';
 import { ProtectedRoute } from './ProtectedRoute';
 
 export function AppRouter() {
@@ -22,6 +24,12 @@ export function AppRouter() {
 						path="/admin"
 						roles={[Role.ADMIN]}
 						component={Admin}
+					/>
+					<ProtectedRoute path="/unit" roles={[Role.ADMIN]} component={Unit} />{' '}
+					<ProtectedRoute
+						path="/university"
+						roles={[Role.ADMIN]}
+						component={University}
 					/>
 				</Layout>
 			</Switch>

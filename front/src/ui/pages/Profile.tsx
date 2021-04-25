@@ -6,15 +6,15 @@ import {
 	CardContent,
 	Typography,
 } from '@material-ui/core';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import EmailIcon from '@material-ui/icons/Email';
 import HouseIcon from '@material-ui/icons/House';
 import PersonIcon from '@material-ui/icons/Person';
-import EmailIcon from '@material-ui/icons/Email';
 import React, { useEffect, useState } from 'react';
 import { useWindowSize } from 'react-use';
 import { User } from '../../models/User';
 import userService from '../../services/user';
 import { fitbitOAuthUrl } from '../shared/const';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 const Profile = () => {
 	const size = useWindowSize();
