@@ -2,13 +2,13 @@ import { University } from '../models/University';
 import { get } from './api';
 
 const getUniversities = async () => {
-	const response = await get('university');
+  const response = await get('university');
 
-	return response as University[];
+  return response as University[];
 };
 
 const universityService = {
-	getUniversities,
+  getUniversities,
 };
 
 export default universityService;

@@ -4,11 +4,11 @@ import theme from '../sass/layout/theme';
 import { AppRouter } from './routes/AppRouter';
 
 const App: React.FunctionComponent = () => {
-	return (
-		<ThemeProvider theme={theme}>
-			<AppRouter />
-		</ThemeProvider>
-	);
+  return (
+    <ThemeProvider theme={theme}>
+      <AppRouter />
+    </ThemeProvider>
+  );
 };
 
 export default App;

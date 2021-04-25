@@ -12,27 +12,27 @@ import University from '../pages/University';
 import { ProtectedRoute } from './ProtectedRoute';
 
 export function AppRouter() {
-	return (
-		<BrowserRouter>
-			<Switch>
-				<Layout>
-					<Route exact path="/login" component={Login} />
-					<Route exact path="/signup" component={SignUp} />
-					<ProtectedRoute exact path="/" component={Home} />
-					<ProtectedRoute exact path="/profile" component={Profile} />
-					<ProtectedRoute
-						path="/admin"
-						roles={[Role.ADMIN]}
-						component={Admin}
-					/>
-					<ProtectedRoute path="/unit" roles={[Role.ADMIN]} component={Unit} />{' '}
-					<ProtectedRoute
-						path="/university"
-						roles={[Role.ADMIN]}
-						component={University}
-					/>
-				</Layout>
-			</Switch>
-		</BrowserRouter>
-	);
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Layout>
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/signup" component={SignUp} />
+          <ProtectedRoute exact path="/" component={Home} />
+          <ProtectedRoute exact path="/profile" component={Profile} />
+          <ProtectedRoute
+            path="/admin"
+            roles={[Role.ADMIN]}
+            component={Admin}
+          />
+          <ProtectedRoute path="/unit" roles={[Role.ADMIN]} component={Unit} />{' '}
+          <ProtectedRoute
+            path="/university"
+            roles={[Role.ADMIN]}
+            component={University}
+          />
+        </Layout>
+      </Switch>
+    </BrowserRouter>
+  );
 }
