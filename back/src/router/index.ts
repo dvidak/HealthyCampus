@@ -6,28 +6,28 @@ import UserRouter from './User';
 import AuthRouter from './Auth';
 
 class AppRouter {
-	private _router = Router();
-	private authRouter = AuthRouter;
-	private activityTypeRouter = ActivityTypeRouter;
-	private unitRouter = UnitRouter;
-	private univerityRouter = UniveristyRouter;
-	private userRouter = UserRouter;
+  private _router = Router();
+  private authRouter = AuthRouter;
+  private activityTypeRouter = ActivityTypeRouter;
+  private unitRouter = UnitRouter;
+  private univerityRouter = UniveristyRouter;
+  private userRouter = UserRouter;
 
-	constructor() {
-		this.configure();
-	}
+  constructor() {
+    this.configure();
+  }
 
-	get router() {
-		return this._router;
-	}
+  get router() {
+    return this._router;
+  }
 
-	private configure() {
-		this._router.use('/auth', this.authRouter);
-		this._router.use('/activity-type', this.activityTypeRouter);
-		this._router.use('/unit', this.unitRouter);
-		this._router.use('/university', this.univerityRouter);
-		this._router.use('/user', this.userRouter);
-	}
+  private configure() {
+    this._router.use('/auth', this.authRouter);
+    this._router.use('/activity-type', this.activityTypeRouter);
+    this._router.use('/unit', this.unitRouter);
+    this._router.use('/university', this.univerityRouter);
+    this._router.use('/user', this.userRouter);
+  }
 }
 
 export = new AppRouter().router;
