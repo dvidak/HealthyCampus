@@ -2,3 +2,12 @@
 @import 'abstract/index';
 @import 'components/index';
 @import 'pages/index';
+
+.modal {
+  background: white;
+  position: absolute;
+  width: 400px;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

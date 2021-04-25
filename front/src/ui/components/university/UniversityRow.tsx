@@ -22,9 +22,11 @@ import AddIcon from '@material-ui/icons/Add';
 interface Props {
   row: University;
   onSaveRow: (universityId: number, unitId: number, name: string) => void;
+  onCreate: (type: string, universityId?: number) => void;
+  onDelete: (type: string, id: number) => void;
 }
 
-const UniversityRow = ({ row, onSaveRow }: Props) => {
+const UniversityRow = ({ row, onSaveRow, onCreate, onDelete }: Props) => {
   const [open, setOpen] = React.useState(false);
   const [name, setName] = useState<string | undefined>();
 
@@ -39,16 +41,6 @@ const UniversityRow = ({ row, onSaveRow }: Props) => {
       rowKey: id,
     });
     setName(currentName);
-  };
-
-  const onDeleteUnit = ({ id }: any) => {
-    console.log('on delete');
-    console.log(id);
-  };
-
-  const onCreate = ({ type }: any) => {
-    console.log('on create');
-    console.log(type);
   };
 
   const onSaveUnit = ({ universityId, unitId, newName }: any) => {
@@ -77,9 +69,12 @@ const UniversityRow = ({ row, onSaveRow }: Props) => {
           </IconButton>
         </TableCell>
         <TableCell>{row.name}</TableCell>
-        <TableCell align="right">
-          <IconButton color="secondary">
-            <AddIcon onClick={() => onCreate({ type: 'university' })} />
+        <TableCell>
+          <IconButton
+            color="secondary"
+            onClick={() => onDelete('university', row.id)}
+          >
+            <DeleteIcon />
           </IconButton>
         </TableCell>
       </TableRow>
@@ -92,8 +87,11 @@ const UniversityRow = ({ row, onSaveRow }: Props) => {
                   <TableRow>
                     <TableCell>Units</TableCell>
                     <TableCell align="right">
-                      <IconButton color="secondary">
-                        <AddIcon onClick={() => onCreate({ type: 'unit' })} />
+                      <IconButton
+                        color="secondary"
+                        onClick={() => onCreate('unit', row.id)}
+                      >
+                        <AddIcon />
                       </IconButton>
                     </TableCell>
                   </TableRow>
@@ -151,11 +149,7 @@ const UniversityRow = ({ row, onSaveRow }: Props) => {
                             </IconButton>
                             <IconButton
                               color="secondary"
-                              onClick={() =>
-                                onDeleteUnit({
-                                  id: unit.id,
-                                })
-                              }
+                              onClick={() => onDelete('unit', unit.id)}
                             >
                               <DeleteIcon />
                             </IconButton>
