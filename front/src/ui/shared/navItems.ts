@@ -10,48 +10,40 @@ export interface NavItem {
 	route: string;
 	label: string;
 	component: FunctionComponent;
+	roles: Role[];
 }
 
-export const navItems = {
-	[Role.ADMIN]: [
-		{
-			route: '/admin',
-			label: 'Admin',
-			component: Admin,
-		},
-	],
-
-	[Role.STUDENT]: [
-		{
-			route: '/',
-			label: 'Home',
-			component: Home,
-			public: false,
-		},
-		{
-			route: '/profile',
-			label: 'Profile',
-			component: Profile,
-			public: false,
-		},
-	],
-	[Role.PROFESOR]: [
-		{
-			route: '/profile',
-			label: 'Profile',
-			component: Profile,
-		},
-	],
-	[Role.NONE]: [
-		{
-			route: '/login',
-			label: 'Login',
-			component: Login,
-		},
-		{
-			route: '/signUp',
-			label: 'Sign up',
-			component: SignUp,
-		},
-	],
-};
+export const navItems = [
+	{
+		route: '/admin',
+		label: 'Admin',
+		component: Admin,
+		roles: [Role.ADMIN],
+	},
+	{
+		route: '/',
+		label: 'Home',
+		component: Home,
+		public: false,
+		roles: [Role.PROFESOR, Role.STUDENT],
+	},
+	{
+		route: '/profile',
+		label: 'Profile',
+		component: Profile,
+		public: false,
+		roles: [Role.PROFESOR, Role.STUDENT],
+	},
+	{
+		route: '/login',
+		label: 'Login',
+		component: Login,
+		roles: [Role.NONE],
+	},
+	{
+		route: '/signUp',
+		label: 'Sign up',
+		component: SignUp,
+		roles: [Role.NONE],
+	},
+];

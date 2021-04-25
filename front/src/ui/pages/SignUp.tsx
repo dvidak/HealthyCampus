@@ -18,7 +18,8 @@ const SignUp = () => {
 		} else {
 			localStorage.setItem('token', signUpResponse.token);
 			localStorage.setItem('userId', signUpResponse.user.id);
-			history.push('/profile');
+			history.push('/home');
+			window.location.reload();
 		}
 	};
 

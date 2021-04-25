@@ -11,15 +11,15 @@ const NavigationMenu = ({ onNavItemClick }: Props) => {
 
 	return (
 		<div className={`navigation`}>
-			{navItems[role].map((navItem: NavItem) => {
-				return (
+			{navItems.map((navItem: NavItem) =>
+				navItem.roles.includes(role) ? (
 					<NavigationItem
 						key={navItem.label}
 						onClick={onNavItemClick}
 						navItem={navItem}
 					></NavigationItem>
-				);
-			})}
+				) : null,
+			)}
 		</div>
 	);
 };

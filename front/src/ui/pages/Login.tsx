@@ -17,7 +17,8 @@ const Login = () => {
 			localStorage.setItem('userId', loginResponse.user.id);
 			localStorage.setItem('role', loginResponse.user.role.roleName);
 
-			history.push('/profile');
+			history.push('/home');
+			window.location.reload();
 		}
 	};
 
