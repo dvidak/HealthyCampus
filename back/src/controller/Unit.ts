@@ -59,12 +59,18 @@ class UnitController {
 				oldUnit.name = req.body.name;
 				oldUnit.university = university;
 				await conn.manager.save(oldUnit);
-				res.status(204).json();
+
+				res.json({
+					statusCode: 200,
+				});
 			} else {
-				res.status(404).json({ message: 'Unit with given id does not exist' });
+				res.json({
+					statusCode: 404,
+					message: 'Unit with given id does not exist',
+				});
 			}
 		} catch (error) {
-			res.status(400).json({ error });
+			res.json({ statusCode: 400, error });
 		}
 	}
 
