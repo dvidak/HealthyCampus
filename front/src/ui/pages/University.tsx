@@ -72,7 +72,6 @@ const UniversityPage = () => {
     }
 
     if (response.statusCode !== 204) {
-      console.log({ response });
       alert(response.message);
     } else {
       fetchUniveristies();

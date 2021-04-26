@@ -8,8 +8,15 @@ const getUserById = async () => {
   return response as User;
 };
 
+const getUsers = async () => {
+  const response = await get('user');
+
+  return response;
+};
+
 const userService = {
   getUserById,
+  getUsers,
 };
 
 export default userService;

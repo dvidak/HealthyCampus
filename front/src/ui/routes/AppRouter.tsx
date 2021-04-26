@@ -2,13 +2,12 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Role } from '../../models/User';
 import Layout from '../components/Layout';
-import Admin from '../pages/Admin';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Profile from '../pages/Profile';
 import SignUp from '../pages/SignUp';
-import Unit from '../pages/Unit';
 import University from '../pages/University';
+import Users from '../pages/Users';
 import { ProtectedRoute } from './ProtectedRoute';
 
 export function AppRouter() {
@@ -20,12 +19,12 @@ export function AppRouter() {
           <Route exact path="/signup" component={SignUp} />
           <ProtectedRoute exact path="/" component={Home} />
           <ProtectedRoute exact path="/profile" component={Profile} />
+
           <ProtectedRoute
-            path="/admin"
+            path="/users"
             roles={[Role.ADMIN]}
-            component={Admin}
+            component={Users}
           />
-          <ProtectedRoute path="/unit" roles={[Role.ADMIN]} component={Unit} />{' '}
           <ProtectedRoute
             path="/university"
             roles={[Role.ADMIN]}

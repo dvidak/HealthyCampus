@@ -1,0 +1,10 @@
+.user-table {
+  width: 50vw !important;
+  margin: 2rem auto;
+}
+
+@media (max-width: #{$phone-width}) {
+  .user-table {
+    width: 90vw !important;
+  }
+}

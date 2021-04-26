@@ -1,12 +1,11 @@
 import { FunctionComponent } from 'react';
 import { Role } from '../../models/User';
-import Admin from '../pages/Admin';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Profile from '../pages/Profile';
 import SignUp from '../pages/SignUp';
-import Unit from '../pages/Unit';
 import University from '../pages/University';
+import Users from '../pages/Users';
 
 export interface NavItem {
   route: string;
@@ -17,15 +16,9 @@ export interface NavItem {
 
 export const navItems = [
   {
-    route: '/admin',
-    label: 'Admin',
-    component: Admin,
-    roles: [Role.ADMIN],
-  },
-  {
-    route: '/unit',
-    label: 'Unit',
-    component: Unit,
+    route: '/users',
+    label: 'Users',
+    component: Users,
     roles: [Role.ADMIN],
   },
   {

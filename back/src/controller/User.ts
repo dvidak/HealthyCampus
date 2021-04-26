@@ -12,6 +12,7 @@ class UserController {
       const users: User[] = await conn.manager.find(User, {
         relations: ['userUnit'],
       });
+      console.log(users);
       res.status(200).json(users);
     } catch (error) {
       res.status(400).json({ error });

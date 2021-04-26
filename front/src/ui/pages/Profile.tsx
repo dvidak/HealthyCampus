@@ -69,7 +69,7 @@ const Profile = () => {
           )}
         </CardContent>
       </CardActionArea>
-      {!user?.fitbit.fitbitId && (
+      {!user?.fitbit?.fitbitId && (
         <CardActions>
           <Button color="secondary" onClick={handleFitbitLogin}>
             Connect to FitBit
