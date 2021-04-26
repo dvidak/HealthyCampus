@@ -8,6 +8,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  Typography,
 } from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
 import EditIcon from '@material-ui/icons/Edit';
@@ -85,7 +86,9 @@ const UniversityRow = ({ row, onSaveRow, onCreate, onDelete }: Props) => {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Units</TableCell>
+                    <TableCell>
+                      <Typography color="secondary">Units</Typography>
+                    </TableCell>
                     <TableCell align="right">
                       <IconButton
                         color="secondary"

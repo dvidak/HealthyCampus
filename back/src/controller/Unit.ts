@@ -100,18 +100,22 @@ class UnitController {
       });
 
       if (userUnit.length > 0) {
-        res.status(400).json({
+        res.json({
+          statusCode: 400,
           message:
             'You are not allowed to delete a unit if there are students connected to it.',
         });
       } else if (unit) {
         await conn.manager.remove(Unit, unit);
-        res.status(204).json({ message: 'Successfully removed.' });
+        res.json({ statusCode: 204, message: 'Successfully removed.' });
       } else {
-        res.status(404).json({ message: 'Unit with given id does not exist.' });
+        res.json({
+          statusCode: 400,
+          message: 'Unit with given id does not exist.',
+        });
       }
     } catch (error) {
-      res.status(400).json({ error });
+      res.json({ statusCode: 400, error });
     }
   }
 }

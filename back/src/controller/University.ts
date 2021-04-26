@@ -73,11 +73,12 @@ class UniversityController {
 
       if (university) {
         await conn.manager.remove(University, university);
-        res.status(204).json({ message: 'Successfully removed.' });
+        res.json({ statusCode: 204, message: 'Successfully removed.' });
       } else {
-        res
-          .status(404)
-          .json({ message: 'University with given id does not exist.' });
+        res.json({
+          statusCode: 404,
+          message: 'University with given id does not exist.',
+        });
       }
     } catch (error) {
       res.status(400).json({ error });

@@ -63,12 +63,19 @@ const UniversityPage = () => {
   };
 
   const onDelete = async (type: string, id: number) => {
+    let response;
+
     if (type === 'unit') {
-      await unitService.deleteUnit(id);
+      response = await unitService.deleteUnit(id);
     } else {
-      await universityService.deleteUniversity(id);
+      response = await universityService.deleteUniversity(id);
     }
-    fetchUniveristies();
+
+    if (response.statusCode !== 204) {
+      alert(response.message);
+    } else {
+      fetchUniveristies();
+    }
   };
 
   const onCreateUniversity = async (data: {}) => {
