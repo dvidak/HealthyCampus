@@ -2,3 +2,9 @@
   width: 50vw !important;
   margin: 2rem auto;
 }
+
+@media (max-width: #{$phone-width}) {
+  .university-table {
+    width: 100vw !important;
+  }
+}

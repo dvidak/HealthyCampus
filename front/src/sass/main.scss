@@ -16,3 +16,9 @@
     outline: none;
   }
 }
+
+@media (max-width: #{$phone-width}) {
+  .modal {
+    width: 90vw !important;
+  }
+}
