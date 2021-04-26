@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'react';
 import { Role } from '../../models/User';
+import ActivityType from '../pages/ActivityType';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Profile from '../pages/Profile';
@@ -33,6 +34,13 @@ export const navItems = [
     component: Home,
     public: false,
     roles: [Role.PROFESOR, Role.STUDENT],
+  },
+  {
+    route: '/activity-type',
+    label: 'Activity type',
+    component: ActivityType,
+    public: false,
+    roles: [Role.PROFESOR],
   },
   {
     route: '/profile',

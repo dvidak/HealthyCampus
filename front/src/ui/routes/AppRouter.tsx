@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Role } from '../../models/User';
 import Layout from '../components/Layout';
+import ActivityType from '../pages/ActivityType';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Profile from '../pages/Profile';
@@ -19,7 +20,11 @@ export function AppRouter() {
           <Route exact path="/signup" component={SignUp} />
           <ProtectedRoute exact path="/" component={Home} />
           <ProtectedRoute exact path="/profile" component={Profile} />
-
+          <ProtectedRoute
+            path="/activity-type"
+            roles={[Role.PROFESOR]}
+            component={ActivityType}
+          />
           <ProtectedRoute
             path="/users"
             roles={[Role.ADMIN]}
