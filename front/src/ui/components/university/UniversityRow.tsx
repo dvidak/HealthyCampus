@@ -10,15 +10,15 @@ import {
   TableRow,
   Typography,
 } from '@material-ui/core';
-import ClearIcon from '@material-ui/icons/Clear';
-import EditIcon from '@material-ui/icons/Edit';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import SaveIcon from '@material-ui/icons/Save';
 import { default as React, useState } from 'react';
 import { University } from '../../../models/University';
-import DeleteIcon from '@material-ui/icons/Delete';
-import AddIcon from '@material-ui/icons/Add';
+import CancelButton from '../common/CancelButton';
+import CreateButton from '../common/CreateButton';
+import DeleteButton from '../common/DeleteButton';
+import EditButton from '../common/EditButton';
+import SaveButton from '../common/SaveButton';
 
 interface Props {
   row: University;
@@ -70,32 +70,22 @@ const UniversityRow = ({ row, onSaveRow, onCreate, onDelete }: Props) => {
           </IconButton>
         </TableCell>
         <TableCell>{row.name}</TableCell>
-        <TableCell>
-          <IconButton
-            color="secondary"
-            onClick={() => onDelete('university', row.id)}
-          >
-            <DeleteIcon />
-          </IconButton>
+        <TableCell align="right">
+          <DeleteButton onDelete={() => onDelete('university', row.id)} />
         </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open}>
             <Box margin={1}>
-              <Table size="small" aria-label="purchases">
+              <Table size="small">
                 <TableHead>
                   <TableRow>
                     <TableCell>
                       <Typography color="secondary">Units</Typography>
                     </TableCell>
                     <TableCell align="right">
-                      <IconButton
-                        color="secondary"
-                        onClick={() => onCreate('unit', row.id)}
-                      >
-                        <AddIcon />
-                      </IconButton>
+                      <CreateButton onCreate={() => onCreate('unit', row.id)} />
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -117,45 +107,30 @@ const UniversityRow = ({ row, onSaveRow, onCreate, onDelete }: Props) => {
                       <TableCell align="right">
                         {inEditMode.status && inEditMode.rowKey === unit.id ? (
                           <>
-                            <IconButton
-                              color="secondary"
-                              onClick={() =>
+                            <SaveButton
+                              onSave={() =>
                                 onSaveUnit({
                                   universityId: row.id,
                                   unitId: unit.id,
                                   newName: name,
                                 })
                               }
-                            >
-                              <SaveIcon />
-                            </IconButton>
-
-                            <IconButton
-                              color="secondary"
-                              onClick={onCancelUnit}
-                            >
-                              <ClearIcon />
-                            </IconButton>
+                            />
+                            <CancelButton onCancel={onCancelUnit} />
                           </>
                         ) : (
                           <>
-                            <IconButton
-                              color="secondary"
-                              onClick={() =>
+                            <EditButton
+                              onEdit={() =>
                                 onEditUnit({
                                   id: unit.id,
                                   currentName: unit.name,
                                 })
                               }
-                            >
-                              <EditIcon />
-                            </IconButton>
-                            <IconButton
-                              color="secondary"
-                              onClick={() => onDelete('unit', unit.id)}
-                            >
-                              <DeleteIcon />
-                            </IconButton>
+                            />
+                            <DeleteButton
+                              onDelete={() => onDelete('unit', unit.id)}
+                            />
                           </>
                         )}
                       </TableCell>

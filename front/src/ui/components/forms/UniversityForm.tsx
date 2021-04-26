@@ -26,7 +26,7 @@ const UniversityForm = ({ createUniversity }: Props) => {
         registerRef={register({
           required: 'Name is required!',
           pattern: {
-            value: /^[A-Za-z]+$/,
+            value: /^[a-zA-Z0-9_ ]*$/,
             message: 'Invalid name',
           },
         })}

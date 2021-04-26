@@ -1,16 +1,4 @@
-import {
-  IconButton,
-  Modal,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+import { Modal } from '@material-ui/core';
 import { default as React, useCallback, useEffect, useState } from 'react';
 import { UpdateUnitData } from '../../models/Unit';
 import { University } from '../../models/University';
@@ -18,7 +6,7 @@ import unitService from '../../services/unit';
 import universityService from '../../services/univeristy';
 import UnitForm from '../components/forms/UnitForm';
 import UniversityForm from '../components/forms/UniversityForm';
-import UniversityRow from '../components/university/UniversityRow';
+import UniversityTable from '../components/university/UniversityTable';
 
 const UniversityPage = () => {
   const [universities, setUniversities] = useState<University[] | null>(null);
@@ -110,40 +98,12 @@ const UniversityPage = () => {
 
   return (
     <>
-      <TableContainer className="university-table" component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell />
-              <TableCell>
-                <Typography color="secondary" variant="h5">
-                  All universities
-                </Typography>
-              </TableCell>
-              <TableCell align="right">
-                <IconButton
-                  color="secondary"
-                  onClick={() => onCreate('university')}
-                >
-                  <AddIcon />
-                </IconButton>
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {universities &&
-              universities.map((university) => (
-                <UniversityRow
-                  key={university.name}
-                  row={university}
-                  onSaveRow={onSaveUnit}
-                  onCreate={onCreate}
-                  onDelete={onDelete}
-                />
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <UniversityTable
+        universities={universities}
+        onCreate={onCreate}
+        onDelete={onDelete}
+        onSaveUnit={onSaveUnit}
+      ></UniversityTable>
       <Modal open={open} onClose={handleClose}>
         {body}
       </Modal>
