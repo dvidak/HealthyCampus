@@ -9,21 +9,27 @@ import {
   Typography,
 } from '@material-ui/core';
 import { default as React } from 'react';
+import { RowType } from '../../../models/Unit';
 import { University } from '../../../models/University';
 import CreateButton from '../common/CreateButton';
 import UniversityRow from './UniversityRow';
 
 interface Props {
   universities: University[] | null;
-  onCreate: (type: string, universityId?: number) => void;
-  onSaveUnit: (universityId: number, unitId: number, name: string) => void;
-  onDelete: (type: string, id: number) => void;
+  onCreate: (type: RowType, universityId?: number) => void;
+  onSave: (
+    universityId: number,
+    name: string,
+    type: RowType,
+    unitId?: number,
+  ) => void;
+  onDelete: (type: RowType, id: number) => void;
 }
 
 const UniversityTable = ({
   universities,
   onCreate,
-  onSaveUnit,
+  onSave,
   onDelete,
 }: Props) => {
   return (
@@ -38,7 +44,7 @@ const UniversityTable = ({
               </Typography>
             </TableCell>
             <TableCell align="right">
-              <CreateButton onCreate={() => onCreate('university')} />
+              <CreateButton onCreate={() => onCreate(RowType.university)} />
             </TableCell>
           </TableRow>
         </TableHead>
@@ -48,7 +54,7 @@ const UniversityTable = ({
               <UniversityRow
                 key={university.name}
                 row={university}
-                onSaveRow={onSaveUnit}
+                onSaveRow={onSave}
                 onCreate={onCreate}
                 onDelete={onDelete}
               />

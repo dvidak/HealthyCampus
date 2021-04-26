@@ -1,10 +1,10 @@
 import { University } from '../models/University';
-import { get, post, remove } from './api';
+import { get, post, remove, put } from './api';
 
 const getUniversities = async () => {
   const response = await get('university');
 
-  return response as University[];
+  return response.universities as University[];
 };
 
 const createUniversity = async (data: {}) => {
@@ -19,10 +19,17 @@ const deleteUniversity = async (id: number) => {
   return response;
 };
 
+const updateUniversity = async (data: any) => {
+  const response = await put(`university/${data.universityId}`, data);
+
+  return response;
+};
+
 const universityService = {
   getUniversities,
   createUniversity,
   deleteUniversity,
+  updateUniversity,
 };
 
 export default universityService;

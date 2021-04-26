@@ -8,9 +8,9 @@ class UniversityController {
 
     try {
       const universities: University[] = await conn.manager.find(University);
-      res.status(200).json(universities);
+      res.json({ statusCode: 200, universities });
     } catch (error) {
-      res.status(400).json({ error });
+      res.json({ statusCode: 400, error });
     }
   }
 
@@ -21,9 +21,9 @@ class UniversityController {
       const university = new University();
       university.name = req.body.name;
       await conn.manager.save(university);
-      res.status(201).json({ message: 'Successfully created.' });
+      res.json({ statusCode: 201, message: 'Successfully created.' });
     } catch (error) {
-      res.status(400).json({ error });
+      res.json({ statusCode: 400, error });
     }
   }
 
@@ -36,14 +36,18 @@ class UniversityController {
       if (university) {
         university.name = req.body.name;
         await conn.manager.save(university);
-        res.status(204).json({ message: 'Successfully updated.' });
+        res.json({
+          statusCode: 204,
+          message: 'Successfully updated.',
+        });
       } else {
-        res
-          .status(404)
-          .json({ message: 'University with given id does not exist.' });
+        res.json({
+          statusCode: 404,
+          message: 'University with given id does not exist.',
+        });
       }
     } catch (error) {
-      res.status(400).json({ error });
+      res.json({ status: 400, error });
     }
   }
 
@@ -54,14 +58,15 @@ class UniversityController {
       let university = await conn.manager.findOne(University, req.params.id);
 
       if (university) {
-        res.status(200).json(university);
+        res.json({ statusCode: 200, university });
       } else {
-        res
-          .status(404)
-          .json({ message: 'University with given id does not exist.' });
+        res.json({
+          statusCode: 404,
+          message: 'University with given id does not exist.',
+        });
       }
     } catch (error) {
-      res.status(400).json({ error });
+      res.json({ statusCode: 400, error });
     }
   }
 
@@ -81,7 +86,10 @@ class UniversityController {
         });
       }
     } catch (error) {
-      res.status(400).json({ error });
+      res.json({
+        statusCode: 400,
+        message: 'You are not allowed to delete university with units',
+      });
     }
   }
 }

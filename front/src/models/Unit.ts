@@ -8,3 +8,8 @@ export interface UpdateUnitData {
   unitId: number;
   name: string;
 }
+
+export enum RowType {
+  university = 'university',
+  unit = 'unit',
+}

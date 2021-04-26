@@ -1,6 +1,6 @@
 import { Modal } from '@material-ui/core';
 import { default as React, useCallback, useEffect, useState } from 'react';
-import { UpdateUnitData } from '../../models/Unit';
+import { RowType, UpdateUnitData } from '../../models/Unit';
 import { University } from '../../models/University';
 import unitService from '../../services/unit';
 import universityService from '../../services/univeristy';
@@ -12,7 +12,7 @@ const UniversityPage = () => {
   const [universities, setUniversities] = useState<University[] | null>(null);
   const [open, setOpen] = useState(false);
   const [type, setType] = useState({
-    type: 'university',
+    type: RowType.university,
     universityId: 0,
   });
 
@@ -25,24 +25,36 @@ const UniversityPage = () => {
     fetchUniveristies();
   }, [fetchUniveristies]);
 
-  const onSaveUnit = async (
+  const onSave = async (
     universityId: number,
-    unitId: number,
     name: string,
+    type: RowType,
+    unitId?: number,
   ) => {
-    const updateUnitData: UpdateUnitData = {
-      universityId,
-      unitId,
-      name,
-    };
+    let response;
 
-    const response = await unitService.updateUnit(updateUnitData);
-    if (response.statusCode === 200) {
+    if (type === RowType.unit && unitId) {
+      const updateUnitData: UpdateUnitData = {
+        universityId,
+        unitId,
+        name,
+      };
+
+      response = await unitService.updateUnit(updateUnitData);
+    } else {
+      const updateUniversityData: any = {
+        universityId,
+        name,
+      };
+      response = await universityService.updateUniversity(updateUniversityData);
+    }
+
+    if (response.statusCode === 204) {
       fetchUniveristies();
     }
   };
 
-  const onCreate = (type: string, universityId: number = 0) => {
+  const onCreate = (type: RowType, universityId: number = 0) => {
     setOpen(true);
     setType({
       type: type,
@@ -50,16 +62,17 @@ const UniversityPage = () => {
     });
   };
 
-  const onDelete = async (type: string, id: number) => {
+  const onDelete = async (type: RowType, id: number) => {
     let response;
 
-    if (type === 'unit') {
+    if (type === RowType.unit) {
       response = await unitService.deleteUnit(id);
     } else {
       response = await universityService.deleteUniversity(id);
     }
 
     if (response.statusCode !== 204) {
+      console.log({ response });
       alert(response.message);
     } else {
       fetchUniveristies();
@@ -88,7 +101,7 @@ const UniversityPage = () => {
 
   const body = (
     <div className="modal">
-      {type.type === 'university' ? (
+      {type.type === RowType.university ? (
         <UniversityForm createUniversity={onCreateUniversity} />
       ) : (
         <UnitForm createUnit={onCreateUnit} />
@@ -102,7 +115,7 @@ const UniversityPage = () => {
         universities={universities}
         onCreate={onCreate}
         onDelete={onDelete}
-        onSaveUnit={onSaveUnit}
+        onSave={onSave}
       ></UniversityTable>
       <Modal open={open} onClose={handleClose}>
         {body}

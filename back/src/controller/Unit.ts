@@ -10,9 +10,9 @@ class UnitController {
 
     try {
       const units: Unit[] = await conn.manager.find(Unit);
-      res.status(200).json(units);
+      res.json({ statusCode: 200, units });
     } catch (error) {
-      res.status(400).json({ error });
+      res.json({ statusCode: 400, error });
     }
   }
 
@@ -30,15 +30,16 @@ class UnitController {
         unit.name = req.body.name;
         unit.university = university;
         await conn.manager.save(unit);
-        res.status(201).json({ message: 'Successfully created.' });
+        res.json({ statusCode: 201, message: 'Successfully created.' });
       } else {
-        res.status(400).json({
+        res.json({
+          statusCode: 400,
           error:
             'Unit must belong to some university. University with given id does not exist',
         });
       }
     } catch (error) {
-      res.status(400).json({ error });
+      res.json({ statusCode: 400, error });
     }
   }
 
@@ -61,7 +62,8 @@ class UnitController {
         await conn.manager.save(oldUnit);
 
         res.json({
-          statusCode: 200,
+          statusCode: 204,
+          message: 'Successfully updated.',
         });
       } else {
         res.json({
@@ -81,12 +83,15 @@ class UnitController {
       let unit = await conn.manager.findOne(Unit, req.params.id);
 
       if (unit) {
-        res.status(200).json(unit);
+        res.json({ statusCode: 200, unit });
       } else {
-        res.status(404).json({ message: 'Unit with given id does not exist.' });
+        res.json({
+          statusCode: 404,
+          message: 'Unit with given id does not exist.',
+        });
       }
     } catch (error) {
-      res.status(400).json({ error });
+      res.json({ statusCode: 400, error });
     }
   }
 

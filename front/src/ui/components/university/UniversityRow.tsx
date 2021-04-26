@@ -13,6 +13,7 @@ import {
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { default as React, useState } from 'react';
+import { RowType } from '../../../models/Unit';
 import { University } from '../../../models/University';
 import CancelButton from '../common/CancelButton';
 import CreateButton from '../common/CreateButton';
@@ -22,43 +23,63 @@ import SaveButton from '../common/SaveButton';
 
 interface Props {
   row: University;
-  onSaveRow: (universityId: number, unitId: number, name: string) => void;
-  onCreate: (type: string, universityId?: number) => void;
-  onDelete: (type: string, id: number) => void;
+  onSaveRow: (
+    universityId: number,
+    name: string,
+    type: RowType,
+    unitId?: number,
+  ) => void;
+  onCreate: (type: RowType, universityId?: number) => void;
+  onDelete: (type: RowType, id: number) => void;
 }
 
 const UniversityRow = ({ row, onSaveRow, onCreate, onDelete }: Props) => {
   const [open, setOpen] = React.useState(false);
-  const [name, setName] = useState<string | undefined>();
+  const [uniName, setUniName] = useState<string | undefined>();
+  const [unitName, setUnitName] = useState<string | undefined>();
 
   const [inEditMode, setInEditMode] = useState({
     status: false,
     rowKey: null,
+    type: null,
   });
 
-  const onEditUnit = ({ id, currentName }: any) => {
+  const onEdit = ({ id, currentName, type }: any) => {
     setInEditMode({
       status: true,
       rowKey: id,
+      type: type,
     });
-    setName(currentName);
+
+    if (type === RowType.unit) {
+      setUnitName(currentName);
+    } else {
+      setUniName(currentName);
+    }
   };
 
-  const onSaveUnit = ({ universityId, unitId, newName }: any) => {
-    onSaveRow(universityId, unitId, newName);
-    setName(newName);
+  const onSave = ({ universityId, unitId, newName, type }: any) => {
+    onSaveRow(universityId, newName, type, unitId);
     setInEditMode({
       status: false,
       rowKey: null,
+      type: null,
     });
+
+    if (type === RowType.unit) {
+      setUnitName(newName);
+    } else {
+      setUniName(newName);
+    }
   };
 
-  const onCancelUnit = () => {
+  const onCancel = () => {
     setInEditMode({
       status: false,
       rowKey: null,
+      type: null,
     });
-    setName(undefined);
+    setUnitName(undefined);
   };
 
   return (
@@ -69,9 +90,52 @@ const UniversityRow = ({ row, onSaveRow, onCreate, onDelete }: Props) => {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell>{row.name}</TableCell>
+        <TableCell align="left">
+          {inEditMode.status &&
+          inEditMode.type === RowType.university &&
+          inEditMode.rowKey === row.id ? (
+            <Input
+              color="secondary"
+              fullWidth
+              value={uniName}
+              onChange={(event) => setUniName(event.target.value)}
+            />
+          ) : (
+            row.name
+          )}
+        </TableCell>
         <TableCell align="right">
-          <DeleteButton onDelete={() => onDelete('university', row.id)} />
+          {inEditMode.status &&
+          inEditMode.type === RowType.university &&
+          inEditMode.rowKey === row.id ? (
+            <>
+              <SaveButton
+                onSave={() =>
+                  onSave({
+                    universityId: row.id,
+                    newName: uniName,
+                    type: RowType.university,
+                  })
+                }
+              />
+              <CancelButton onCancel={onCancel} />
+            </>
+          ) : (
+            <>
+              <EditButton
+                onEdit={() =>
+                  onEdit({
+                    id: row.id,
+                    currentName: row.name,
+                    type: RowType.university,
+                  })
+                }
+              />
+              <DeleteButton
+                onDelete={() => onDelete(RowType.university, row.id)}
+              />
+            </>
+          )}
         </TableCell>
       </TableRow>
       <TableRow>
@@ -85,7 +149,9 @@ const UniversityRow = ({ row, onSaveRow, onCreate, onDelete }: Props) => {
                       <Typography color="secondary">Units</Typography>
                     </TableCell>
                     <TableCell align="right">
-                      <CreateButton onCreate={() => onCreate('unit', row.id)} />
+                      <CreateButton
+                        onCreate={() => onCreate(RowType.unit, row.id)}
+                      />
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -93,43 +159,51 @@ const UniversityRow = ({ row, onSaveRow, onCreate, onDelete }: Props) => {
                   {row.units.map((unit) => (
                     <TableRow key={unit.id}>
                       <TableCell>
-                        {inEditMode.status && inEditMode.rowKey === unit.id ? (
+                        {inEditMode.status &&
+                        inEditMode.type === RowType.unit &&
+                        inEditMode.rowKey === unit.id ? (
                           <Input
                             color="secondary"
                             fullWidth
-                            value={name}
-                            onChange={(event) => setName(event.target.value)}
+                            value={unitName}
+                            onChange={(event) =>
+                              setUnitName(event.target.value)
+                            }
                           />
                         ) : (
                           unit.name
                         )}
                       </TableCell>
                       <TableCell align="right">
-                        {inEditMode.status && inEditMode.rowKey === unit.id ? (
+                        {inEditMode.status &&
+                        inEditMode.type === RowType.unit &&
+                        inEditMode.rowKey === unit.id ? (
                           <>
                             <SaveButton
                               onSave={() =>
-                                onSaveUnit({
+                                onSave({
                                   universityId: row.id,
                                   unitId: unit.id,
-                                  newName: name,
+                                  newName: unitName,
+                                  type: RowType.unit,
                                 })
                               }
                             />
-                            <CancelButton onCancel={onCancelUnit} />
+                            <CancelButton onCancel={onCancel} />
                           </>
                         ) : (
                           <>
                             <EditButton
                               onEdit={() =>
-                                onEditUnit({
+                                onEdit({
                                   id: unit.id,
                                   currentName: unit.name,
+                                  type: RowType.unit,
                                 })
                               }
                             />
                             <DeleteButton
-                              onDelete={() => onDelete('unit', unit.id)}
+                              onDelete={() => onDelete(RowType.unit, unit.id)}
                             />
                           </>
                         )}
