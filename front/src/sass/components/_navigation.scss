@@ -11,12 +11,19 @@
   &.top {
     margin-top: 50px;
   }
+
+  .logout-button {
+    color: #{$text-color};
+    animation: none;
+    right: 12px;
+  }
 }
 
 .navigation {
   display: flex;
   justify-content: flex-start;
   padding: 12px;
+  align-items: center;
   background-color: #{$base-color-1};
 
   .navigation-item {
@@ -43,6 +50,12 @@
       width: 100%;
       padding: 16px;
       text-align: center;
+    }
+
+    .logout-button {
+      animation: none;
+      position: unset;
+      right: unset;
     }
   }
 }

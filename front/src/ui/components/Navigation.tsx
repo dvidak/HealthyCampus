@@ -6,8 +6,11 @@ import { useMedia } from 'react-use';
 
 import classNames from 'classnames';
 import NavigationMenu from './NavigationMenu';
+import authService from '../../services/auth';
+import { useHistory } from 'react-router-dom';
 
 const Navigation = () => {
+  const history = useHistory();
   const isMobile = useMedia('(max-width: 767px)');
   const [isVisible, setIsVisible] = useState(true);
 
@@ -29,6 +32,11 @@ const Navigation = () => {
     }
   };
 
+  const onLogoutClick = () => {
+    authService.logout();
+    history.push('/login');
+  };
+
   return (
     <div
       className={classNames('navigation-container', {
@@ -45,7 +53,12 @@ const Navigation = () => {
           <ClearIcon />
         </IconButton>
       )}
-      {isVisible && <NavigationMenu onNavItemClick={onNavItemClick} />}
+      {isVisible && (
+        <NavigationMenu
+          onNavItemClick={onNavItemClick}
+          onLogoutClick={onLogoutClick}
+        />
+      )}
     </div>
   );
 };
