@@ -48,6 +48,7 @@ class ActivityTypeController {
 
       if (activityType) {
         activityType.type = req.body.type;
+        activityType.subType = req.body.subType;
         await conn.manager.save(activityType);
         res.status(204).json({ message: 'Successfully updated.' });
       } else {

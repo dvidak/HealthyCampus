@@ -64,11 +64,14 @@ class AuthController {
 
     const token = this.authService.createToken(user.id);
 
-    res.json({
+    return res.json({
       statusCode: 200,
       message,
       token,
-      user,
+      user: {
+        id: user.id,
+        role: user.role,
+      },
     });
   }
 
