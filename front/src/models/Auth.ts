@@ -9,4 +9,5 @@ export interface SignUpData {
   email: string;
   password: string;
   unitId: number;
+  policy: boolean;
 }

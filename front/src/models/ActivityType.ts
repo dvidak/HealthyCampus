@@ -4,3 +4,8 @@ export interface ActivityType {
   type: string;
   subType: string;
 }
+
+export enum RowType {
+  type = 'type',
+  subType = 'subType',
+}
