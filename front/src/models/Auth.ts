@@ -10,4 +10,5 @@ export interface SignUpData {
   password: string;
   unitId: number;
   policy: boolean;
+  roleId: boolean | number;
 }

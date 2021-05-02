@@ -7,7 +7,7 @@ import {
   List,
   Typography,
 } from '@material-ui/core';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   Activity as ActivityIcon,
   Archive as ArchiveIcon,
@@ -60,15 +60,8 @@ const items = [
   },
 ];
 
-const getItems = (role: Role | null, isLoggedIn: boolean) => {
-  if (isLoggedIn && role !== null) {
-    return items.filter((item) => {
-      return item.roles.includes(role);
-    });
-  }
-  return items.filter((item) => item.roles.includes(Role.NONE));
-};
-
+const getItems = (role: Role, isLoggedIn: boolean) =>
+  items.filter((item) => item.roles.includes(role));
 interface Props {
   onMobileClose: () => void;
   openMobile: boolean;
@@ -77,9 +70,10 @@ interface Props {
 const DashboardSidebar = ({ onMobileClose, openMobile }: Props) => {
   const [user, setUser] = useState<User | undefined>(undefined);
   const isLoggedIn = Boolean(localStorage.getItem('token'));
-  const role = localStorage.getItem('role') as Role;
+  const [role, setRole] = useState<Role>(Role.NONE);
+
   const location = useLocation();
-  const items = getItems(role, isLoggedIn);
+  const items = useMemo(() => getItems(role, isLoggedIn), [isLoggedIn, role]);
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
@@ -92,6 +86,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }: Props) => {
     async function fetchUser() {
       const fetchedUser = await userService.getUserById();
       setUser(fetchedUser);
+      setRole(fetchedUser.role.roleName);
     }
 
     fetchUser();

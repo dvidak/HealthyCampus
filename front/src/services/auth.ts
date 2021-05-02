@@ -10,7 +10,6 @@ const signUp = async (data: SignUpData) => {
 };
 
 const logout = () => {
-  localStorage.removeItem('role');
   localStorage.removeItem('userId');
   localStorage.removeItem('token');
 };

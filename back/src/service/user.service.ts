@@ -13,6 +13,7 @@ interface SignUpData {
   email: string;
   password: string;
   unitId: number;
+  roleId: number;
 }
 
 class UserService {
@@ -28,7 +29,7 @@ class UserService {
 
   public async createUser(signUpData: SignUpData) {
     const conn = await connection;
-    const { firstName, lastName, email, password, unitId } = signUpData;
+    const { firstName, lastName, email, password, unitId, roleId } = signUpData;
 
     const userAlreadyExists = await this.userAlreadyExists(email);
 
@@ -62,10 +63,7 @@ class UserService {
     newUser.lastName = lastName;
     newUser.email = email;
 
-    // TODO: change
-    const studentRole = await conn.manager.findOne(Role, {
-      roleName: 'STUDENT',
-    });
+    const studentRole = await conn.manager.findOne(Role, roleId);
     newUser.role = studentRole;
 
     // Password

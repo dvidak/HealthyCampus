@@ -37,6 +37,7 @@ const Register = () => {
     const parsedData = {
       ...data,
       unitId: Number(data.unitId),
+      roleId: data.roleId ? 2 : 3,
     };
     const signUpResponse = await authService.signUp(parsedData);
     if (signUpResponse.statusCode === 400) {
@@ -60,6 +61,7 @@ const Register = () => {
       >
         <Container maxWidth="sm">
           <Formik
+            // True for student, false for profesor
             initialValues={{
               email: '',
               firstName: '',
@@ -67,6 +69,7 @@ const Register = () => {
               password: '',
               policy: false,
               unitId: 0,
+              roleId: true,
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string()
@@ -80,6 +83,7 @@ const Register = () => {
               password: Yup.string().max(255).required('Password is required'),
               policy: Yup.boolean().oneOf([true], 'This field must be checked'),
               unitId: Yup.number().required('Unit is required'),
+              roleId: Yup.boolean(),
             })}
             onSubmit={handleSignUp}
           >
@@ -176,6 +180,23 @@ const Register = () => {
                       </optgroup>
                     ))}
                 </Select>
+
+                <Box
+                  sx={{
+                    alignItems: 'center',
+                    display: 'flex',
+                    ml: -1,
+                  }}
+                >
+                  <Checkbox
+                    checked={values.roleId}
+                    name="roleId"
+                    onChange={handleChange}
+                  />
+                  <Typography color="textSecondary" variant="body1">
+                    {values.roleId ? 'Student' : 'Profesor'}
+                  </Typography>
+                </Box>
 
                 <Box
                   sx={{
