@@ -33,6 +33,9 @@ export class User extends BaseEntity {
   @Column()
   password: string;
 
+  @Column({ nullable: true })
+  avatar: string | null;
+
   @ManyToOne((type) => Role, { eager: true })
   role: Role;
 

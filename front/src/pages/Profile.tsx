@@ -3,18 +3,27 @@ import React, { useEffect, useState } from 'react';
 import { useWindowSize } from 'react-use';
 import UserProfile from '../components/UserProfile';
 import UserProfileDetails from '../components/UserProfileDetails';
-import { User } from '../models/User';
+import { User, UserUpdateData } from '../models/User';
 import userService from '../services/user';
 import { fitbitOAuthUrl } from '../shared/const';
 
 const Profile = () => {
   const size = useWindowSize();
   const [user, setUser] = useState<User | undefined>(undefined);
+  const [userProfileDetails, setUserProfileDetails] = useState<
+    UserUpdateData | undefined
+  >(undefined);
 
   useEffect(() => {
     async function fetchUser() {
       const fetchedUser = await userService.getUserById();
       setUser(fetchedUser);
+      const profileDetails: UserUpdateData = {
+        ...fetchedUser,
+        unitId: fetchedUser.userUnit.unit.id,
+        password: fetchedUser.password,
+      };
+      setUserProfileDetails(profileDetails);
     }
 
     fetchUser();
@@ -55,7 +64,9 @@ const Profile = () => {
             )}
           </Grid>
           <Grid item lg={8} md={6} xs={12}>
-            {user && <UserProfileDetails user={user} />}
+            {userProfileDetails && (
+              <UserProfileDetails user={userProfileDetails} />
+            )}
           </Grid>
         </Grid>
       </Container>

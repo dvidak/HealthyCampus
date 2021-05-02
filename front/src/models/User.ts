@@ -4,6 +4,7 @@ export interface User {
   email: string;
   firstName: string;
   lastName: string;
+  password: string;
   fitbit: {
     accessToken: string;
     refreshToken: string;
@@ -12,12 +13,22 @@ export interface User {
   userUnit: {
     unit: {
       name: string;
+      id: number;
     };
   };
   role: {
     id: string;
     roleName: Role;
   };
+}
+
+export interface UserUpdateData {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  unitId: number;
+  password: string;
 }
 
 export enum Role {

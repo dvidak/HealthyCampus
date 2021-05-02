@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
 import { connection } from '../connection/Connection';
+import { Unit } from '../entity/Unit';
 import { User } from '../entity/User';
 import { UserUnit } from '../entity/UserUnit';
 
@@ -47,12 +48,22 @@ class UserController {
         oldUser.firstName = req.body.firstName;
         oldUser.lastName = req.body.lastName;
         oldUser.email = req.body.email;
-        oldUser.role = req.body.role;
+
+        const unitId = Number(req.body.unitId);
+        const newUserUnit = await conn.manager.findOne(Unit, unitId);
+        const userUnit = await conn.manager.findOne(UserUnit, {
+          user: oldUser,
+        });
+
+        userUnit.unit = newUserUnit;
+        await conn.manager.save(userUnit);
 
         // Edit password
-        const salt = await bcrypt.genSalt(10);
-        const passwordHash = await bcrypt.hash(req.body.password, salt);
-        oldUser.password = passwordHash;
+        if (req.body.password) {
+          const salt = await bcrypt.genSalt(10);
+          const passwordHash = await bcrypt.hash(req.body.password, salt);
+          oldUser.password = passwordHash;
+        }
 
         await conn.manager.save(oldUser);
         res.status(204).json({ message: 'Successfully updated.' });

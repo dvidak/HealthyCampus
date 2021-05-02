@@ -1,5 +1,5 @@
-import { User } from '../models/User';
-import { get } from './api';
+import { User, UserUpdateData } from '../models/User';
+import { get, put } from './api';
 
 const getUserById = async () => {
   const userId = localStorage.getItem('userId');
@@ -14,9 +14,15 @@ const getUsers = async () => {
   return response;
 };
 
+const updateUser = async (data: UserUpdateData) => {
+  const response = await put(`user/${data.id}`, data);
+  return response;
+};
+
 const userService = {
   getUserById,
   getUsers,
+  updateUser,
 };
 
 export default userService;
