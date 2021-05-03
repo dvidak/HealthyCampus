@@ -53,6 +53,8 @@ export class Activity extends BaseEntity {
   @ManyToOne((type) => UserUnit, { onDelete: 'CASCADE' })
   createdBy: UserUnit;
 
-  @OneToMany((type) => UserActivity, (UserActivity) => UserActivity.activity)
+  @OneToMany((type) => UserActivity, (UserActivity) => UserActivity.activity, {
+    nullable: true,
+  })
   userActivities: UserActivity[];
 }

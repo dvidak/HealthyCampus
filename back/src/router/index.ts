@@ -4,10 +4,12 @@ import UniveristyRouter from './University';
 import ActivityTypeRouter from './ActivityType';
 import UserRouter from './User';
 import AuthRouter from './Auth';
+import ActivityRouter from './Activity';
 
 class AppRouter {
   private _router = Router();
   private authRouter = AuthRouter;
+  private activityRouter = ActivityRouter;
   private activityTypeRouter = ActivityTypeRouter;
   private unitRouter = UnitRouter;
   private univerityRouter = UniveristyRouter;
@@ -23,6 +25,7 @@ class AppRouter {
 
   private configure() {
     this._router.use('/auth', this.authRouter);
+    this._router.use('/activity', this.activityRouter);
     this._router.use('/activity-type', this.activityTypeRouter);
     this._router.use('/unit', this.unitRouter);
     this._router.use('/university', this.univerityRouter);
