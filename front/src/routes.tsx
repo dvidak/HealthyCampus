@@ -10,6 +10,9 @@ import Profile from './pages/Profile';
 import UsersPage from './pages/Users';
 import { Navigate } from 'react-router-dom';
 import MainLayout from './components/layout/MainLayout';
+import ActivityPage from './pages/Activity';
+import CreateActivityPage from './pages/CreateActivity';
+import ActivityDetails from './pages/ActivityDetails';
 
 const routes = (isLoggedIn: boolean) => [
   {
@@ -18,6 +21,9 @@ const routes = (isLoggedIn: boolean) => [
     children: [
       { path: 'admin', element: <Admin /> },
       { path: 'home', element: <Home /> },
+      { path: 'activity', element: <ActivityPage /> },
+      { path: 'activity/create', element: <CreateActivityPage /> },
+      { path: 'activity/details/:id', element: <ActivityDetails /> },
       { path: 'activity-types', element: <ActivityType /> },
       { path: 'universities', element: <UniversityPage /> },
       { path: 'profile', element: <Profile /> },
