@@ -8,31 +8,45 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
-import * as Yup from 'yup';
 import { Formik } from 'formik';
-import React from 'react';
+import groupBy from 'lodash/groupBy';
+import mapValues from 'lodash/mapValues';
+import sortBy from 'lodash/sortBy';
+import { default as React, useCallback, useEffect, useState } from 'react';
+import * as Yup from 'yup';
+import activityTypeService from '../services/activity-type';
 
 interface Props {
   title: string;
-  activityTypes: any;
+  buttonText: string;
   handleRequest: (data: any) => void;
+  initialValues: any;
 }
 
-const ActivityForm = ({ title, handleRequest, activityTypes }: Props) => {
+const ActivityForm = ({
+  title,
+  buttonText,
+  initialValues,
+  handleRequest,
+}: Props) => {
+  const [activityTypes, setActivityTypes] = useState<any>();
+
+  const fetchActivityTypes = useCallback(async () => {
+    const response = await activityTypeService.getActivityTypes();
+    const mapResponse = mapValues(
+      groupBy(response, (r) => r.type),
+      (v) => sortBy(v, 'subType'),
+    );
+    setActivityTypes(mapResponse);
+  }, []);
+
+  useEffect(() => {
+    fetchActivityTypes();
+  }, [fetchActivityTypes]);
   return (
     <Formik
       onSubmit={handleRequest}
-      initialValues={{
-        name: '',
-        description: '',
-        startDate: '',
-        endDate: '',
-        goalDistance: 0,
-        goalDuration: 0,
-        goalCalories: 0,
-        goalElevation: 0,
-        activityTypeId: '',
-      }}
+      initialValues={initialValues}
       validationSchema={Yup.object().shape({
         name: Yup.string().max(255).required('Name is required'),
         description: Yup.string().max(255).required('Description is required'),
@@ -56,7 +70,11 @@ const ActivityForm = ({ title, handleRequest, activityTypes }: Props) => {
           <Card>
             <Divider />
             <CardContent>
-              <Typography style={{ padding: 10 }} variant="h3">
+              <Typography
+                style={{ padding: 10 }}
+                color="secondary"
+                variant="h3"
+              >
                 {title}
               </Typography>
               <Grid container spacing={3}>
@@ -208,7 +226,7 @@ const ActivityForm = ({ title, handleRequest, activityTypes }: Props) => {
                 color="primary"
                 variant="contained"
               >
-                Create
+                {buttonText}
               </Button>
             </Box>
           </Card>

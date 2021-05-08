@@ -1,3 +1,5 @@
+import { User } from './User';
+
 export interface Activity {
   id?: number;
   name: string;
@@ -10,4 +12,22 @@ export interface Activity {
   goalElevation: number;
   activityTypeId: number;
   userId: number;
+  type?: {
+    id: number;
+    type: string;
+    subType: string;
+  };
+  userActivities?: StudentActivity[];
+}
+
+export interface StudentActivity {
+  id: number;
+  userId: number;
+  activityId: string;
+  distance: number;
+  duration: number;
+  calories: number;
+  elevation: number;
+  startTime: string;
+  student: User;
 }

@@ -28,6 +28,19 @@ const ActivityTable = ({ activities }: Props) => {
       }),
     );
   };
+
+  const getDate = (date: any) => {
+    const parsed = new Date(parseInt(date));
+    return (
+      parsed.getDate() +
+      '.' +
+      (parsed.getMonth() + 1) +
+      '.' +
+      parsed.getFullYear() +
+      '.'
+    );
+  };
+
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -58,7 +71,7 @@ const ActivityTable = ({ activities }: Props) => {
               </Typography>
             </TableCell>
             <TableCell>
-              <Typography color="secondary" variant="subtitle1">
+              <Typography align="center" color="secondary" variant="subtitle1">
                 Period
               </Typography>
             </TableCell>
@@ -91,8 +104,8 @@ const ActivityTable = ({ activities }: Props) => {
               <TableRow key={activity.name}>
                 <TableCell>{activity.name}</TableCell>
                 <TableCell>{activity.description}</TableCell>
-                <TableCell>
-                  {activity.startDate} - {activity.endDate}
+                <TableCell align="center">
+                  {getDate(activity.startDate)} - {getDate(activity.endDate)}
                 </TableCell>
                 <TableCell align="center">{activity.goalDistance}</TableCell>
                 <TableCell align="center">{activity.goalDuration}</TableCell>

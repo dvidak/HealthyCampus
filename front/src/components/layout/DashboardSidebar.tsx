@@ -53,6 +53,12 @@ const items = [
     roles: [Role.PROFESOR, Role.ADMIN],
   },
   {
+    href: '/app/activities',
+    icon: ActivityIcon,
+    title: 'All activities',
+    roles: [Role.STUDENT],
+  },
+  {
     href: '/app/users',
     icon: UsersIcon,
     title: 'Users',

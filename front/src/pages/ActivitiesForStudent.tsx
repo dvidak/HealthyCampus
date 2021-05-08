@@ -1,18 +1,19 @@
 import { Container, Box, Grid } from '@material-ui/core';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Activity } from '../models/Activity';
+import activityService from '../services/activity';
 
-const ActivityDetails = () => {
-  const [activity, setActivity] = useState<Activity>();
+const ActivitiesForStudent = () => {
+  const [activities, setActivities] = useState<Activity[]>();
 
-  const fetchActivity = useCallback(async () => {
-    // const response = await activityService.getActivities();
-    // setActivities(response);
+  const fetchActivities = useCallback(async () => {
+    const response = await activityService.getActivitiesForSpecificUser();
+    setActivities(response);
   }, []);
 
   useEffect(() => {
-    fetchActivity();
-  }, [fetchActivity]);
+    fetchActivities();
+  }, [fetchActivities]);
 
   return (
     <Box
@@ -42,4 +43,4 @@ const ActivityDetails = () => {
   );
 };
 
-export default ActivityDetails;
+export default ActivitiesForStudent;

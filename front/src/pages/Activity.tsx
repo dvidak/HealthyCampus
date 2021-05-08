@@ -11,7 +11,7 @@ const ActivityPage = () => {
   const [activities, setActivities] = useState<Activity[]>();
 
   const fetchActivities = useCallback(async () => {
-    const response = await activityService.getActivities();
+    const response = await activityService.getActivitiesForProf();
     setActivities(response);
   }, []);
 

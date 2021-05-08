@@ -16,7 +16,7 @@ const DashboardNavbar = ({ onMobileNavOpen, ...rest }: any) => {
   return (
     <AppBar elevation={0} {...rest}>
       <Toolbar>
-        Logooooo
+        <IconButton color="secondary">HC</IconButton>
         <Box sx={{ flexGrow: 1 }} />
         <Hidden lgDown>
           <IconButton onClick={onLogoutClick} color="inherit">
