@@ -16,6 +16,13 @@ class ActivityRouter {
   private configure() {
     this._router.get('', this.controller.getAllActivities);
     this._router.post('', this.controller.createActivity);
+    this._router.get('/:id', this.controller.getActivityById);
+    this._router.put('/:id', this.controller.updateActivity);
+    this.router.get('/prof/:userId', this.controller.getAllActivitiesForProf);
+    this._router.get(
+      '/:userId',
+      this.controller.getAllActivitiesForSpecificUser,
+    );
   }
 }
 
