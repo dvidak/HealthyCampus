@@ -11,7 +11,7 @@ class UserController {
 
     try {
       const users: User[] = await conn.manager.find(User, {
-        relations: ['userUnit'],
+        relations: ['userUnit', 'role', 'fitbit'],
       });
       res.status(200).json(users);
     } catch (error) {
@@ -24,7 +24,7 @@ class UserController {
 
     try {
       let user = await conn.manager.findOne(User, req.params.id, {
-        relations: ['userUnit'],
+        relations: ['userUnit', 'role', 'fitbit'],
       });
 
       if (user) {

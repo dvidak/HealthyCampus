@@ -4,6 +4,7 @@ import { connection } from '../connection/Connection';
 import { Activity } from '../entity/Activity';
 import { ActivityType } from '../entity/ActivityType';
 import { User } from '../entity/User';
+import { UserActivity } from '../entity/UserActivity';
 import { UserUnit } from '../entity/UserUnit';
 
 class ActivityController {
@@ -52,7 +53,7 @@ class ActivityController {
 
       activity.type = activityType;
 
-      if (req.body.userId) {
+      if (!req.body.userId) {
         res.json({
           statusCode: 400,
           message: 'Failed. UserId is required.',
@@ -83,7 +84,31 @@ class ActivityController {
       activity.startDate = Date.parse(req.body.startDate);
       activity.endDate = Date.parse(req.body.endDate);
 
-      await conn.manager.save(activity);
+      const newActivity = await conn.manager.save(activity);
+
+      //create all users that can do that activity
+      //first we want to find which unist is that
+      const unitThatCanDoActivity = userUnit.unit;
+
+      const allUserUnit = await conn.manager.find(UserUnit, {
+        relations: ['user'],
+        where: {
+          unit: unitThatCanDoActivity,
+        },
+      });
+
+      const allIds: number[] = allUserUnit.map((userUnit) => userUnit.user.id);
+
+      allIds.forEach(async (id: number) => {
+        const user = await conn.manager.findOne(User, id);
+        const userActivity = new UserActivity();
+        userActivity.activity = newActivity;
+        userActivity.student = await conn.manager.findOne(UserUnit, {
+          user: user,
+        });
+        await conn.manager.save(userActivity);
+      });
+
       res.status(201).json({ message: 'Successfully created.' });
     } catch (error) {
       res.status(400).json({ error });

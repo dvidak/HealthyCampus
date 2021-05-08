@@ -6,16 +6,19 @@ import {
   Divider,
   Grid,
   TextField,
+  Typography,
 } from '@material-ui/core';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import React from 'react';
 
 interface Props {
+  title: string;
   activityTypes: any;
   handleRequest: (data: any) => void;
 }
 
-const ActivityForm = ({ handleRequest, activityTypes }: Props) => {
+const ActivityForm = ({ title, handleRequest, activityTypes }: Props) => {
   return (
     <Formik
       onSubmit={handleRequest}
@@ -53,6 +56,9 @@ const ActivityForm = ({ handleRequest, activityTypes }: Props) => {
           <Card>
             <Divider />
             <CardContent>
+              <Typography style={{ padding: 10 }} variant="h3">
+                {title}
+              </Typography>
               <Grid container spacing={3}>
                 <Grid item md={6} xs={12}>
                   <TextField
@@ -156,7 +162,7 @@ const ActivityForm = ({ handleRequest, activityTypes }: Props) => {
                     defaultValue={values.goalElevation}
                   />
                 </Grid>
-                <Grid item md={6} xs={12}>
+                <Grid item md={12} xs={12}>
                   <TextField
                     fullWidth
                     name="activityTypeId"

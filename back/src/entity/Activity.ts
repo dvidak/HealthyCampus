@@ -46,8 +46,7 @@ export class Activity extends BaseEntity {
   @Column({ nullable: true, type: 'float' })
   goalElevation: number;
 
-  @OneToOne((type) => ActivityType)
-  @JoinColumn()
+  @ManyToOne((type) => ActivityType)
   type: ActivityType;
 
   @ManyToOne((type) => UserUnit, { onDelete: 'CASCADE' })

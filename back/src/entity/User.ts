@@ -36,14 +36,12 @@ export class User extends BaseEntity {
   @Column({ nullable: true })
   avatar: string | null;
 
-  @ManyToOne((type) => Role, { eager: true })
+  @ManyToOne((type) => Role)
   role: Role;
 
   @ManyToOne((type) => UserUnit, (UserUnit) => UserUnit.user)
   userUnit: UserUnit;
 
-  @OneToOne((type) => FitbitAccount, (FitbitAccount) => FitbitAccount.user, {
-    eager: true,
-  })
+  @OneToOne((type) => FitbitAccount, (FitbitAccount) => FitbitAccount.user)
   fitbit: FitbitAccount;
 }
