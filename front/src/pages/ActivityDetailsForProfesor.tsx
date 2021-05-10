@@ -5,8 +5,7 @@ import ActivityForm from '../components/ActivityForm';
 import StudentActivitiesTable from '../components/StudentActivitiesTable';
 import { Activity } from '../models/Activity';
 import activityService from '../services/activity';
-
-const minuteInMs = 60000;
+import { minuteInMs } from '../shared/const';
 
 const ActivityDetailsForProfesor = () => {
   let { id } = useParams();

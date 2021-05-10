@@ -3,8 +3,7 @@ import { Box, Grid } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
 import ActivityForm from '../components/ActivityForm';
 import activityService from '../services/activity';
-
-const minuteInMs = 60000;
+import { minuteInMs } from '../shared/const';
 
 const CreateActivityPage = () => {
   const navigate = useNavigate();

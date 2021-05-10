@@ -3,10 +3,10 @@ import {
   Button,
   Card,
   CardContent,
+  CardHeader,
   Divider,
   Grid,
   TextField,
-  Typography,
 } from '@material-ui/core';
 import { Formik } from 'formik';
 import groupBy from 'lodash/groupBy';
@@ -68,16 +68,11 @@ const ActivityForm = ({
       }: any) => (
         <form onSubmit={handleSubmit}>
           <Card>
-            <Divider />
+            <CardHeader
+              title={title}
+              titleTypographyProps={{ variant: 'h3', color: 'secondary' }}
+            ></CardHeader>
             <CardContent>
-              <Typography
-                //fix
-                style={{ padding: 10 }}
-                color="secondary"
-                variant="h3"
-              >
-                {title}
-              </Typography>
               <Grid container spacing={3}>
                 <Grid item md={6} xs={12}>
                   <TextField

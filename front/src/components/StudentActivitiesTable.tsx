@@ -9,6 +9,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { StudentActivity } from '../models/Activity';
+import { minuteInMs } from '../shared/const';
 import { getDate } from '../shared/helpers';
 
 interface Props {
@@ -74,7 +75,9 @@ const StudentActivitiesTable = ({ studentActivities }: Props) => {
               </TableCell>
               <TableCell>{getDate(a.startTime)}</TableCell>
               <TableCell align="center">{a.distance} meter</TableCell>
-              <TableCell align="center">{a.duration} minute</TableCell>
+              <TableCell align="center">
+                {a.duration / minuteInMs} minute
+              </TableCell>
               <TableCell align="center">{a.calories} kcal</TableCell>
               <TableCell align="center">{a.elevation} meter</TableCell>
             </TableRow>

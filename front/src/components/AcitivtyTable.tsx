@@ -14,6 +14,7 @@ import { generatePath } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { getDate } from '../shared/helpers';
+import { minuteInMs } from '../shared/const';
 
 interface Props {
   activities: Activity[] | undefined;
@@ -100,7 +101,7 @@ const ActivityTable = ({ activities }: Props) => {
                   {activity.goalDistance} meter
                 </TableCell>
                 <TableCell align="center">
-                  {activity.goalDuration} minute
+                  {activity.goalDuration / minuteInMs} minute
                 </TableCell>
                 <TableCell align="center">
                   {activity.goalCalories} kcal
