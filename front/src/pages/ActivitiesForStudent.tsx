@@ -10,15 +10,28 @@ import {
   TableRow,
   Typography,
 } from '@material-ui/core';
+import { DataGrid, GridColumns } from '@material-ui/data-grid';
 import React, { useCallback, useEffect, useState } from 'react';
 import ModalWrapper from '../components/ModalWrapper';
 import activityService from '../services/activity';
 import { minuteInMs } from '../shared/const';
 import { getDate } from '../shared/helpers';
 
+const columns: GridColumns = [
+  { field: 'name', headerName: 'Name', editable: false, width: 100 },
+  {
+    field: 'description',
+    headerName: 'Description',
+    editable: false,
+    width: 300,
+  },
+  { field: 'startDate', headerName: 'Start date', width: 150, editable: false },
+  { field: 'startTime', headerName: 'Start time', width: 150, editable: false },
+];
+
 const ActivitiesForStudent = () => {
   const [activities, setActivities] = useState<any[]>();
-  const [fitBitAcctivities, setFitbitAcctivities] = useState<any>();
+  const [fitBitAcctivities, setFitbitAcctivities] = useState([]);
 
   const [open, setOpen] = React.useState(false);
 
@@ -30,13 +43,44 @@ const ActivitiesForStudent = () => {
 
   const fetchPossibleFitbitAcctivities = useCallback(async () => {
     const response = await activityService.getPossibleFitbitAcctivities();
-    setFitbitAcctivities(response);
+    let mapped: any = [];
+
+    let index = 0;
+    for (const fitbitActivity of Object.values(response)) {
+      const a = {
+        id: index,
+        ...fitbitActivity,
+      };
+      index++;
+      mapped.push(a);
+    }
+    setFitbitAcctivities(mapped);
   }, []);
 
   useEffect(() => {
     fetchActivities();
     fetchPossibleFitbitAcctivities();
   }, [fetchActivities, fetchPossibleFitbitAcctivities]);
+
+  console.log({ fitBitAcctivities });
+
+  const body = (
+    <div style={{ width: 700 }}>
+      <div style={{ height: 500, width: '100%' }}>
+        {' '}
+        {fitBitAcctivities && (
+          <DataGrid
+            rows={fitBitAcctivities}
+            columns={columns}
+            disableColumnReorder={true}
+            disableMultipleColumnsSorting={true}
+            disableColumnMenu={true}
+            checkboxSelection
+          />
+        )}
+      </div>
+    </div>
+  );
 
   return (
     <Box
@@ -52,7 +96,7 @@ const ActivitiesForStudent = () => {
         </button>
 
         <ModalWrapper
-          body={<span>Bok</span>}
+          body={body}
           isOpen={open}
           handleClose={() => setOpen(false)}
         ></ModalWrapper>
