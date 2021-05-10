@@ -1,5 +1,5 @@
-import { createStyles, makeStyles, Modal, Theme } from '@material-ui/core';
 import { default as React, useCallback, useEffect, useState } from 'react';
+import ModalWrapper from '../components/ModalWrapper';
 import UnitForm from '../components/university/UnitForm';
 import UniversityForm from '../components/university/UniversityForm';
 import UniversityTable from '../components/university/UniversityTable';
@@ -8,31 +8,7 @@ import { University } from '../models/University';
 import unitService from '../services/unit';
 import universityService from '../services/univeristy';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      height: 300,
-      flexGrow: 1,
-      minWidth: 300,
-    },
-    modal: {
-      display: 'flex',
-      padding: theme.spacing(1),
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    paper: {
-      width: 400,
-      backgroundColor: theme.palette.background.paper,
-      padding: theme.spacing(2, 4, 3),
-      border: '2px solid #2c8c99',
-      borderRadius: '20px',
-    },
-  }),
-);
-
 const UniversityPage = () => {
-  const classes = useStyles();
   const [universities, setUniversities] = useState<University[] | null>(null);
   const [open, setOpen] = useState(false);
   const [type, setType] = useState({
@@ -118,18 +94,14 @@ const UniversityPage = () => {
     fetchUniveristies();
   };
 
-  const handleClose = useCallback(() => {
-    setOpen(false);
-  }, []);
-
   const body = (
-    <div className="modal">
+    <>
       {type.type === RowType.university ? (
         <UniversityForm createUniversity={onCreateUniversity} />
       ) : (
         <UnitForm createUnit={onCreateUnit} />
       )}
-    </div>
+    </>
   );
 
   return (
@@ -140,16 +112,11 @@ const UniversityPage = () => {
         onDelete={onDelete}
         onSave={onSave}
       ></UniversityTable>
-      <Modal
-        className={classes.modal}
-        disablePortal
-        disableEnforceFocus
-        disableAutoFocus
-        open={open}
-        onClose={handleClose}
-      >
-        <div className={classes.paper}>{body}</div>
-      </Modal>
+      <ModalWrapper
+        body={body}
+        isOpen={open}
+        handleClose={() => setOpen(false)}
+      ></ModalWrapper>
     </>
   );
 };

@@ -19,7 +19,6 @@ const CreateActivityPage = () => {
       userId: Number(localStorage.getItem('userId')),
     };
 
-    console.log(parsedData);
     await activityService.createActivity(parsedData);
     navigate('');
   };
