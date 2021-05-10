@@ -1,5 +1,5 @@
-import { Unit } from "../models/Unit";
-import { University } from "../models/University";
+import { Unit } from '../models/Unit';
+import { University } from '../models/University';
 
 export const universityGroupOptions = (
   universities: University[],
@@ -14,4 +14,16 @@ export const universityGroupOptions = (
   });
 
   return options;
+};
+
+export const getDate = (date: string) => {
+  const parsed = new Date(parseInt(date));
+  return (
+    parsed.getDate() +
+    '.' +
+    (parsed.getMonth() + 1) +
+    '.' +
+    parsed.getFullYear() +
+    '.'
+  );
 };

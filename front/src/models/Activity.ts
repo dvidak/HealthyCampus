@@ -29,5 +29,7 @@ export interface StudentActivity {
   calories: number;
   elevation: number;
   startTime: string;
-  student: User;
+  student: {
+    user: User;
+  };
 }

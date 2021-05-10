@@ -1,20 +1,12 @@
-import {
-  Box,
-  Grid,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@material-ui/core';
+import { Box, Grid } from '@material-ui/core';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ActivityForm from '../components/ActivityForm';
-import { Activity, StudentActivity } from '../models/Activity';
+import StudentActivitiesTable from '../components/StudentActivitiesTable';
+import { Activity } from '../models/Activity';
 import activityService from '../services/activity';
+
+const minuteInMs = 60000;
 
 const ActivityDetailsForProfesor = () => {
   let { id } = useParams();
@@ -35,7 +27,7 @@ const ActivityDetailsForProfesor = () => {
       ...data,
       id: activity?.id,
       goalDistance: Number(data.goalDistance),
-      goalDuration: Number(data.goalDuration),
+      goalDuration: Number(data.goalDuration) * minuteInMs,
       goalCalories: Number(data.goalCalories),
       goalElevation: Number(data.goalElevation),
       activityTypeId: Number(data.activityTypeId),
@@ -43,7 +35,7 @@ const ActivityDetailsForProfesor = () => {
     await activityService.updateActivity(parsedData);
   };
 
-  const getDate = (date: any) => {
+  const getDateForDropdown = (date: any) => {
     const parsed = new Date(parseInt(date));
     const day = parsed.getDate();
     const month = parsed.getMonth() + 1;
@@ -73,8 +65,8 @@ const ActivityDetailsForProfesor = () => {
               initialValues={{
                 name: activity.name,
                 description: activity.description,
-                startDate: getDate(activity.startDate),
-                endDate: getDate(activity.endDate),
+                startDate: getDateForDropdown(activity.startDate),
+                endDate: getDateForDropdown(activity.endDate),
                 goalDistance: activity.goalDistance,
                 goalDuration: activity.goalDuration,
                 goalCalories: activity.goalCalories,
@@ -85,75 +77,11 @@ const ActivityDetailsForProfesor = () => {
           )}
         </Grid>
         <Grid item lg={7} md={6} xs={12}>
-          <TableContainer component={Paper}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>
-                    <Typography color="secondary" variant="h5">
-                      Student activities
-                    </Typography>
-                  </TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>
-                    <Typography color="secondary" variant="subtitle1">
-                      Student
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography
-                      align="center"
-                      color="secondary"
-                      variant="subtitle1"
-                    >
-                      Distance
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography
-                      align="center"
-                      color="secondary"
-                      variant="subtitle1"
-                    >
-                      Duration
-                    </Typography>
-                  </TableCell>{' '}
-                  <TableCell>
-                    <Typography color="secondary" variant="subtitle1">
-                      Calories
-                    </Typography>
-                  </TableCell>{' '}
-                  <TableCell>
-                    <Typography color="secondary" variant="subtitle1">
-                      Elevation
-                    </Typography>
-                  </TableCell>
-                  <TableCell></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {activity &&
-                  activity.userActivities &&
-                  activity.userActivities.map((a: StudentActivity) => (
-                    <TableRow>
-                      <TableCell>
-                        {a.student.firstName} {a.student.lastName}
-                      </TableCell>
-                      <TableCell align="center">{a.distance}</TableCell>
-                      <TableCell align="center">{a.duration}</TableCell>
-                      <TableCell align="center">{a.calories}</TableCell>
-                      <TableCell align="center">{a.elevation}</TableCell>
-                    </TableRow>
-                  ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+          {activity && activity.userActivities && (
+            <StudentActivitiesTable
+              studentActivities={activity.userActivities}
+            />
+          )}
         </Grid>
       </Grid>
     </Box>

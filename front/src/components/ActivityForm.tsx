@@ -71,6 +71,7 @@ const ActivityForm = ({
             <Divider />
             <CardContent>
               <Typography
+                //fix
                 style={{ padding: 10 }}
                 color="secondary"
                 variant="h3"
@@ -140,7 +141,7 @@ const ActivityForm = ({
                   <TextField
                     fullWidth
                     name="goalDistance"
-                    label="Goal distance in [dodaj jedinicu]"
+                    label="Goal distance in meters"
                     type="number"
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -151,7 +152,7 @@ const ActivityForm = ({
                   <TextField
                     fullWidth
                     name="goalDuration"
-                    label="Goal duration in [dodaj jedinicu]"
+                    label="Goal duration in minutes"
                     type="number"
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -162,7 +163,7 @@ const ActivityForm = ({
                   <TextField
                     fullWidth
                     name="goalCalories"
-                    label="Goal calories in [dodaj jedinicu]"
+                    label="Goal calories in kcal"
                     type="number"
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -175,7 +176,7 @@ const ActivityForm = ({
                     name="goalElevation"
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    label="Goal elevation in [dodaj jedinicu]"
+                    label="Goal elevation in meters"
                     type="number"
                     defaultValue={values.goalElevation}
                   />

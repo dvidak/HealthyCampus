@@ -13,6 +13,7 @@ import {
 import { generatePath } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import { getDate } from '../shared/helpers';
 
 interface Props {
   activities: Activity[] | undefined;
@@ -26,18 +27,6 @@ const ActivityTable = ({ activities }: Props) => {
       generatePath('/app/activity/details/:id', {
         id: id,
       }),
-    );
-  };
-
-  const getDate = (date: any) => {
-    const parsed = new Date(parseInt(date));
-    return (
-      parsed.getDate() +
-      '.' +
-      (parsed.getMonth() + 1) +
-      '.' +
-      parsed.getFullYear() +
-      '.'
     );
   };
 
@@ -76,7 +65,7 @@ const ActivityTable = ({ activities }: Props) => {
               </Typography>
             </TableCell>
             <TableCell>
-              <Typography color="secondary" variant="subtitle1">
+              <Typography align="center" color="secondary" variant="subtitle1">
                 Goal distance
               </Typography>
             </TableCell>
@@ -86,12 +75,12 @@ const ActivityTable = ({ activities }: Props) => {
               </Typography>
             </TableCell>{' '}
             <TableCell>
-              <Typography color="secondary" variant="subtitle1">
+              <Typography align="center" color="secondary" variant="subtitle1">
                 Goal calories
               </Typography>
             </TableCell>{' '}
             <TableCell>
-              <Typography color="secondary" variant="subtitle1">
+              <Typography align="center" color="secondary" variant="subtitle1">
                 Goal elevation
               </Typography>
             </TableCell>
@@ -107,10 +96,18 @@ const ActivityTable = ({ activities }: Props) => {
                 <TableCell align="center">
                   {getDate(activity.startDate)} - {getDate(activity.endDate)}
                 </TableCell>
-                <TableCell align="center">{activity.goalDistance}</TableCell>
-                <TableCell align="center">{activity.goalDuration}</TableCell>
-                <TableCell align="center">{activity.goalCalories}</TableCell>
-                <TableCell align="center">{activity.goalElevation}</TableCell>
+                <TableCell align="center">
+                  {activity.goalDistance} meter
+                </TableCell>
+                <TableCell align="center">
+                  {activity.goalDuration} minute
+                </TableCell>
+                <TableCell align="center">
+                  {activity.goalCalories} kcal
+                </TableCell>
+                <TableCell align="center">
+                  {activity.goalElevation} meter
+                </TableCell>
                 <IconButton
                   color="secondary"
                   onClick={() => onDetailsClick(activity.id)}

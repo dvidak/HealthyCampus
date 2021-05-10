@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import ActivityForm from '../components/ActivityForm';
 import activityService from '../services/activity';
 
+const minuteInMs = 60000;
+
 const CreateActivityPage = () => {
   const navigate = useNavigate();
 
@@ -11,12 +13,14 @@ const CreateActivityPage = () => {
     const parsedData = {
       ...data,
       goalDistance: Number(data.goalDistance),
-      goalDuration: Number(data.goalDuration),
+      goalDuration: Number(data.goalDuration) * minuteInMs,
       goalCalories: Number(data.goalCalories),
       goalElevation: Number(data.goalElevation),
       activityTypeId: Number(data.activityTypeId),
       userId: Number(localStorage.getItem('userId')),
     };
+
+    console.log(parsedData);
     await activityService.createActivity(parsedData);
     navigate('');
   };
