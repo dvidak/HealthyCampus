@@ -16,7 +16,7 @@ export class UserUnit extends BaseEntity {
   @ManyToOne((type) => Unit, { eager: true, onDelete: 'CASCADE' })
   unit: Unit;
 
-  @ManyToOne((type) => User, { onDelete: 'CASCADE' })
+  @ManyToOne((type) => User, { eager: true, onDelete: 'CASCADE' })
   user: User;
 
   @Column({

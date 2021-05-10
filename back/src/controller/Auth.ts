@@ -7,13 +7,7 @@ import AuthService from '../service/auth.service';
 import querystring from 'querystring';
 
 import UserService from '../service/user.service';
-
-const CLIENT_ID = '22CDGB';
-const CLIENT_SECRET = 'b891b07bfed49c9d8f5a2d2ad2831a78';
-
-const fitbitHeaderAppAuthorization = Buffer.from(
-  `${CLIENT_ID}:${CLIENT_SECRET}`,
-).toString('base64');
+import { CLIENT_ID, fitbitHeaderAppAuthorization } from '../common';
 
 type JwtPayload = {
   iss: string;

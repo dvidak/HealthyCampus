@@ -1,5 +1,8 @@
 import Axios from 'axios';
-import ActivityType from '../controller/ActivityType';
+import querystring from 'querystring';
+import { fitbitHeaderAppAuthorization } from '../common';
+import { connection } from '../connection/Connection';
+import { User } from '../entity/User';
 
 class FitbitActivityService {
   public async loadActivityTypes() {
@@ -39,6 +42,58 @@ class FitbitActivityService {
     });
 
     return mapped;
+  }
+
+  public async getActivities(user: User, endpoint: string) {
+    let conn = await connection;
+
+    if (!user.fitbit) {
+      throw new Error('User does not have Fitbit Account assigned!');
+    }
+
+    const requestUrl = `https://api.fitbit.com/1/user/${user.fitbit.fitbitId}/${endpoint}`;
+
+    try {
+      // Fetch and return
+      const fitbitResponse = await Axios.get(requestUrl, {
+        headers: { Authorization: `Bearer ${user.fitbit.accessToken}` },
+      });
+
+      return fitbitResponse.data;
+    } catch (error) {
+      if (error.response.status === 401) {
+        const refreshRequestData = {
+          grant_type: 'refresh_token',
+          refresh_token: user.fitbit.refreshToken,
+        };
+
+        const fitbitResponse = await Axios.post(
+          `https://api.fitbit.com/oauth2/token`,
+          querystring.stringify(refreshRequestData),
+          {
+            headers: { Authorization: 'Basic ' + fitbitHeaderAppAuthorization },
+          },
+        );
+
+        const newAccessToken = fitbitResponse.data.access_token;
+        const newRefreshToken = fitbitResponse.data.refresh_token;
+        user.fitbit.accessToken = newAccessToken;
+        user.fitbit.refreshToken = newRefreshToken;
+        await conn.manager.save(user.fitbit);
+
+        // Fetch and return
+        try {
+          const fitbitResponse2 = await Axios.get(requestUrl, {
+            headers: { Authorization: `Bearer ${user.fitbit.accessToken}` },
+          });
+          return fitbitResponse2.data;
+        } catch (error) {
+          throw error;
+        }
+      } else {
+        throw error;
+      }
+    }
   }
 }
 

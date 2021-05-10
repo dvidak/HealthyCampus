@@ -1,11 +1,21 @@
 import { Request, Response } from 'express';
-import { runInNewContext } from 'vm';
 import { connection } from '../connection/Connection';
 import { Activity } from '../entity/Activity';
 import { ActivityType } from '../entity/ActivityType';
 import { User } from '../entity/User';
-import { UserActivity } from '../entity/UserActivity';
 import { UserUnit } from '../entity/UserUnit';
+import fitbitActivityService from '../service/fitbit-activity.service';
+
+interface FitbitActivity {
+  activityId: number;
+  calories: number;
+  description: string;
+  duration: number;
+  name: string;
+  startDate: string;
+  startTime: string;
+  logId: number;
+}
 
 class ActivityController {
   // For admin
@@ -20,13 +30,81 @@ class ActivityController {
     }
   }
 
+  public async getPossibleFitbitAcctivities(req: Request, res: Response) {
+    const conn = await connection;
+
+    try {
+      const user = await conn.manager.findOne(User, req.params.id, {
+        relations: ['fitbit'],
+      });
+      const dateStrings = [
+        '2021-04-24',
+        '2021-04-25',
+        '2021-04-26',
+        '2021-04-27',
+      ];
+
+      let fitBitReponses = [];
+
+      for (const date of dateStrings) {
+        const data = await fitbitActivityService.getActivities(
+          user,
+          `activities/date/${date}.json`,
+        );
+        fitBitReponses.push(data);
+      }
+
+      let onlyActivities = [];
+
+      fitBitReponses.forEach((element) => {
+        element.activities.forEach((activity) => {
+          const m: FitbitActivity = {
+            activityId: activity.activityId,
+            calories: activity.calories,
+            description: activity.description,
+            duration: activity.durtion,
+            name: activity.name,
+            startDate: activity.startDate,
+            startTime: activity.startTime,
+            logId: activity.logId,
+          };
+          onlyActivities.push(m);
+        });
+      });
+
+      res.status(200).json(onlyActivities as FitbitActivity[]);
+    } catch (error) {
+      res.status(400).json({ error });
+    }
+  }
+
+  public async getLastMonthFitbitAcctivities(req: Request, res: Response) {
+    const conn = await connection;
+
+    try {
+      const user = await conn.manager.findOne(User, req.params.id, {
+        relations: ['fitbit'],
+      });
+
+      const data = await fitbitActivityService.getActivities(
+        user,
+        'activities/activityCalories/date/today/1m.json',
+      );
+
+      res.status(200).json(data);
+    } catch (error) {
+      res.status(400).json({ error });
+    }
+  }
+
   public async getActivityById(req: Request, res: Response) {
     const conn = await connection;
 
     try {
       let activity = await conn.manager.findOne(Activity, req.params.id, {
-        relations: ['userActivities', 'type', 'userActivities.student'],
+        relations: ['userActivities', 'userActivities.student'],
       });
+
       res.status(200).json(activity);
     } catch (error) {
       res.status(400).json({ error });

@@ -23,6 +23,17 @@ class ActivityRouter {
       '/:userId',
       this.controller.getAllActivitiesForSpecificUser,
     );
+
+    // Fitbit
+    this._router.get(
+      '/fitbit/:id',
+      this.controller.getPossibleFitbitAcctivities,
+    );
+
+    this._router.get(
+      '/fitbit/lastMonth/:id',
+      this.controller.getLastMonthFitbitAcctivities,
+    );
   }
 }
 
