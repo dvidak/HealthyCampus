@@ -67,7 +67,7 @@ const ActivityDetailsForProfesor = () => {
                 startDate: getDateForDropdown(activity.startDate),
                 endDate: getDateForDropdown(activity.endDate),
                 goalDistance: activity.goalDistance,
-                goalDuration: activity.goalDuration,
+                goalDuration: activity.goalDuration / minuteInMs,
                 goalCalories: activity.goalCalories,
                 goalElevation: activity.goalElevation,
                 activityTypeId: activity.type?.id,

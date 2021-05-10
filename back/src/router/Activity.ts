@@ -20,7 +20,7 @@ class ActivityRouter {
     this._router.put('/:id', this.controller.updateActivity);
     this.router.get('/prof/:userId', this.controller.getAllActivitiesForProf);
     this._router.get(
-      '/:userId',
+      '/student/:id',
       this.controller.getAllActivitiesForSpecificUser,
     );
 

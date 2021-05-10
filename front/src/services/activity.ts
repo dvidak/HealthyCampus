@@ -14,9 +14,17 @@ const getActivitiesForProf = async () => {
   return response as Activity[];
 };
 
-const getActivitiesForSpecificUser = async () => {
+const getActivitiesForStudentBasedOnUnit = async () => {
   const userId = localStorage.getItem('userId');
-  const response = await get(`activity/${userId}`);
+  const response = await get(`activity/student/${userId}`);
+
+  return response;
+};
+
+// Function that will be used in modal to connect fitbit with some of the activities
+const getPossibleFitbitAcctivities = async () => {
+  const userId = localStorage.getItem('userId');
+  const response = await get(`activity/fitbit/${userId}`);
 
   return response as Activity[];
 };
@@ -42,7 +50,8 @@ const updateActivity = async (data: any) => {
 const activityService = {
   getActivities,
   createActivity,
-  getActivitiesForSpecificUser,
+  getPossibleFitbitAcctivities,
+  getActivitiesForStudentBasedOnUnit,
   getActivitiesForProf,
   getActivityById,
   updateActivity,

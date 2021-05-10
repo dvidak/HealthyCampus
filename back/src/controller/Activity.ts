@@ -78,6 +78,7 @@ class ActivityController {
     }
   }
 
+  // Just example
   public async getLastMonthFitbitAcctivities(req: Request, res: Response) {
     const conn = await connection;
 
@@ -138,24 +139,21 @@ class ActivityController {
     const conn = await connection;
 
     try {
-      const user: User = await conn.manager.findOne(User, req.params.userId);
-      const userUnit: UserUnit = await conn.manager.findOne(UserUnit, {
-        relations: ['unit'],
-        where: {
-          user: user,
-        },
+      const user: User = await conn.manager.findOne(User, req.params.id, {
+        relations: ['userUnit'],
       });
 
-      const activities: Activity[] = await conn.manager.find(Activity, {
+      const unit = user.userUnit.unit;
+
+      const allActivities: Activity[] = await conn.manager.find(Activity, {
         relations: ['createdBy', 'createdBy.user'],
-        where: {
-          createdBy: {
-            unit: userUnit.unit,
-          },
-        },
       });
 
-      res.status(200).json(activities);
+      const filtered = allActivities.filter(
+        (a) => a.createdBy.unit.id === unit.id,
+      );
+
+      res.status(200).json(filtered);
     } catch (error) {
       res.status(400).json({ error });
     }

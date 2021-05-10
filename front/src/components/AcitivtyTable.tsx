@@ -109,12 +109,14 @@ const ActivityTable = ({ activities }: Props) => {
                 <TableCell align="center">
                   {activity.goalElevation} meter
                 </TableCell>
-                <IconButton
-                  color="secondary"
-                  onClick={() => onDetailsClick(activity.id)}
-                >
-                  <VisibilityIcon />
-                </IconButton>
+                <TableCell>
+                  <IconButton
+                    color="secondary"
+                    onClick={() => onDetailsClick(activity.id)}
+                  >
+                    <VisibilityIcon />
+                  </IconButton>
+                </TableCell>
               </TableRow>
             ))}
         </TableBody>
