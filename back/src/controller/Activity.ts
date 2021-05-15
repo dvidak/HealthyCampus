@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { getDatesBetweenDates } from '../common';
 import { connection } from '../connection/Connection';
 import { Activity } from '../entity/Activity';
 import { ActivityType } from '../entity/ActivityType';

@@ -28,10 +28,6 @@ export class UserActivity extends BaseEntity {
   // @Column({ nullable: true })
   // dataOrigin: DataOrigin;
 
-  // In seconds
-  @Column({ type: 'bigint', nullable: true })
-  startTime: number;
-
   @ManyToOne((type) => UserUnit, { eager: true, onDelete: 'CASCADE' })
   student: UserUnit;
 
