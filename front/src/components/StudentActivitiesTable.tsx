@@ -10,7 +10,6 @@ import {
 } from '@material-ui/core';
 import { StudentActivity } from '../models/Activity';
 import { minuteInMs } from '../shared/const';
-import { getDate } from '../shared/helpers';
 
 interface Props {
   studentActivities: StudentActivity[];
@@ -73,7 +72,6 @@ const StudentActivitiesTable = ({ studentActivities }: Props) => {
               <TableCell>
                 {a.student.user.firstName} {a.student.user.lastName}
               </TableCell>
-              <TableCell>{getDate(a.startTime)}</TableCell>
               <TableCell align="center">{a.distance} meter</TableCell>
               <TableCell align="center">
                 {a.duration / minuteInMs} minute

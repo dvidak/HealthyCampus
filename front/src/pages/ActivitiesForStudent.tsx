@@ -14,7 +14,9 @@ import {
 import { DataGrid, GridColumns, GridRowId } from '@material-ui/data-grid';
 import React, { useCallback, useEffect, useState } from 'react';
 import ModalWrapper from '../components/ModalWrapper';
+import { CreateUserActivity } from '../models/Activity';
 import activityService from '../services/activity';
+import userActivityService from '../services/user-activity';
 import { minuteInMs } from '../shared/const';
 import { getDate } from '../shared/helpers';
 
@@ -42,6 +44,7 @@ const columns: GridColumns = [
 ];
 
 const ActivitiesForStudent = () => {
+  const [connectToActivity, setConnectToActivity] = useState<number>(0);
   const [activities, setActivities] = useState<any[]>();
   const [fitBitAcctivities, setFitbitAcctivities] = useState([]);
   const [selectedActivities, setSelectedActivities] = useState<any>([]);
@@ -58,9 +61,40 @@ const ActivitiesForStudent = () => {
     setSelectedActivities(selectedRowData);
   };
 
-  const onSaveSelection = () => {
+  const onSaveSelection = async () => {
     setOpen(false);
-    //save to back;
+
+    let sumDistance: number = 0;
+    let sumDuration: number = 0;
+    let sumCalories: number = 0;
+    let sumSteps: number = 0;
+    let sumElevation: number = 0;
+    selectedActivities.forEach(
+      (element: {
+        distance: number;
+        calories: number;
+        duration: number;
+        steps: number;
+        elevation: number;
+      }) => {
+        sumDistance += element.distance;
+        sumCalories += element.calories;
+        sumDuration += element.duration;
+        sumSteps += element.steps;
+        sumElevation += element.elevation;
+      },
+    );
+
+    const newUserActivity: CreateUserActivity = {
+      activityId: connectToActivity,
+      distance: sumDistance === 0 ? sumSteps * 0.762 : sumDistance,
+      duration: sumDuration * minuteInMs,
+      calories: sumCalories,
+      elevation: sumElevation || 0,
+      userId: Number(localStorage.getItem('userId')),
+    };
+
+    await userActivityService.createUserActivity(newUserActivity);
   };
 
   // Fetch activities for some unit
@@ -95,8 +129,10 @@ const ActivitiesForStudent = () => {
     fetchActivities();
   }, [fetchActivities]);
 
-  const onTrackActivity = (activityId: string) => {
+  const onTrackActivity = (activityId: number) => {
     setOpen(true);
+    setConnectToActivity(activityId);
+
     const { startDate, endDate } = activities?.find((a) => a.id === activityId);
     fetchPossibleFitbitActivities(startDate, endDate);
   };

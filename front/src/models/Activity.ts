@@ -23,13 +23,14 @@ export interface Activity {
 export interface StudentActivity {
   id: number;
   userId: number;
-  activityId: string;
+  activityId: number;
   distance: number;
   duration: number;
   calories: number;
   elevation: number;
-  startTime: string;
   student: {
     user: User;
   };
 }
+
+export type CreateUserActivity = Omit<StudentActivity, 'id' | 'student'>;
