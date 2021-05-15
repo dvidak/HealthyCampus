@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Container,
   Paper,
   Table,
@@ -10,7 +11,7 @@ import {
   TableRow,
   Typography,
 } from '@material-ui/core';
-import { DataGrid, GridColumns } from '@material-ui/data-grid';
+import { DataGrid, GridColumns, GridRowId } from '@material-ui/data-grid';
 import React, { useCallback, useEffect, useState } from 'react';
 import ModalWrapper from '../components/ModalWrapper';
 import activityService from '../services/activity';
@@ -18,22 +19,49 @@ import { minuteInMs } from '../shared/const';
 import { getDate } from '../shared/helpers';
 
 const columns: GridColumns = [
-  { field: 'name', headerName: 'Name', editable: false, width: 100 },
+  { field: 'name', headerName: 'Name' },
   {
-    field: 'description',
-    headerName: 'Description',
-    editable: false,
-    width: 300,
+    field: 'calories',
+    headerName: 'Calories',
   },
-  { field: 'startDate', headerName: 'Start date', width: 150, editable: false },
-  { field: 'startTime', headerName: 'Start time', width: 150, editable: false },
+  {
+    field: 'duration',
+    headerName: 'Duration',
+  },
+  {
+    field: 'distance',
+    headerName: 'Distance',
+    sortable: false,
+  },
+  {
+    field: 'steps',
+    headerName: 'Steps',
+  },
+  { field: 'startDate', headerName: 'Start date' },
+  { field: 'startTime', headerName: 'Start time' },
 ];
 
 const ActivitiesForStudent = () => {
   const [activities, setActivities] = useState<any[]>();
   const [fitBitAcctivities, setFitbitAcctivities] = useState([]);
+  const [selectedActivities, setSelectedActivities] = useState<any>([]);
 
   const [open, setOpen] = React.useState(false);
+
+  const onSelectionModelChange = (e: {
+    selectionModel: Iterable<unknown> | null | undefined;
+  }) => {
+    const selectedIDs = new Set(e.selectionModel);
+    const selectedRowData = fitBitAcctivities.filter((row: { id: GridRowId }) =>
+      selectedIDs.has(row.id),
+    );
+    setSelectedActivities(selectedRowData);
+  };
+
+  const onSaveSelection = () => {
+    setOpen(false);
+    //save to back;
+  };
 
   // Fetch activities for some unit
   const fetchActivities = useCallback(async () => {
@@ -41,34 +69,45 @@ const ActivitiesForStudent = () => {
     setActivities(response);
   }, []);
 
-  const fetchPossibleFitbitAcctivities = useCallback(async () => {
-    const response = await activityService.getPossibleFitbitAcctivities();
-    let mapped: any = [];
+  const fetchPossibleFitbitActivities = useCallback(
+    async (startDate: string, endDate: string) => {
+      const response = await activityService.getPossibleFitbitAcctivities(
+        startDate,
+        endDate,
+      );
+      let mapped: any = [];
 
-    let index = 0;
-    for (const fitbitActivity of Object.values(response)) {
-      const a = {
-        id: index,
-        ...fitbitActivity,
-      };
-      index++;
-      mapped.push(a);
-    }
-    setFitbitAcctivities(mapped);
-  }, []);
+      let index = 0;
+      for (const fitbitActivity of Object.values(response)) {
+        const a = {
+          id: index,
+          ...fitbitActivity,
+        };
+        index++;
+        mapped.push(a);
+      }
+      setFitbitAcctivities(mapped);
+    },
+    [],
+  );
 
   useEffect(() => {
     fetchActivities();
-    fetchPossibleFitbitAcctivities();
-  }, [fetchActivities, fetchPossibleFitbitAcctivities]);
+  }, [fetchActivities]);
 
-  console.log({ fitBitAcctivities });
+  const onTrackActivity = (activityId: string) => {
+    setOpen(true);
+    const { startDate, endDate } = activities?.find((a) => a.id === activityId);
+    fetchPossibleFitbitActivities(startDate, endDate);
+  };
 
   const body = (
-    <div style={{ width: 700 }}>
+    <div style={{ width: 800, position: 'relative' }}>
+      <Typography color="secondary" variant="h3">
+        Chose activities you want to use
+      </Typography>
       <div style={{ height: 500, width: '100%' }}>
-        {' '}
-        {fitBitAcctivities && (
+        {fitBitAcctivities !== [] && (
           <DataGrid
             rows={fitBitAcctivities}
             columns={columns}
@@ -76,9 +115,18 @@ const ActivitiesForStudent = () => {
             disableMultipleColumnsSorting={true}
             disableColumnMenu={true}
             checkboxSelection
+            onSelectionModelChange={onSelectionModelChange}
           />
         )}
       </div>
+      <Button
+        style={{ position: 'absolute', bottom: 10, left: 10 }}
+        variant="contained"
+        color="secondary"
+        onClick={onSaveSelection}
+      >
+        Save selection
+      </Button>
     </div>
   );
 
@@ -91,10 +139,6 @@ const ActivitiesForStudent = () => {
       }}
     >
       <Container maxWidth="lg">
-        <button type="button" onClick={() => setOpen(true)}>
-          Open Modal
-        </button>
-
         <ModalWrapper
           body={body}
           isOpen={open}
@@ -190,7 +234,15 @@ const ActivitiesForStudent = () => {
                     <TableCell align="center">
                       {a.goalElevation} meter
                     </TableCell>
-                    <TableCell>I did this button</TableCell>
+                    <TableCell>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => onTrackActivity(a.id)}
+                      >
+                        Track
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 ))}
             </TableBody>

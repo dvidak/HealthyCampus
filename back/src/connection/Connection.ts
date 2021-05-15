@@ -5,7 +5,7 @@ export const connection = createConnection({
   host: '127.0.0.1',
   port: 5432,
   username: 'postgres',
-  password: 'postgre',
+  password: 'test',
   database: 'dipl',
   synchronize: true,
   logging: false,

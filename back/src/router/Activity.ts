@@ -26,7 +26,7 @@ class ActivityRouter {
 
     // Fitbit
     this._router.get(
-      '/fitbit/:id',
+      '/fitbit/:id/:startDate/:endDate',
       this.controller.getPossibleFitbitAcctivities,
     );
 

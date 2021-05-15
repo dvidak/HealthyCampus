@@ -6,15 +6,25 @@ import { User } from '../entity/User';
 import { UserUnit } from '../entity/UserUnit';
 import fitbitActivityService from '../service/fitbit-activity.service';
 
+const formatDate = (input) => {
+  var datePart = input.match(/\d+/g),
+    year = datePart[0].substring(2),
+    month = datePart[1],
+    day = datePart[2];
+
+  return day + '.' + month + '.' + year + '.';
+};
+
 interface FitbitActivity {
   activityId: number;
   calories: number;
-  description: string;
+  distance: number;
   duration: number;
+  steps: number;
+  description: string;
   name: string;
   startDate: string;
   startTime: string;
-  logId: number;
 }
 
 class ActivityController {
@@ -37,12 +47,11 @@ class ActivityController {
       const user = await conn.manager.findOne(User, req.params.id, {
         relations: ['fitbit'],
       });
-      const dateStrings = [
-        '2021-04-24',
-        '2021-04-25',
-        '2021-04-26',
-        '2021-04-27',
-      ];
+
+      const dateStrings = getDatesBetweenDates(
+        new Date(parseInt(req.params.startDate)),
+        new Date(parseInt(req.params.endDate)),
+      );
 
       let fitBitReponses = [];
 
@@ -57,16 +66,21 @@ class ActivityController {
       let onlyActivities = [];
 
       fitBitReponses.forEach((element) => {
+        const totalDistance = element.summary.distances.find(
+          (a) => a.activity === 'total',
+        );
+
         element.activities.forEach((activity) => {
           const m: FitbitActivity = {
             activityId: activity.activityId,
             calories: activity.calories,
+            distance: activity.distance || 0,
+            steps: activity.steps,
             description: activity.description,
-            duration: activity.durtion,
+            duration: Math.round(activity.duration / 60000),
             name: activity.name,
-            startDate: activity.startDate,
+            startDate: formatDate(activity.startDate),
             startTime: activity.startTime,
-            logId: activity.logId,
           };
           onlyActivities.push(m);
         });

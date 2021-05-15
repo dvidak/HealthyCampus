@@ -18,12 +18,24 @@ export const universityGroupOptions = (
 
 export const getDate = (date: string) => {
   const parsed = new Date(parseInt(date));
-  return (
-    parsed.getDate() +
-    '.' +
-    (parsed.getMonth() + 1) +
-    '.' +
-    parsed.getFullYear() +
-    '.'
-  );
+
+  const parsedMonth = parsed.getMonth() + 1;
+  const month = parsedMonth < 10 ? `0${parsedMonth}` : parsedMonth;
+
+  const parsedDate = parsed.getDate();
+  const day = parsedDate < 10 ? `0${parsedDate}` : parsedDate;
+
+  return day + '.' + month + '.' + parsed.getFullYear() + '.';
+};
+
+export const getDateYYYYMMDDFormat = (date: string) => {
+  const parsed = new Date(parseInt(date));
+
+  const parsedMonth = parsed.getMonth() + 1;
+  const month = parsedMonth < 10 ? `0${parsedMonth}` : parsedMonth;
+
+  const parsedDate = parsed.getDate();
+  const day = parsedDate < 10 ? `0${parsedDate}` : parsedDate;
+
+  return parsed.getFullYear() + '.' + month + '.' + day + '.';
 };

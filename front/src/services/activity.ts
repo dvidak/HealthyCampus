@@ -22,9 +22,14 @@ const getActivitiesForStudentBasedOnUnit = async () => {
 };
 
 // Function that will be used in modal to connect fitbit with some of the activities
-const getPossibleFitbitAcctivities = async () => {
+const getPossibleFitbitAcctivities = async (
+  startDate: string,
+  endDate: string,
+) => {
   const userId = localStorage.getItem('userId');
-  const response = await get(`activity/fitbit/${userId}`);
+  const response = await get(
+    `activity/fitbit/${userId}/${startDate}/${endDate}`,
+  );
 
   return response as Activity[];
 };

@@ -34,7 +34,7 @@ const UniversityForm = ({ createUniversity }: Props) => {
             name: '',
           }}
           validationSchema={Yup.object().shape({
-            name: Yup.string().max(10).required('Name is required'),
+            name: Yup.string().max(20).required('Name is required'),
           })}
           onSubmit={handleSubmit}
         >

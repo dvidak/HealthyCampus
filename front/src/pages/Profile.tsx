@@ -10,9 +10,8 @@ import { fitbitOAuthUrl } from '../shared/const';
 const Profile = () => {
   const size = useWindowSize();
   const [user, setUser] = useState<User | undefined>(undefined);
-  const [userProfileDetails, setUserProfileDetails] = useState<
-    UserUpdateData | undefined
-  >(undefined);
+  const [userProfileDetails, setUserProfileDetails] =
+    useState<UserUpdateData | undefined>(undefined);
 
   useEffect(() => {
     async function fetchUser() {
@@ -20,7 +19,7 @@ const Profile = () => {
       setUser(fetchedUser);
       const profileDetails: UserUpdateData = {
         ...fetchedUser,
-        unitId: fetchedUser.userUnit.unit.id,
+        unitId: fetchedUser.userUnit?.unit?.id || 0,
         password: fetchedUser.password,
       };
       setUserProfileDetails(profileDetails);
