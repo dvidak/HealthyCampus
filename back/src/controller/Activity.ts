@@ -161,14 +161,29 @@ class ActivityController {
       const unit = user.userUnit.unit;
 
       const allActivities: Activity[] = await conn.manager.find(Activity, {
-        relations: ['createdBy', 'createdBy.user'],
+        relations: ['createdBy', 'createdBy.user', 'userActivities'],
       });
 
-      const filtered = allActivities.filter(
-        (a) => a.createdBy.unit.id === unit.id,
-      );
+      const noData = allActivities.filter((a) => {
+        const isNotFinished = a.userActivities.find(
+          (a) => a.student.id !== user.userUnit.id,
+        );
 
-      res.status(200).json(filtered);
+        return a.createdBy.unit.id === unit.id && isNotFinished;
+      });
+
+      const hasData = allActivities.filter((a) => {
+        const isNotFinished = a.userActivities.find(
+          (a) => a.student.id === user.userUnit.id,
+        );
+
+        return a.createdBy.unit.id === unit.id && isNotFinished;
+      });
+
+      res.status(200).json({
+        connected: hasData,
+        other: noData,
+      });
     } catch (error) {
       res.status(400).json({ error });
     }

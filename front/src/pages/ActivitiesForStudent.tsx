@@ -1,24 +1,13 @@
-import {
-  Box,
-  Button,
-  Container,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@material-ui/core';
+import { Box, Button, Container, Typography } from '@material-ui/core';
 import { DataGrid, GridColumns, GridRowId } from '@material-ui/data-grid';
 import React, { useCallback, useEffect, useState } from 'react';
+import ConnectedActivitiesTable from '../components/ConnectedActivitiesTable';
 import ModalWrapper from '../components/ModalWrapper';
+import TrackActivitiesTable from '../components/TrackActivitiesTable';
 import { CreateUserActivity } from '../models/Activity';
 import activityService from '../services/activity';
 import userActivityService from '../services/user-activity';
 import { minuteInMs } from '../shared/const';
-import { getDate } from '../shared/helpers';
 
 const columns: GridColumns = [
   { field: 'name', headerName: 'Name' },
@@ -45,7 +34,9 @@ const columns: GridColumns = [
 
 const ActivitiesForStudent = () => {
   const [connectToActivity, setConnectToActivity] = useState<number>(0);
-  const [activities, setActivities] = useState<any[]>();
+  const [connectedUserActivities, setConnectedUserActivities] =
+    useState<any[]>();
+  const [allActivities, setAllActivities] = useState<any>([]);
   const [fitBitAcctivities, setFitbitAcctivities] = useState([]);
   const [selectedActivities, setSelectedActivities] = useState<any>([]);
 
@@ -97,10 +88,10 @@ const ActivitiesForStudent = () => {
     await userActivityService.createUserActivity(newUserActivity);
   };
 
-  // Fetch activities for some unit
   const fetchActivities = useCallback(async () => {
     const response = await activityService.getActivitiesForStudentBasedOnUnit();
-    setActivities(response);
+    setConnectedUserActivities(response.connected);
+    setAllActivities(response.other);
   }, []);
 
   const fetchPossibleFitbitActivities = useCallback(
@@ -133,7 +124,9 @@ const ActivitiesForStudent = () => {
     setOpen(true);
     setConnectToActivity(activityId);
 
-    const { startDate, endDate } = activities?.find((a) => a.id === activityId);
+    const { startDate, endDate } = allActivities?.find(
+      (a: { id: number }) => a.id === activityId,
+    );
     fetchPossibleFitbitActivities(startDate, endDate);
   };
 
@@ -181,109 +174,19 @@ const ActivitiesForStudent = () => {
           handleClose={() => setOpen(false)}
         ></ModalWrapper>
 
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  <Typography color="secondary" variant="h3">
-                    All activities for{' '}
-                    {activities && activities[0]?.createdBy?.unit?.name}
-                  </Typography>
-                </TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>
-                  <Typography color="secondary" variant="subtitle1">
-                    Profesor
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography
-                    align="center"
-                    color="secondary"
-                    variant="subtitle1"
-                  >
-                    Period
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography
-                    align="center"
-                    color="secondary"
-                    variant="subtitle1"
-                  >
-                    Distance
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography
-                    align="center"
-                    color="secondary"
-                    variant="subtitle1"
-                  >
-                    Duration
-                  </Typography>
-                </TableCell>{' '}
-                <TableCell>
-                  <Typography
-                    align="center"
-                    color="secondary"
-                    variant="subtitle1"
-                  >
-                    Calories
-                  </Typography>
-                </TableCell>{' '}
-                <TableCell>
-                  <Typography
-                    align="center"
-                    color="secondary"
-                    variant="subtitle1"
-                  >
-                    Elevation
-                  </Typography>
-                </TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {activities &&
-                activities.map((a: any) => (
-                  <TableRow>
-                    <TableCell>
-                      {a.createdBy.user.firstName} {a.createdBy.user.lastName}
-                    </TableCell>
-                    <TableCell align="center">
-                      {getDate(a.startDate)} - {getDate(a.endDate)}
-                    </TableCell>
-                    <TableCell align="center">{a.goalDistance} meter</TableCell>
-                    <TableCell align="center">
-                      {a.goalDuration / minuteInMs} minute
-                    </TableCell>
-                    <TableCell align="center">{a.goalCalories} kcal</TableCell>
-                    <TableCell align="center">
-                      {a.goalElevation} meter
-                    </TableCell>
-                    <TableCell>
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={() => onTrackActivity(a.id)}
-                      >
-                        Track
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        {allActivities && (
+          <TrackActivitiesTable
+            activities={allActivities}
+            onTrackActivity={onTrackActivity}
+          />
+        )}
+      </Container>
+      <br></br>
+
+      <Container>
+        {connectedUserActivities && (
+          <ConnectedActivitiesTable activities={connectedUserActivities} />
+        )}
       </Container>
     </Box>
   );

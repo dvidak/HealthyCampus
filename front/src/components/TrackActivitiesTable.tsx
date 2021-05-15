@@ -1,4 +1,5 @@
 import {
+  Button,
   Paper,
   Table,
   TableBody,
@@ -8,14 +9,15 @@ import {
   TableRow,
   Typography,
 } from '@material-ui/core';
-import { StudentActivity } from '../models/Activity';
 import { minuteInMs } from '../shared/const';
+import { getDate } from '../shared/helpers';
 
 interface Props {
-  studentActivities: StudentActivity[];
+  activities: any[];
+  onTrackActivity: (id: number) => void;
 }
 
-const StudentActivitiesTable = ({ studentActivities }: Props) => {
+const TrackActivitiesTable = ({ activities, onTrackActivity }: Props) => {
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -23,9 +25,13 @@ const StudentActivitiesTable = ({ studentActivities }: Props) => {
           <TableRow>
             <TableCell>
               <Typography color="secondary" variant="h3">
-                Student activities
+                All activities for
+                {activities[0]?.createdBy?.unit?.name}
               </Typography>
             </TableCell>
+            <TableCell></TableCell>
+            <TableCell></TableCell>
+            <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell></TableCell>
@@ -35,7 +41,22 @@ const StudentActivitiesTable = ({ studentActivities }: Props) => {
           <TableRow>
             <TableCell>
               <Typography color="secondary" variant="subtitle1">
-                Student
+                Profesor
+              </Typography>
+            </TableCell>
+            <TableCell>
+              <Typography color="secondary" variant="subtitle1">
+                Name
+              </Typography>
+            </TableCell>
+            <TableCell>
+              <Typography color="secondary" variant="subtitle1">
+                Description
+              </Typography>
+            </TableCell>
+            <TableCell>
+              <Typography align="center" color="secondary" variant="subtitle1">
+                Period
               </Typography>
             </TableCell>
             <TableCell>
@@ -62,19 +83,31 @@ const StudentActivitiesTable = ({ studentActivities }: Props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {studentActivities.map((a: StudentActivity) => (
+          {activities.map((a: any) => (
             <TableRow>
               <TableCell>
-                {a.student.user.firstName} {a.student.user.lastName}
+                {a.createdBy.user.firstName} {a.createdBy.user.lastName}
               </TableCell>
+              <TableCell>{a.name}</TableCell>
+              <TableCell>{a.description}</TableCell>
               <TableCell align="center">
-                {Math.round(a.distance)} meter
+                {getDate(a.startDate)} - {getDate(a.endDate)}
               </TableCell>
+              <TableCell align="center">{a.goalDistance} meter</TableCell>
               <TableCell align="center">
-                {Math.round(a.duration / minuteInMs)} minute
+                {a.goalDuration / minuteInMs} minute
               </TableCell>
-              <TableCell align="center">{a.calories} kcal</TableCell>
-              <TableCell align="center">{a.elevation} meter</TableCell>
+              <TableCell align="center">{a.goalCalories} kcal</TableCell>
+              <TableCell align="center">{a.goalElevation} meter</TableCell>
+              <TableCell>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => onTrackActivity(a.id)}
+                >
+                  Track
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -83,4 +116,4 @@ const StudentActivitiesTable = ({ studentActivities }: Props) => {
   );
 };
 
-export default StudentActivitiesTable;
+export default TrackActivitiesTable;
