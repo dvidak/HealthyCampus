@@ -14,6 +14,7 @@ import ActivityPage from './pages/Activity';
 import CreateActivityPage from './pages/CreateActivity';
 import ActivitiesForStudent from './pages/ActivitiesForStudent';
 import ActivityDetailsForProfesor from './pages/ActivityDetailsForProfesor';
+import CreateStudentActivity from './pages/CreateStudentActivity';
 
 const routes = (isLoggedIn: boolean) => [
   {
@@ -25,6 +26,10 @@ const routes = (isLoggedIn: boolean) => [
       { path: 'activities', element: <ActivitiesForStudent /> },
       { path: 'activity', element: <ActivityPage /> },
       { path: 'activity/create', element: <CreateActivityPage /> },
+      {
+        path: 'student-activity/create/:id',
+        element: <CreateStudentActivity />,
+      },
       { path: 'activity/details/:id', element: <ActivityDetailsForProfesor /> },
       { path: 'activity-types', element: <ActivityType /> },
       { path: 'universities', element: <UniversityPage /> },

@@ -166,10 +166,10 @@ class ActivityController {
 
       const noData = allActivities.filter((a) => {
         const isNotFinished = a.userActivities.find(
-          (a) => a.student.id !== user.userUnit.id,
+          (a) => a.student.id === user.userUnit.id,
         );
 
-        return a.createdBy.unit.id === unit.id && isNotFinished;
+        return a.createdBy.unit.id === unit.id && !isNotFinished;
       });
 
       const hasData = allActivities.filter((a) => {

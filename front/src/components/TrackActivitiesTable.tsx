@@ -10,6 +10,8 @@ import {
   Typography,
 } from '@material-ui/core';
 import { minuteInMs } from '../shared/const';
+import { generatePath } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { getDate } from '../shared/helpers';
 
 interface Props {
@@ -18,6 +20,15 @@ interface Props {
 }
 
 const TrackActivitiesTable = ({ activities, onTrackActivity }: Props) => {
+  const navigate = useNavigate();
+
+  const onTrackManulClick = (id: string) => {
+    navigate(
+      generatePath('/app/student-activity/create/:id', {
+        id: id,
+      }),
+    );
+  };
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -25,10 +36,11 @@ const TrackActivitiesTable = ({ activities, onTrackActivity }: Props) => {
           <TableRow>
             <TableCell>
               <Typography color="secondary" variant="h3">
-                All activities for
+                All activities for <span> </span>{' '}
                 {activities[0]?.createdBy?.unit?.name}
               </Typography>
             </TableCell>
+            <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell></TableCell>
@@ -80,6 +92,7 @@ const TrackActivitiesTable = ({ activities, onTrackActivity }: Props) => {
               </Typography>
             </TableCell>
             <TableCell></TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -101,11 +114,22 @@ const TrackActivitiesTable = ({ activities, onTrackActivity }: Props) => {
               <TableCell align="center">{a.goalElevation} meter</TableCell>
               <TableCell>
                 <Button
+                  size="small"
                   variant="contained"
                   color="secondary"
                   onClick={() => onTrackActivity(a.id)}
                 >
-                  Track
+                  Track F
+                </Button>
+              </TableCell>
+              <TableCell>
+                <Button
+                  size="small"
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => onTrackManulClick(a.id)}
+                >
+                  Track M
                 </Button>
               </TableCell>
             </TableRow>
