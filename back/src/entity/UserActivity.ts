@@ -25,8 +25,8 @@ export class UserActivity extends BaseEntity {
   @Column({ nullable: true, type: 'float' })
   elevation: number;
 
-  // @Column({ nullable: true })
-  // dataOrigin: DataOrigin;
+  @Column({ nullable: true })
+  manual: boolean;
 
   @ManyToOne((type) => UserUnit, { eager: true, onDelete: 'CASCADE' })
   student: UserUnit;

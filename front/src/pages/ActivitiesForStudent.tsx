@@ -83,6 +83,7 @@ const ActivitiesForStudent = () => {
       calories: sumCalories,
       elevation: sumElevation || 0,
       userId: Number(localStorage.getItem('userId')),
+      manual: false,
     };
 
     await userActivityService.createUserActivity(newUserActivity);

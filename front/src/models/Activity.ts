@@ -28,6 +28,7 @@ export interface StudentActivity {
   duration: number;
   calories: number;
   elevation: number;
+  manual: boolean;
   student: {
     user: User;
   };

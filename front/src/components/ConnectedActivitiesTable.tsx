@@ -10,6 +10,8 @@ import {
 } from '@material-ui/core';
 import { minuteInMs } from '../shared/const';
 import { getDate } from '../shared/helpers';
+import PanToolIcon from '@material-ui/icons/PanTool';
+import WatchIcon from '@material-ui/icons/Watch';
 
 interface Props {
   activities: any[];
@@ -26,6 +28,7 @@ const ConnectedActivitiesTable = ({ activities }: Props) => {
                 Done or in progress ??
               </Typography>
             </TableCell>
+            <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell></TableCell>
@@ -75,6 +78,11 @@ const ConnectedActivitiesTable = ({ activities }: Props) => {
                 Elevation
               </Typography>
             </TableCell>
+            <TableCell>
+              <Typography align="center" color="secondary" variant="subtitle1">
+                Created
+              </Typography>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -111,6 +119,13 @@ const ConnectedActivitiesTable = ({ activities }: Props) => {
                   {Math.round(a.userActivities[0].elevation)}
                 </span>
                 /{a.goalElevation} meter
+              </TableCell>
+              <TableCell align="center">
+                {a.userActivities[0].manual ? (
+                  <PanToolIcon color="primary" />
+                ) : (
+                  <WatchIcon color="primary" />
+                )}
               </TableCell>
             </TableRow>
           ))}

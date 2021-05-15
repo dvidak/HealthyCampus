@@ -14,6 +14,7 @@ class UserActivityController {
       userActivity.duration = req.body.duration;
       userActivity.calories = req.body.calories;
       userActivity.elevation = req.body.elevation;
+      userActivity.manual = req.body.manual;
 
       const activity = await conn.manager.findOne(
         Activity,
