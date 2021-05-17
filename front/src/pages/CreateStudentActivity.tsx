@@ -32,10 +32,7 @@ const CreateStudentActivity = () => {
     fetchActivity();
   }, [fetchActivity]);
 
-  console.log(activity);
-
   const onSubmit = async (data: any) => {
-    console.log(data);
     const newUserActivity: CreateUserActivity = {
       ...data,
       duration: data.duration * minuteInMs,

@@ -21,12 +21,12 @@ class StatisticRouter {
 
     this._router.get(
       '/activity/:id/calories',
-      this.controller.getActivityCaloriesChart,
+      this.controller.getActivityCaloriesPercentagesPerUsers,
     );
 
     this._router.get(
       '/activity/:id/distance',
-      this.controller.getActivityDistanceChart,
+      this.controller.getActivityDistancePercentagesByUser,
     );
   }
 }

@@ -1,36 +1,70 @@
-import React from 'react';
+import { Grid } from '@material-ui/core';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Paper from '@material-ui/core/Paper';
-import {
-  Chart,
-  PieSeries,
-  Title,
-} from '@devexpress/dx-react-chart-material-ui';
-
-const data = [
-  { country: 'Russia', area: 12 },
-  { country: 'Canada', area: 7 },
-  { country: 'USA', area: 7 },
-  { country: 'China', area: 7 },
-  { country: 'Brazil', area: 6 },
-  { country: 'Australia', area: 5 },
-  { country: 'India', area: 2 },
-  { country: 'Others', area: 55 },
-];
+import BarChartWrapper from '../components/BarChar';
+import PieChartWrapper from '../components/PieChart';
+import statisticService from '../services/statistic';
 
 const ActivityStatisticForStudent = () => {
   let { id } = useParams();
+  const [activityCompletitionRate, setActivityCompletitionRate] = useState([]);
+  const [activityCalories, setActivityCalories] = useState([]);
+  const [activityDistance, setActivityDistance] = useState([]);
 
-  console.log(id);
+  const fetchActivityCompletionRate = useCallback(async () => {
+    const response = await statisticService.getActivityCompletionRate(
+      Number(id),
+    );
+    setActivityCompletitionRate(response);
+  }, [id]);
+
+  const fetchActivityCalories = useCallback(async () => {
+    const response =
+      await statisticService.getActivityCaloriesPercentagesPerUsers(Number(id));
+    setActivityCalories(response);
+  }, [id]);
+
+  const fetchActivityDistances = useCallback(async () => {
+    const response =
+      await statisticService.getActivityDistancePercentagesByUser(Number(id));
+    setActivityDistance(response);
+  }, [id]);
+
+  useEffect(() => {
+    fetchActivityCompletionRate();
+    fetchActivityCalories();
+    fetchActivityDistances();
+  }, [
+    fetchActivityCalories,
+    fetchActivityCompletionRate,
+    fetchActivityDistances,
+  ]);
 
   return (
-    <Paper>
-      <Chart data={data}>
-        <PieSeries valueField="area" argumentField="country" />
-        <Title text="Area of Countries" />
-        {/* <Animation /> */}
-      </Chart>
-    </Paper>
+    <Grid container spacing={3}>
+      <Grid item md={6} xs={12}>
+        <PieChartWrapper
+          title="Completition rate"
+          data={activityCompletitionRate}
+        ></PieChartWrapper>
+      </Grid>
+      <Grid item md={6} xs={12}>
+        Add some general data
+      </Grid>
+
+      <Grid item md={6} xs={12}>
+        <BarChartWrapper
+          title="Calories statistic"
+          data={activityCalories}
+        ></BarChartWrapper>
+      </Grid>
+      <Grid item md={6} xs={12}>
+        <BarChartWrapper
+          title="Distance statistic"
+          data={activityDistance}
+        ></BarChartWrapper>
+      </Grid>
+    </Grid>
   );
 };
 

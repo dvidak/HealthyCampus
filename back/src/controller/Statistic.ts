@@ -1,3 +1,4 @@
+import e from 'cors';
 import { Request, Response } from 'express';
 import { connection } from '../connection/Connection';
 import { Activity } from '../entity/Activity';
@@ -7,52 +8,52 @@ import { UserUnit } from '../entity/UserUnit';
 
 const buckets = [
   {
-    key: '0-10',
+    name: '0%-10%',
     min: 0,
     max: 10,
   },
   {
-    key: '10-20',
+    name: '10%-20%',
     min: 10,
     max: 20,
   },
   {
-    key: '20-30',
+    name: '20%-30%',
     min: 20,
     max: 30,
   },
   {
-    key: '30-40',
+    name: '30%-40%',
     min: 30,
     max: 40,
   },
   {
-    key: '40-50',
+    name: '40%-50%',
     min: 40,
     max: 50,
   },
   {
-    key: '50-60',
+    name: '50%-60%',
     min: 50,
     max: 60,
   },
   {
-    key: '60-70',
+    name: '60%-70%',
     min: 60,
     max: 70,
   },
   {
-    key: '70-80',
+    name: '70%-80%',
     min: 70,
     max: 80,
   },
   {
-    key: '80-90',
+    name: '80%-90%',
     min: 80,
     max: 90,
   },
   {
-    key: '90-100',
+    name: '90%-100%',
     min: 90,
     max: 100,
   },
@@ -105,7 +106,10 @@ class StatisticController {
     }
   }
 
-  public async getActivityCaloriesChart(req: Request, res: Response) {
+  public async getActivityCaloriesPercentagesPerUsers(
+    req: Request,
+    res: Response,
+  ) {
     const conn = await connection;
 
     try {
@@ -119,6 +123,13 @@ class StatisticController {
           error: 'Activity with given id does not exist',
         });
       }
+
+      const unit = activity.createdBy.unit;
+      const unitStudentsCount = await conn.manager.count(UserUnit, {
+        where: {
+          unit: unit,
+        },
+      });
 
       const studentActivities = await conn.manager.find(UserActivity, {
         where: {
@@ -131,7 +142,7 @@ class StatisticController {
       let mapCalories: Record<string, number> = {};
 
       buckets.forEach((bucket) => {
-        mapCalories[bucket.key] = 0;
+        mapCalories[bucket.name] = 0;
       });
 
       studentActivities.forEach((student) => {
@@ -141,20 +152,30 @@ class StatisticController {
             value > bucket.min &&
             (value < bucket.max || value === bucket.max)
           ) {
-            mapCalories[bucket.key] += 1;
+            mapCalories[bucket.name] += 1;
           } else if (value > bucket.max && bucket.max === 100) {
-            mapCalories['90-100'] += 1;
+            mapCalories['90%-100%'] += 1;
           }
         });
       });
 
-      res.json({ statusCode: 200, mapCalories });
+      mapCalories['0%-10%'] += unitStudentsCount - studentActivities.length;
+
+      const returnValue = Object.entries(mapCalories).map((e) => ({
+        name: e[0],
+        value: e[1],
+      }));
+
+      res.json({ statusCode: 200, data: returnValue });
     } catch (error) {
       res.json({ statusCode: 400, error });
     }
   }
 
-  public async getActivityDistanceChart(req: Request, res: Response) {
+  public async getActivityDistancePercentagesByUser(
+    req: Request,
+    res: Response,
+  ) {
     const conn = await connection;
 
     try {
@@ -169,6 +190,13 @@ class StatisticController {
         });
       }
 
+      const unit = activity.createdBy.unit;
+      const unitStudentsCount = await conn.manager.count(UserUnit, {
+        where: {
+          unit: unit,
+        },
+      });
+
       const studentActivities = await conn.manager.find(UserActivity, {
         where: {
           activity: activity,
@@ -180,7 +208,7 @@ class StatisticController {
       let mapDistance: Record<string, number> = {};
 
       buckets.forEach((bucket) => {
-        mapDistance[bucket.key] = 0;
+        mapDistance[bucket.name] = 0;
       });
 
       studentActivities.forEach((student) => {
@@ -191,14 +219,21 @@ class StatisticController {
             value > bucket.min &&
             (value < bucket.max || value === bucket.max)
           ) {
-            mapDistance[bucket.key] += 1;
+            mapDistance[bucket.name] += 1;
           } else if (value > bucket.max && bucket.max === 100) {
-            mapDistance['90-100'] += 1;
+            mapDistance['90%-100%'] += 1;
           }
         });
       });
 
-      res.json({ statusCode: 200, mapDistance });
+      mapDistance['0%-10%'] += unitStudentsCount - studentActivities.length;
+
+      const returnValue = Object.entries(mapDistance).map((e) => ({
+        name: e[0],
+        value: e[1],
+      }));
+
+      res.json({ statusCode: 200, data: returnValue });
     } catch (error) {
       res.json({ statusCode: 400, error });
     }

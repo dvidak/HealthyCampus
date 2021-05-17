@@ -1,5 +1,4 @@
 import {
-  Button,
   IconButton,
   Paper,
   Table,
@@ -10,13 +9,13 @@ import {
   TableRow,
   Typography,
 } from '@material-ui/core';
-import { minuteInMs } from '../shared/const';
-import { generatePath } from 'react-router';
-import { useNavigate } from 'react-router-dom';
-import { getDate } from '../shared/helpers';
 import PanToolIcon from '@material-ui/icons/PanTool';
 import WatchIcon from '@material-ui/icons/Watch';
 import React from 'react';
+import { generatePath } from 'react-router';
+import { useNavigate } from 'react-router-dom';
+import { minuteInMs } from '../shared/const';
+import { getDate } from '../shared/helpers';
 
 interface Props {
   activities: any[];

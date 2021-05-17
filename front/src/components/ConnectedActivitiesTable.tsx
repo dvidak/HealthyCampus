@@ -9,12 +9,14 @@ import {
   TableRow,
   Typography,
 } from '@material-ui/core';
-import { minuteInMs } from '../shared/const';
-import { getDate } from '../shared/helpers';
 import PanToolIcon from '@material-ui/icons/PanTool';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 import WatchIcon from '@material-ui/icons/Watch';
+import React from 'react';
 import { generatePath } from 'react-router';
 import { useNavigate } from 'react-router-dom';
+import { minuteInMs } from '../shared/const';
+import { getDate } from '../shared/helpers';
 
 interface Props {
   activities: any[];
@@ -142,8 +144,11 @@ const ConnectedActivitiesTable = ({ activities }: Props) => {
                 )}
               </TableCell>
               <TableCell>
-                <IconButton onClick={() => onDetailsClick(a.id)}>
-                  View
+                <IconButton
+                  color="secondary"
+                  onClick={() => onDetailsClick(a.id)}
+                >
+                  <VisibilityIcon />
                 </IconButton>
               </TableCell>
             </TableRow>
