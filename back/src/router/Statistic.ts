@@ -18,6 +18,16 @@ class StatisticRouter {
       '/activity/:id',
       this.controller.getActivityCompletionRate,
     );
+
+    this._router.get(
+      '/activity/:id/calories',
+      this.controller.getActivityCaloriesChart,
+    );
+
+    this._router.get(
+      '/activity/:id/distance',
+      this.controller.getActivityDistanceChart,
+    );
   }
 }
 

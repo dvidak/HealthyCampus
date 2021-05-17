@@ -161,7 +161,12 @@ class ActivityController {
       const unit = user.userUnit.unit;
 
       const allActivities: Activity[] = await conn.manager.find(Activity, {
-        relations: ['createdBy', 'createdBy.user', 'userActivities'],
+        relations: [
+          'createdBy',
+          'createdBy.user',
+          'userActivities',
+          'userActivities.student',
+        ],
       });
 
       const noData = allActivities.filter((a) => {

@@ -28,9 +28,9 @@ export class UserActivity extends BaseEntity {
   @Column({ nullable: true })
   manual: boolean;
 
-  @ManyToOne((type) => UserUnit, { eager: true, onDelete: 'CASCADE' })
+  @ManyToOne((type) => UserUnit, { onDelete: 'CASCADE' })
   student: UserUnit;
 
-  @ManyToOne((type) => Activity, { eager: true })
+  @ManyToOne((type) => Activity)
   activity: Activity;
 }
