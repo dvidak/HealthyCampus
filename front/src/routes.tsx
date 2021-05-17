@@ -15,6 +15,7 @@ import CreateActivityPage from './pages/CreateActivity';
 import ActivitiesForStudent from './pages/ActivitiesForStudent';
 import ActivityDetailsForProfesor from './pages/ActivityDetailsForProfesor';
 import CreateStudentActivity from './pages/CreateStudentActivity';
+import ActivityStatisticForStudent from './pages/ActivityStatisticForStudent';
 
 const routes = (isLoggedIn: boolean) => [
   {
@@ -29,6 +30,10 @@ const routes = (isLoggedIn: boolean) => [
       {
         path: 'student-activity/create/:id',
         element: <CreateStudentActivity />,
+      },
+      {
+        path: 'student-activity/details/:id',
+        element: <ActivityStatisticForStudent />,
       },
       { path: 'activity/details/:id', element: <ActivityDetailsForProfesor /> },
       { path: 'activity-types', element: <ActivityType /> },

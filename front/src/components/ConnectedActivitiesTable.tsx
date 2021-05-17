@@ -1,4 +1,5 @@
 import {
+  IconButton,
   Paper,
   Table,
   TableBody,
@@ -12,12 +13,23 @@ import { minuteInMs } from '../shared/const';
 import { getDate } from '../shared/helpers';
 import PanToolIcon from '@material-ui/icons/PanTool';
 import WatchIcon from '@material-ui/icons/Watch';
+import { generatePath } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   activities: any[];
 }
 
 const ConnectedActivitiesTable = ({ activities }: Props) => {
+  const navigate = useNavigate();
+
+  const onDetailsClick = (id: string) => {
+    navigate(
+      generatePath('/app/student-activity/details/:id', {
+        id: id,
+      }),
+    );
+  };
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -28,6 +40,7 @@ const ConnectedActivitiesTable = ({ activities }: Props) => {
                 Done or in progress ??
               </Typography>
             </TableCell>
+            <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell></TableCell>
@@ -83,6 +96,7 @@ const ConnectedActivitiesTable = ({ activities }: Props) => {
                 Created
               </Typography>
             </TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -126,6 +140,11 @@ const ConnectedActivitiesTable = ({ activities }: Props) => {
                 ) : (
                   <WatchIcon color="primary" />
                 )}
+              </TableCell>
+              <TableCell>
+                <IconButton onClick={() => onDetailsClick(a.id)}>
+                  View
+                </IconButton>
               </TableCell>
             </TableRow>
           ))}
