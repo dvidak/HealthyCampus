@@ -174,7 +174,17 @@ const ActivitiesForStudent = () => {
           isOpen={open}
           handleClose={() => setOpen(false)}
         ></ModalWrapper>
-
+        {allActivities && (
+          <Typography
+            style={{ padding: 20 }}
+            align="center"
+            color="primary"
+            variant="h3"
+          >
+            {' '}
+            {allActivities[0]?.createdBy?.unit?.name}
+          </Typography>
+        )}
         {allActivities && (
           <TrackActivitiesTable
             activities={allActivities}

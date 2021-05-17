@@ -1,5 +1,6 @@
 import {
   Button,
+  IconButton,
   Paper,
   Table,
   TableBody,
@@ -13,6 +14,9 @@ import { minuteInMs } from '../shared/const';
 import { generatePath } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import { getDate } from '../shared/helpers';
+import PanToolIcon from '@material-ui/icons/PanTool';
+import WatchIcon from '@material-ui/icons/Watch';
+import React from 'react';
 
 interface Props {
   activities: any[];
@@ -36,8 +40,7 @@ const TrackActivitiesTable = ({ activities, onTrackActivity }: Props) => {
           <TableRow>
             <TableCell>
               <Typography color="secondary" variant="h3">
-                All activities for <span> </span>{' '}
-                {activities[0]?.createdBy?.unit?.name}
+                All available activities
               </Typography>
             </TableCell>
             <TableCell></TableCell>
@@ -52,47 +55,49 @@ const TrackActivitiesTable = ({ activities, onTrackActivity }: Props) => {
           </TableRow>
           <TableRow>
             <TableCell>
-              <Typography color="secondary" variant="subtitle1">
-                Profesor
-              </Typography>
+              <Typography color="secondary">Profesor</Typography>
             </TableCell>
             <TableCell>
-              <Typography color="secondary" variant="subtitle1">
-                Name
-              </Typography>
+              <Typography color="secondary">Name</Typography>
             </TableCell>
             <TableCell>
-              <Typography color="secondary" variant="subtitle1">
-                Description
-              </Typography>
+              <Typography color="secondary">Description</Typography>
             </TableCell>
             <TableCell>
-              <Typography align="center" color="secondary" variant="subtitle1">
+              <Typography align="center" color="secondary">
                 Period
               </Typography>
             </TableCell>
             <TableCell>
-              <Typography align="center" color="secondary" variant="subtitle1">
+              <Typography align="center" color="secondary">
                 Distance
               </Typography>
             </TableCell>
             <TableCell>
-              <Typography align="center" color="secondary" variant="subtitle1">
+              <Typography align="center" color="secondary">
                 Duration
               </Typography>
-            </TableCell>{' '}
+            </TableCell>
             <TableCell>
-              <Typography align="center" color="secondary" variant="subtitle1">
+              <Typography align="center" color="secondary">
                 Calories
               </Typography>
-            </TableCell>{' '}
+            </TableCell>
             <TableCell>
-              <Typography align="center" color="secondary" variant="subtitle1">
+              <Typography align="center" color="secondary">
                 Elevation
               </Typography>
             </TableCell>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
+            <TableCell>
+              <Typography align="center" color="secondary">
+                Track
+              </Typography>
+            </TableCell>
+            <TableCell>
+              <Typography align="center" color="secondary">
+                Manual
+              </Typography>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -113,24 +118,20 @@ const TrackActivitiesTable = ({ activities, onTrackActivity }: Props) => {
               <TableCell align="center">{a.goalCalories} kcal</TableCell>
               <TableCell align="center">{a.goalElevation} meter</TableCell>
               <TableCell>
-                <Button
-                  size="small"
-                  variant="contained"
-                  color="secondary"
+                <IconButton
+                  color="primary"
                   onClick={() => onTrackActivity(a.id)}
                 >
-                  Track F
-                </Button>
+                  <WatchIcon />
+                </IconButton>
               </TableCell>
               <TableCell>
-                <Button
-                  size="small"
-                  variant="contained"
-                  color="secondary"
+                <IconButton
+                  color="primary"
                   onClick={() => onTrackManulClick(a.id)}
                 >
-                  Track M
-                </Button>
+                  <PanToolIcon />
+                </IconButton>
               </TableCell>
             </TableRow>
           ))}
