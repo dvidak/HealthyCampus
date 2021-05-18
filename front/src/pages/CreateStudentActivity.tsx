@@ -51,7 +51,6 @@ const CreateStudentActivity = () => {
         duration: 0,
         distance: 0,
         calories: 0,
-        elevation: 0,
       }}
     >
       {({
@@ -134,13 +133,6 @@ const CreateStudentActivity = () => {
                         {' minutes '}
                       </span>{' '}
                     </Typography>
-                    <Typography variant="body1">
-                      Goal elevation:{' '}
-                      <span style={{ color: '#2c8c99' }}>
-                        {activity.goalElevation}
-                        {'  meters '}
-                      </span>
-                    </Typography>
                   </Grid>
                   <Grid item md={3} xs={12}>
                     <TextField
@@ -151,17 +143,6 @@ const CreateStudentActivity = () => {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       defaultValue={values.calories}
-                    />
-                  </Grid>
-                  <Grid item md={3} xs={12}>
-                    <TextField
-                      fullWidth
-                      name="elevation"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      label="Total elevation in meters"
-                      type="number"
-                      defaultValue={values.elevation}
                     />
                   </Grid>
                 </Grid>

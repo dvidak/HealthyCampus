@@ -84,11 +84,6 @@ const TrackActivitiesTable = ({ activities, onTrackActivity }: Props) => {
             </TableCell>
             <TableCell>
               <Typography align="center" color="secondary">
-                Elevation
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography align="center" color="secondary">
                 Track
               </Typography>
             </TableCell>
@@ -115,7 +110,6 @@ const TrackActivitiesTable = ({ activities, onTrackActivity }: Props) => {
                 {a.goalDuration / minuteInMs} minute
               </TableCell>
               <TableCell align="center">{a.goalCalories} kcal</TableCell>
-              <TableCell align="center">{a.goalElevation} meter</TableCell>
               <TableCell>
                 <IconButton
                   color="primary"

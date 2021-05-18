@@ -43,9 +43,6 @@ export class Activity extends BaseEntity {
   @Column({ nullable: true, type: 'float' })
   goalCalories: number;
 
-  @Column({ nullable: true, type: 'float' })
-  goalElevation: number;
-
   @ManyToOne((type) => ActivityType)
   type: ActivityType;
 

@@ -168,17 +168,6 @@ const ActivityForm = ({
                 <Grid item md={6} xs={12}>
                   <TextField
                     fullWidth
-                    name="goalElevation"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    label="Goal elevation in meters"
-                    type="number"
-                    defaultValue={values.goalElevation}
-                  />
-                </Grid>
-                <Grid item md={12} xs={12}>
-                  <TextField
-                    fullWidth
                     name="activityTypeId"
                     label=""
                     onChange={handleChange}

@@ -22,9 +22,6 @@ export class UserActivity extends BaseEntity {
   @Column({ nullable: true, type: 'float' })
   calories: number;
 
-  @Column({ nullable: true, type: 'float' })
-  elevation: number;
-
   @Column({ nullable: true })
   manual: boolean;
 

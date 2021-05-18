@@ -53,11 +53,6 @@ const StudentActivitiesTable = ({ studentActivities }: Props) => {
                 Calories
               </Typography>
             </TableCell>{' '}
-            <TableCell>
-              <Typography align="center" color="secondary" variant="subtitle1">
-                Elevation
-              </Typography>
-            </TableCell>
             <TableCell></TableCell>
           </TableRow>
         </TableHead>
@@ -74,7 +69,6 @@ const StudentActivitiesTable = ({ studentActivities }: Props) => {
                 {Math.round(a.duration / minuteInMs)} minute
               </TableCell>
               <TableCell align="center">{a.calories} kcal</TableCell>
-              <TableCell align="center">{a.elevation} meter</TableCell>
             </TableRow>
           ))}
         </TableBody>

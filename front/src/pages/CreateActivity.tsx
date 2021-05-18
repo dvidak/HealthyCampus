@@ -14,7 +14,6 @@ const CreateActivityPage = () => {
       goalDistance: Number(data.goalDistance),
       goalDuration: Number(data.goalDuration) * minuteInMs,
       goalCalories: Number(data.goalCalories),
-      goalElevation: Number(data.goalElevation),
       activityTypeId: Number(data.activityTypeId),
       userId: Number(localStorage.getItem('userId')),
     };
@@ -46,7 +45,6 @@ const CreateActivityPage = () => {
               goalDistance: 0,
               goalDuration: 0,
               goalCalories: 0,
-              goalElevation: 0,
               activityTypeId: '',
             }}
           />

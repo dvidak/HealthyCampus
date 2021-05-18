@@ -47,7 +47,6 @@ const ActivityTable = ({ activities }: Props) => {
             <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell></TableCell>
-            <TableCell></TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
@@ -80,11 +79,6 @@ const ActivityTable = ({ activities }: Props) => {
                 Goal calories
               </Typography>
             </TableCell>{' '}
-            <TableCell>
-              <Typography align="center" color="secondary" variant="subtitle1">
-                Goal elevation
-              </Typography>
-            </TableCell>
             <TableCell></TableCell>
           </TableRow>
         </TableHead>
@@ -105,9 +99,6 @@ const ActivityTable = ({ activities }: Props) => {
                 </TableCell>
                 <TableCell align="center">
                   {activity.goalCalories} kcal
-                </TableCell>
-                <TableCell align="center">
-                  {activity.goalElevation} meter
                 </TableCell>
                 <TableCell>
                   <IconButton

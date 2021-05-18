@@ -9,7 +9,6 @@ export interface Activity {
   goalDistance: number;
   goalDuration: number;
   goalCalories: number;
-  goalElevation: number;
   activityTypeId: number;
   userId: number;
   type?: {
@@ -27,7 +26,6 @@ export interface StudentActivity {
   distance: number;
   duration: number;
   calories: number;
-  elevation: number;
   manual: boolean;
   student: {
     user: User;

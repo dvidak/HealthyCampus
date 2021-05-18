@@ -50,7 +50,6 @@ const ConnectedActivitiesTable = ({ activities }: Props) => {
             <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell></TableCell>
-            <TableCell></TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
@@ -90,11 +89,6 @@ const ConnectedActivitiesTable = ({ activities }: Props) => {
             </TableCell>{' '}
             <TableCell>
               <Typography align="center" color="secondary" variant="subtitle1">
-                Elevation
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography align="center" color="secondary" variant="subtitle1">
                 Created
               </Typography>
             </TableCell>
@@ -129,12 +123,6 @@ const ConnectedActivitiesTable = ({ activities }: Props) => {
                   {Math.round(a.userActivities[0].calories)}
                 </span>
                 /{a.goalCalories} kcal
-              </TableCell>
-              <TableCell align="center">
-                <span style={{ color: '#2c8c99' }}>
-                  {Math.round(a.userActivities[0].elevation)}
-                </span>
-                /{a.goalElevation} meter
               </TableCell>
               <TableCell align="center">
                 {a.userActivities[0].manual ? (

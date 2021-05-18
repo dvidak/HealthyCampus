@@ -77,7 +77,7 @@ const UsersPage = () => {
                   {row.firstName} {row.lastName}
                 </TableCell>
                 <TableCell>{row.email}</TableCell>
-                <TableCell>{row.userUnit.unit.name}</TableCell>
+                <TableCell>{row.userUnit?.unit?.name}</TableCell>
                 <TableCell>{row.role.roleName}</TableCell>
                 <TableCell align="right">
                   {row.fitbit ? <LockIcon /> : <LockOpenIcon />}

@@ -28,7 +28,6 @@ const ActivityDetailsForProfesor = () => {
       goalDistance: Number(data.goalDistance),
       goalDuration: Number(data.goalDuration) * minuteInMs,
       goalCalories: Number(data.goalCalories),
-      goalElevation: Number(data.goalElevation),
       activityTypeId: Number(data.activityTypeId),
     };
     await activityService.updateActivity(parsedData);
@@ -69,7 +68,6 @@ const ActivityDetailsForProfesor = () => {
                 goalDistance: activity.goalDistance,
                 goalDuration: activity.goalDuration / minuteInMs,
                 goalCalories: activity.goalCalories,
-                goalElevation: activity.goalElevation,
                 activityTypeId: activity.type?.id,
               }}
             />

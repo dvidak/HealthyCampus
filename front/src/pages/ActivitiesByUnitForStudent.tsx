@@ -57,20 +57,17 @@ const ActivitiesByUnitForStudent = () => {
     let sumDuration: number = 0;
     let sumCalories: number = 0;
     let sumSteps: number = 0;
-    let sumElevation: number = 0;
     selectedActivities.forEach(
       (element: {
         distance: number;
         calories: number;
         duration: number;
         steps: number;
-        elevation: number;
       }) => {
         sumDistance += element.distance;
         sumCalories += element.calories;
         sumDuration += element.duration;
         sumSteps += element.steps;
-        sumElevation += element.elevation;
       },
     );
 
@@ -79,7 +76,6 @@ const ActivitiesByUnitForStudent = () => {
       distance: sumDistance === 0 ? sumSteps * 0.762 : sumDistance,
       duration: sumDuration * minuteInMs,
       calories: sumCalories,
-      elevation: sumElevation || 0,
       userId: Number(localStorage.getItem('userId')),
       manual: false,
     };
