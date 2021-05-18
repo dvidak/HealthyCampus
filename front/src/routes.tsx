@@ -38,7 +38,7 @@ const routes = (isLoggedIn: boolean) => [
         element: <ActivityStatisticForStudent />,
       },
       { path: 'activity/details/:id', element: <ActivityDetailsForProfesor /> },
-      { path: 'activity-types', element: <ActivityType /> },
+      { path: 'types', element: <ActivityType /> },
       { path: 'universities', element: <UniversityPage /> },
       { path: 'profile', element: <Profile /> },
       { path: 'users', element: <UsersPage /> },

@@ -1,6 +1,6 @@
 import { Box, Grid } from '@material-ui/core';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ActivityForm from '../components/ActivityForm';
 import StudentActivitiesTable from '../components/StudentActivitiesTable';
 import { Activity } from '../models/Activity';
@@ -9,6 +9,7 @@ import { minuteInMs } from '../shared/const';
 
 const ActivityDetailsForProfesor = () => {
   let { id } = useParams();
+  const navigate = useNavigate();
 
   const [activity, setActivity] = useState<Activity>();
 
@@ -31,6 +32,7 @@ const ActivityDetailsForProfesor = () => {
       activityTypeId: Number(data.activityTypeId),
     };
     await activityService.updateActivity(parsedData);
+    navigate('../../', { replace: true });
   };
 
   const getDateForDropdown = (date: any) => {

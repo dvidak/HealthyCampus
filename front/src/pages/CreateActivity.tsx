@@ -19,7 +19,7 @@ const CreateActivityPage = () => {
     };
 
     await activityService.createActivity(parsedData);
-    navigate('');
+    navigate('../', { replace: true });
   };
 
   return (

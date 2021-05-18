@@ -30,7 +30,6 @@ const StudentActivitiesTable = ({ studentActivities }: Props) => {
             <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell></TableCell>
-            <TableCell></TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
@@ -69,6 +68,7 @@ const StudentActivitiesTable = ({ studentActivities }: Props) => {
                 {Math.round(a.duration / minuteInMs)} minute
               </TableCell>
               <TableCell align="center">{a.calories} kcal</TableCell>
+              <TableCell></TableCell>
             </TableRow>
           ))}
         </TableBody>
