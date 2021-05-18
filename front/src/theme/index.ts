@@ -9,17 +9,17 @@ const theme = createMuiTheme({
     },
     primary: {
       contrastText: '#ffffff',
-      main: '#326771'
+      main: '#326771',
     },
     secondary: {
       main: '#2c8c99',
     },
     text: {
-      primary: '#172b4d',
-      secondary: '#6b778c'
-    }
+      primary: '#28464B',
+      secondary: '#6b778c',
+    },
   },
-  typography
+  typography,
 });
 
 export default theme;

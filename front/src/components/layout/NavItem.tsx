@@ -39,7 +39,7 @@ const NavItem = ({ href, icon: Icon, title, ...rest }: any) => {
           textTransform: 'none',
           width: '100%',
           ...(active && {
-            color: 'primary.main',
+            color: 'secondary.main',
           }),
           '& svg': {
             mr: 1,

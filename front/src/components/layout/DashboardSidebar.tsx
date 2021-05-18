@@ -1,24 +1,27 @@
 import {
   Avatar,
   Box,
+  Button,
   Divider,
   Drawer,
   Hidden,
   List,
   Typography,
 } from '@material-ui/core';
-import { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   Activity as ActivityIcon,
   Archive as ArchiveIcon,
   LogIn as LogInIcon,
+  LogOut as LogoutIcon,
+  Monitor as MonitorIcon,
   User as UserIcon,
   UserPlus as UserPlusIcon,
   Users as UsersIcon,
-  Monitor as MonitorIcon,
 } from 'react-feather';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import { Role, User } from '../../models/User';
+import authService from '../../services/auth';
 import userService from '../../services/user';
 import NavItem from './NavItem';
 
@@ -91,8 +94,14 @@ const DashboardSidebar = ({ onMobileClose, openMobile }: Props) => {
   const isLoggedIn = Boolean(localStorage.getItem('token'));
   const [role, setRole] = useState<Role>(Role.NONE);
 
+  const navigate = useNavigate();
   const location = useLocation();
   const items = useMemo(() => getItems(role, isLoggedIn), [isLoggedIn, role]);
+
+  const onLogoutClick = () => {
+    authService.logout();
+    navigate('/login', { replace: true });
+  };
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
@@ -155,6 +164,26 @@ const DashboardSidebar = ({ onMobileClose, openMobile }: Props) => {
               icon={item.icon}
             />
           ))}
+          {isLoggedIn && (
+            <Button
+              onClick={onLogoutClick}
+              sx={{
+                color: 'text.secondary',
+                fontWeight: 'medium',
+                justifyContent: 'flex-start',
+                letterSpacing: 0,
+                py: 1.25,
+                textTransform: 'none',
+                width: '100%',
+                '& svg': {
+                  mr: 1,
+                },
+              }}
+            >
+              {<LogoutIcon size="20" />}
+              <span>Logout</span>
+            </Button>
+          )}
         </List>
       </Box>
     </Box>
