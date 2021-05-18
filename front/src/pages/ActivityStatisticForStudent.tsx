@@ -10,6 +10,7 @@ const ActivityStatisticForStudent = () => {
   const [activityCompletitionRate, setActivityCompletitionRate] = useState([]);
   const [activityCalories, setActivityCalories] = useState([]);
   const [activityDistance, setActivityDistance] = useState([]);
+  const [activityDuration, setActivityDuration] = useState([]);
 
   const fetchActivityCompletionRate = useCallback(async () => {
     const response = await statisticService.getActivityCompletionRate(
@@ -30,14 +31,22 @@ const ActivityStatisticForStudent = () => {
     setActivityDistance(response);
   }, [id]);
 
+  const fetchActivityDuration = useCallback(async () => {
+    const response =
+      await statisticService.getActivityDurationPercentagesByUser(Number(id));
+    setActivityDuration(response);
+  }, [id]);
+
   useEffect(() => {
     fetchActivityCompletionRate();
     fetchActivityCalories();
     fetchActivityDistances();
+    fetchActivityDuration();
   }, [
     fetchActivityCalories,
     fetchActivityCompletionRate,
     fetchActivityDistances,
+    fetchActivityDuration,
   ]);
 
   return (
@@ -52,16 +61,22 @@ const ActivityStatisticForStudent = () => {
         Add some general data
       </Grid>
 
-      <Grid item md={6} xs={12}>
+      <Grid item md={4} xs={12}>
         <BarChartWrapper
           title="Calories statistic"
           data={activityCalories}
         ></BarChartWrapper>
       </Grid>
-      <Grid item md={6} xs={12}>
+      <Grid item md={4} xs={12}>
         <BarChartWrapper
           title="Distance statistic"
           data={activityDistance}
+        ></BarChartWrapper>
+      </Grid>
+      <Grid item md={4} xs={12}>
+        <BarChartWrapper
+          title="Duration statistic"
+          data={activityDuration}
         ></BarChartWrapper>
       </Grid>
     </Grid>

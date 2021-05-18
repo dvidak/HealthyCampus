@@ -28,6 +28,11 @@ class StatisticRouter {
       '/activity/:id/distance',
       this.controller.getActivityDistancePercentagesByUser,
     );
+
+    this._router.get(
+      '/activity/:id/duration',
+      this.controller.getActivityDurationPercentagesByUser,
+    );
   }
 }
 

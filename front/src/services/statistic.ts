@@ -18,10 +18,17 @@ const getActivityDistancePercentagesByUser = async (activityId: number) => {
   return response.data;
 };
 
+const getActivityDurationPercentagesByUser = async (activityId: number) => {
+  const response = await get(`statistic/activity/${activityId}/duration`);
+
+  return response.data;
+};
+
 const statisticService = {
   getActivityCompletionRate,
   getActivityCaloriesPercentagesPerUsers,
   getActivityDistancePercentagesByUser,
+  getActivityDurationPercentagesByUser,
 };
 
 export default statisticService;
