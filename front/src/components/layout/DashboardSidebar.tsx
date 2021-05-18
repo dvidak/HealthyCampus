@@ -15,6 +15,7 @@ import {
   User as UserIcon,
   UserPlus as UserPlusIcon,
   Users as UsersIcon,
+  Monitor as MonitorIcon,
 } from 'react-feather';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { Role, User } from '../../models/User';
@@ -53,9 +54,15 @@ const items = [
     roles: [Role.PROFESOR, Role.ADMIN],
   },
   {
-    href: '/app/activities',
+    href: '/app/activity/all',
     icon: ActivityIcon,
-    title: 'All activities',
+    title: 'Unit activities',
+    roles: [Role.STUDENT],
+  },
+  {
+    href: '/app/activity/connected',
+    icon: MonitorIcon,
+    title: 'My activities',
     roles: [Role.STUDENT],
   },
   {

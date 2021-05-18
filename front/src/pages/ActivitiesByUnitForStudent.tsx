@@ -1,7 +1,6 @@
 import { Box, Button, Container, Typography } from '@material-ui/core';
 import { DataGrid, GridColumns, GridRowId } from '@material-ui/data-grid';
 import React, { useCallback, useEffect, useState } from 'react';
-import ConnectedActivitiesTable from '../components/ConnectedActivitiesTable';
 import ModalWrapper from '../components/ModalWrapper';
 import TrackActivitiesTable from '../components/TrackActivitiesTable';
 import { CreateUserActivity } from '../models/Activity';
@@ -32,10 +31,9 @@ const columns: GridColumns = [
   { field: 'startTime', headerName: 'Start time' },
 ];
 
-const ActivitiesForStudent = () => {
+const ActivitiesByUnitForStudent = () => {
   const [connectToActivity, setConnectToActivity] = useState<number>(0);
-  const [connectedUserActivities, setConnectedUserActivities] =
-    useState<any[]>();
+
   const [allActivities, setAllActivities] = useState<any>([]);
   const [fitBitAcctivities, setFitbitAcctivities] = useState([]);
   const [selectedActivities, setSelectedActivities] = useState<any>([]);
@@ -91,7 +89,6 @@ const ActivitiesForStudent = () => {
 
   const fetchActivities = useCallback(async () => {
     const response = await activityService.getActivitiesForStudentBasedOnUnit();
-    setConnectedUserActivities(response.connected);
     setAllActivities(response.other);
   }, []);
 
@@ -192,15 +189,8 @@ const ActivitiesForStudent = () => {
           />
         )}
       </Container>
-      <br></br>
-
-      <Container>
-        {connectedUserActivities && (
-          <ConnectedActivitiesTable activities={connectedUserActivities} />
-        )}
-      </Container>
     </Box>
   );
 };
 
-export default ActivitiesForStudent;
+export default ActivitiesByUnitForStudent;

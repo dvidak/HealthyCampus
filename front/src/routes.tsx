@@ -12,10 +12,11 @@ import { Navigate } from 'react-router-dom';
 import MainLayout from './components/layout/MainLayout';
 import ActivityPage from './pages/Activity';
 import CreateActivityPage from './pages/CreateActivity';
-import ActivitiesForStudent from './pages/ActivitiesForStudent';
+import ActivitiesByUnitForStudent from './pages/ActivitiesByUnitForStudent';
 import ActivityDetailsForProfesor from './pages/ActivityDetailsForProfesor';
 import CreateStudentActivity from './pages/CreateStudentActivity';
 import ActivityStatisticForStudent from './pages/ActivityStatisticForStudent';
+import ConnectedActivities from './pages/ConnectedActivities';
 
 const routes = (isLoggedIn: boolean) => [
   {
@@ -24,8 +25,9 @@ const routes = (isLoggedIn: boolean) => [
     children: [
       { path: 'admin', element: <Admin /> },
       { path: 'home', element: <Home /> },
-      { path: 'activities', element: <ActivitiesForStudent /> },
       { path: 'activity', element: <ActivityPage /> },
+      { path: 'activity/all', element: <ActivitiesByUnitForStudent /> },
+      { path: 'activity/connected', element: <ConnectedActivities /> },
       { path: 'activity/create', element: <CreateActivityPage /> },
       {
         path: 'student-activity/create/:id',

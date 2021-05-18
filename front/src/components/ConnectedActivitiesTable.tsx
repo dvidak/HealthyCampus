@@ -39,7 +39,7 @@ const ConnectedActivitiesTable = ({ activities }: Props) => {
           <TableRow>
             <TableCell>
               <Typography color="secondary" variant="h3">
-                Done or in progress ??
+                Tracked activities
               </Typography>
             </TableCell>
             <TableCell></TableCell>

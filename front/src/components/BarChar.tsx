@@ -56,7 +56,7 @@ const BarChartWrapper = ({ data, title }: Props) => {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="value" fill="#326771" />
+        <Bar dataKey="students" fill="#326771" />
       </BarChart>
     </div>
   );
