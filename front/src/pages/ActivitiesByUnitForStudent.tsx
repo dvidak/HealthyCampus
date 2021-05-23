@@ -27,7 +27,7 @@ const columns: GridColumns = [
     field: 'steps',
     headerName: 'Steps',
   },
-  { field: 'startDate', headerName: 'Start date' },
+  { field: 'startDate', headerName: 'Date', width: 105 },
   { field: 'startTime', headerName: 'Start time' },
 ];
 
