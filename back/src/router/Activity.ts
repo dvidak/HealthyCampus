@@ -18,6 +18,7 @@ class ActivityRouter {
     this._router.post('', this.controller.createActivity);
     this._router.get('/:id', this.controller.getActivityById);
     this._router.put('/:id', this.controller.updateActivity);
+    this._router.delete('/:id', this.controller.deleteActivity);
     this.router.get('/prof/:userId', this.controller.getAllActivitiesForProf);
     this._router.get(
       '/student/:id',

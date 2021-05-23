@@ -1,5 +1,5 @@
 import { Activity } from '../models/Activity';
-import { get, post, put } from './api';
+import { get, post, put, remove } from './api';
 
 const getActivities = async () => {
   const response = await get('activity');
@@ -40,6 +40,12 @@ const createActivity = async (data: Activity) => {
   return response;
 };
 
+const deleteActivity = async (id: number) => {
+  const response = await remove(`activity/${id}`);
+
+  return response;
+};
+
 const getActivityById = async (id: number) => {
   const response = await get(`activity/${id}`);
 
@@ -60,6 +66,7 @@ const activityService = {
   getActivitiesForProf,
   getActivityById,
   updateActivity,
+  deleteActivity,
 };
 
 export default activityService;

@@ -340,6 +340,35 @@ class ActivityController {
       res.json({ status: 400, error });
     }
   }
+
+  public async deleteActivity(req: Request, res: Response) {
+    const conn = await connection;
+
+    try {
+      const activity = await conn.manager.findOne(Activity, req.params.id, {
+        relations: ['userActivities'],
+      });
+
+      if (!activity) {
+        res.json({
+          statusCode: 404,
+          message: 'Activity with given id does not exist.',
+        });
+      }
+      if (activity.userActivities.length > 0) {
+        res.json({
+          statusCode: 400,
+          message:
+            'You are not allowed to delete activity that has connected user activities!',
+        });
+      }
+
+      await conn.manager.remove(Activity, activity);
+      res.json({ statusCode: 204, message: 'Successfully removed.' });
+    } catch (error) {
+      res.status(400).json({ error });
+    }
+  }
 }
 
 export = new ActivityController();

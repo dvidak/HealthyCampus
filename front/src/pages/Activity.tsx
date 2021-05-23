@@ -28,11 +28,20 @@ const ActivityPage = () => {
       sx={{
         backgroundColor: 'background.default',
         minHeight: '100%',
-        py: 3,
       }}
     >
-      <Button onClick={onCreateClick}>Create</Button>
       <AcitivtyTable activities={activities}></AcitivtyTable>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          p: 3,
+        }}
+      >
+        <Button variant="contained" onClick={onCreateClick}>
+          Create
+        </Button>
+      </Box>
     </Box>
   );
 };

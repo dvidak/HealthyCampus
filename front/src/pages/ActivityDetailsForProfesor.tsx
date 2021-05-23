@@ -12,6 +12,7 @@ const ActivityDetailsForProfesor = () => {
   const navigate = useNavigate();
 
   const [activity, setActivity] = useState<Activity>();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const fetchActivity = useCallback(async () => {
     const response = await activityService.getActivityById(Number(id));
@@ -33,6 +34,15 @@ const ActivityDetailsForProfesor = () => {
     };
     await activityService.updateActivity(parsedData);
     navigate('../../', { replace: true });
+  };
+
+  const handleDeleteActivity = async () => {
+    const deleteReponse = await activityService.deleteActivity(Number(id));
+    if (deleteReponse === 204) {
+      navigate('../../', { replace: true });
+    } else {
+      setErrorMessage(deleteReponse.message);
+    }
   };
 
   const getDateForDropdown = (date: any) => {
@@ -60,8 +70,11 @@ const ActivityDetailsForProfesor = () => {
           {activity && (
             <ActivityForm
               title="Edit activity"
-              buttonText="Edit"
+              buttonText="Save changes"
               handleRequest={handleUpdateActivity}
+              handleDeleteRequest={handleDeleteActivity}
+              errorMessage={errorMessage}
+              deleteButton
               initialValues={{
                 name: activity.name,
                 description: activity.description,

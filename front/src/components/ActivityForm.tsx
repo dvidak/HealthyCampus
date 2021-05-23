@@ -7,6 +7,7 @@ import {
   Divider,
   Grid,
   TextField,
+  Typography,
 } from '@material-ui/core';
 import { Formik } from 'formik';
 import groupBy from 'lodash/groupBy';
@@ -21,6 +22,9 @@ interface Props {
   buttonText: string;
   handleRequest: (data: any) => void;
   initialValues: any;
+  errorMessage: string | null;
+  deleteButton?: boolean;
+  handleDeleteRequest?: () => void;
 }
 
 const ActivityForm = ({
@@ -28,6 +32,9 @@ const ActivityForm = ({
   buttonText,
   initialValues,
   handleRequest,
+  errorMessage,
+  deleteButton = false,
+  handleDeleteRequest,
 }: Props) => {
   const [activityTypes, setActivityTypes] = useState<any>();
 
@@ -54,7 +61,7 @@ const ActivityForm = ({
         endDate: Yup.date()
           .min(Yup.ref('startDate'), "End date can't be before Start date")
           .required('End date is required'),
-        activityTypeId: Yup.string().required('Activity type is required'),
+        activityTypeId: Yup.string(),
       })}
     >
       {({
@@ -197,6 +204,13 @@ const ActivityForm = ({
                 </Grid>
               </Grid>
             </CardContent>
+            {errorMessage && (
+              <Box sx={{ padding: 2 }}>
+                <Typography color="error" variant="h5">
+                  {errorMessage}
+                </Typography>
+              </Box>
+            )}
             <Divider />
             <Box
               sx={{
@@ -205,6 +219,11 @@ const ActivityForm = ({
                 p: 2,
               }}
             >
+              {deleteButton && (
+                <Button sx={{ marginRight: 2 }} onClick={handleDeleteRequest}>
+                  Delete
+                </Button>
+              )}
               <Button
                 disabled={isSubmitting}
                 type="submit"

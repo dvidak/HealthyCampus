@@ -37,6 +37,7 @@ const CreateActivityPage = () => {
             title="Create new activity"
             buttonText="Create"
             handleRequest={handleCreateActivity}
+            errorMessage={null}
             initialValues={{
               name: '',
               description: '',
