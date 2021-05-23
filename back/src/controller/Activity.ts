@@ -61,7 +61,7 @@ class ActivityController {
           user,
           `activities/date/${date}.json`,
         );
-        fitBitReponses.push(data);
+        fitBitReponses.push({ ...data, date });
       }
 
       let onlyActivities = [];
@@ -99,14 +99,14 @@ class ActivityController {
             description: customDescription,
             duration: 0,
             name: customDescription,
-            startDate: '',
-            startTime: '',
+            startDate: element.date,
+            startTime: '-',
           };
           onlyActivities.push(m);
         }
       });
 
-      res.status(200).json(onlyActivities as any[]);
+      res.status(200).json(onlyActivities as FitbitActivity[]);
     } catch (error) {
       res.status(400).json({ error });
     }
