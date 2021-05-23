@@ -10,6 +10,8 @@ const getModalStyle = () => {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
+    borderRadius: 20,
+    padding: 30,
   };
 };
 

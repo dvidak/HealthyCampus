@@ -9,7 +9,7 @@ import userActivityService from '../services/user-activity';
 import { minuteInMs } from '../shared/const';
 
 const columns: GridColumns = [
-  { field: 'name', headerName: 'Name' },
+  { field: 'name', headerName: 'Name', width: 200 },
   {
     field: 'calories',
     headerName: 'Calories',
@@ -125,9 +125,9 @@ const ActivitiesByUnitForStudent = () => {
   };
 
   const body = (
-    <div style={{ width: 800, position: 'relative' }}>
+    <div style={{ width: 900, position: 'relative' }}>
       <Typography color="secondary" variant="h3">
-        Chose activities you want to use
+        Choose activities you want to use
       </Typography>
       <div style={{ height: 500, width: '100%' }}>
         {fitBitAcctivities !== [] && (

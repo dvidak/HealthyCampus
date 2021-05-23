@@ -75,7 +75,7 @@ class ActivityController {
           const m: FitbitActivity = {
             activityId: activity.activityId,
             calories: activity.calories,
-            distance: activity.distance || 0,
+            distance: activity.distance || totalDistance.distance || 0,
             steps: activity.steps,
             description: activity.description,
             duration: Math.round(activity.duration / 60000),
@@ -85,9 +85,28 @@ class ActivityController {
           };
           onlyActivities.push(m);
         });
+
+        if (element.summary.activityCalories > 0) {
+          const customDescription = element.summary.heartRateZones
+            ? element.summary.heartRateZones.map((a) => a.name).join(', ')
+            : '';
+
+          const m: FitbitActivity = {
+            activityId: 0,
+            calories: element.summary.activityCalories,
+            distance: totalDistance.distance || 0,
+            steps: element.summary.steps || 0,
+            description: customDescription,
+            duration: 0,
+            name: customDescription,
+            startDate: '',
+            startTime: '',
+          };
+          onlyActivities.push(m);
+        }
       });
 
-      res.status(200).json(onlyActivities as FitbitActivity[]);
+      res.status(200).json(onlyActivities as any[]);
     } catch (error) {
       res.status(400).json({ error });
     }
@@ -205,7 +224,6 @@ class ActivityController {
       activity.goalDuration = req.body.goalDuration;
       activity.goalDistance = req.body.goalDistance;
       activity.goalCalories = req.body.goalCalories;
-      activity.goalElevation = req.body.goalElevation;
 
       if (!req.body.activityTypeId) {
         res.json({
@@ -288,7 +306,6 @@ class ActivityController {
         activity.goalDuration = req.body.goalDuration;
         activity.goalDistance = req.body.goalDistance;
         activity.goalCalories = req.body.goalCalories;
-        activity.goalElevation = req.body.goalElevation;
 
         const activityType = await conn.manager.findOne(
           ActivityType,

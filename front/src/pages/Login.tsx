@@ -7,6 +7,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Formik } from 'formik';
+import { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { LoginData } from '../models/Auth';
@@ -14,14 +15,16 @@ import authService from '../services/auth';
 
 const Login = () => {
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleLogin = async (data: LoginData) => {
     const loginResponse = await authService.login(data);
     if (loginResponse.statusCode === 400) {
+      setErrorMessage(loginResponse.message);
     } else {
       localStorage.setItem('token', loginResponse.token);
       localStorage.setItem('userId', loginResponse.user.id);
-      navigate('/app/home', { replace: true });
+      navigate('/app/profile', { replace: true });
     }
   };
 
@@ -93,6 +96,13 @@ const Login = () => {
                   value={values.password}
                   variant="outlined"
                 />
+                {errorMessage && (
+                  <Box>
+                    <Typography color="error" variant="h5">
+                      {errorMessage}
+                    </Typography>
+                  </Box>
+                )}
                 <Box sx={{ py: 2 }}>
                   <Button
                     color="primary"

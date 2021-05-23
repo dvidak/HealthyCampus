@@ -22,6 +22,7 @@ import { universityGroupOptions } from '../shared/helpers';
 
 const Register = () => {
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [universityOptions, setUniversityOptions] = useState<any>();
 
   useEffect(() => {
@@ -41,10 +42,11 @@ const Register = () => {
     };
     const signUpResponse = await authService.signUp(parsedData);
     if (signUpResponse.statusCode === 400) {
+      setErrorMessage(signUpResponse.message);
     } else {
       localStorage.setItem('token', signUpResponse.token);
       localStorage.setItem('userId', signUpResponse.user.id);
-      navigate('/app/home', { replace: true });
+      navigate('/app/profile', { replace: true });
     }
   };
 
@@ -225,6 +227,13 @@ const Register = () => {
                 </Box>
                 {Boolean(touched.policy && errors.policy) && (
                   <FormHelperText error>{errors.policy}</FormHelperText>
+                )}
+                {errorMessage && (
+                  <Box>
+                    <Typography color="error" variant="h5">
+                      {errorMessage}
+                    </Typography>
+                  </Box>
                 )}
                 <Box sx={{ py: 2 }}>
                   <Button

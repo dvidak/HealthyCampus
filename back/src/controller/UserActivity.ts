@@ -13,7 +13,6 @@ class UserActivityController {
       userActivity.distance = req.body.distance;
       userActivity.duration = req.body.duration;
       userActivity.calories = req.body.calories;
-      userActivity.elevation = req.body.elevation;
       userActivity.manual = req.body;
 
       const activity = await conn.manager.findOne(
