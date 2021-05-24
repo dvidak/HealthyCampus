@@ -43,7 +43,7 @@ const CreateStudentActivity = () => {
     };
 
     await userActivityService.createUserActivity(newUserActivity);
-    navigate('../../all', { replace: true });
+    navigate('../../connected', { replace: true });
   };
 
   return (
