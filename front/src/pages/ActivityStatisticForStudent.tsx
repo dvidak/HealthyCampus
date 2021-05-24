@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core';
+import { Card, CardContent, Grid, Typography } from '@material-ui/core';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import BarChartWrapper from '../components/BarChar';
@@ -50,15 +50,38 @@ const ActivityStatisticForStudent = () => {
   ]);
 
   return (
-    <Grid container spacing={3}>
+    <Grid container sx={{ width: '80%', margin: 'auto' }} spacing={3}>
       <Grid item md={6} xs={12}>
         <PieChartWrapper
           title="Completition rate"
           data={activityCompletitionRate}
         ></PieChartWrapper>
       </Grid>
-      <Grid item md={6} xs={12}>
-        Add some general data
+      <Grid
+        item
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+        }}
+        md={6}
+        xs={12}
+      >
+        <Card sx={{ width: '80%' }} variant="outlined">
+          <CardContent>
+            <Typography color="textSecondary" gutterBottom>
+              More details about activitiy
+            </Typography>
+            <Typography variant="h5" component="h2">
+              {' '}
+              some
+            </Typography>
+            <Typography color="primary">blablabla</Typography>
+            <Typography variant="body2" component="p">
+              blablabla
+            </Typography>
+          </CardContent>
+        </Card>
       </Grid>
 
       <Grid item md={4} xs={12}>
