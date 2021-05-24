@@ -24,7 +24,7 @@ const Login = () => {
     } else {
       localStorage.setItem('token', loginResponse.token);
       localStorage.setItem('userId', loginResponse.user.id);
-      navigate('/app/profile', { replace: true });
+      navigate('/app/home', { replace: true });
     }
   };
 

@@ -18,6 +18,7 @@ import {
   User as UserIcon,
   UserPlus as UserPlusIcon,
   Users as UsersIcon,
+  BarChart as BarChartIcon,
 } from 'react-feather';
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import { Role, User } from '../../models/User';
@@ -37,6 +38,12 @@ const items = [
     icon: UserPlusIcon,
     title: 'Register',
     roles: [Role.NONE],
+  },
+  {
+    href: '/app/home',
+    icon: BarChartIcon,
+    title: 'Dashboard',
+    roles: [Role.PROFESOR, Role.STUDENT],
   },
   {
     href: '/app/universities',

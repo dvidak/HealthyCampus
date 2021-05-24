@@ -46,7 +46,7 @@ const Register = () => {
     } else {
       localStorage.setItem('token', signUpResponse.token);
       localStorage.setItem('userId', signUpResponse.user.id);
-      navigate('/app/profile', { replace: true });
+      navigate('/app/home', { replace: true });
     }
   };
 
