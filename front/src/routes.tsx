@@ -32,7 +32,7 @@ const routes = (isLoggedIn: boolean) => [
       { path: 'activity/connected', element: <ConnectedActivities /> },
       { path: 'activity/create', element: <CreateActivityPage /> },
       {
-        path: 'student-activity/create/:id',
+        path: 'activity/create/:id',
         element: <CreateStudentActivity />,
       },
       {

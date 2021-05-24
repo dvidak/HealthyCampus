@@ -27,7 +27,7 @@ const TrackActivitiesTable = ({ activities, onTrackActivity }: Props) => {
 
   const onTrackManulClick = (id: string) => {
     navigate(
-      generatePath('/app/student-activity/create/:id', {
+      generatePath('/app/activity/create/:id', {
         id: id,
       }),
     );

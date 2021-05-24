@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import { Formik } from 'formik';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Activity, CreateUserActivity } from '../models/Activity';
 import activityService from '../services/activity';
 import userActivityService from '../services/user-activity';
@@ -20,6 +20,7 @@ import { getDate } from '../shared/helpers';
 
 const CreateStudentActivity = () => {
   let { id } = useParams();
+  const navigate = useNavigate();
 
   const [activity, setActivity] = useState<Activity>();
 
@@ -42,6 +43,7 @@ const CreateStudentActivity = () => {
     };
 
     await userActivityService.createUserActivity(newUserActivity);
+    navigate('../../all', { replace: true });
   };
 
   return (
@@ -62,7 +64,7 @@ const CreateStudentActivity = () => {
       }: any) => (
         <form onSubmit={handleSubmit}>
           {activity && (
-            <Card style={{ width: '60%', margin: 'auto' }}>
+            <Card style={{ width: '60%', margin: '5rem auto' }}>
               <CardHeader
                 title="Manual add activity"
                 titleTypographyProps={{ variant: 'h3', color: 'secondary' }}
