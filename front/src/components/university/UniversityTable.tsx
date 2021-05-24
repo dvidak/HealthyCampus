@@ -33,13 +33,16 @@ const UniversityTable = ({
   onDelete,
 }: Props) => {
   return (
-    <TableContainer className="university-table" component={Paper}>
+    <TableContainer
+      sx={{ width: '80%', margin: '5rem auto' }}
+      component={Paper}
+    >
       <Table>
         <TableHead>
           <TableRow>
             <TableCell />
             <TableCell>
-              <Typography color="secondary" variant="h5">
+              <Typography color="secondary" variant="h4">
                 All universities
               </Typography>
             </TableCell>

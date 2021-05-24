@@ -17,6 +17,7 @@ import ActivityDetailsForProfesor from './pages/ActivityDetailsForProfesor';
 import CreateStudentActivity from './pages/CreateStudentActivity';
 import ActivityStatisticForStudent from './pages/ActivityStatisticForStudent';
 import ConnectedActivities from './pages/ConnectedActivities';
+import Dashboard from './pages/Dashboard';
 
 const routes = (isLoggedIn: boolean) => [
   {
@@ -25,6 +26,7 @@ const routes = (isLoggedIn: boolean) => [
     children: [
       { path: 'admin', element: <Admin /> },
       { path: 'home', element: <Home /> },
+      { path: 'dashboard', element: <Dashboard /> },
       { path: 'activity', element: <ActivityPage /> },
       { path: 'activity/all', element: <ActivitiesByUnitForStudent /> },
       { path: 'activity/connected', element: <ConnectedActivities /> },

@@ -13,7 +13,10 @@ class AuthService {
     const conn = await connection;
 
     const user = await conn.manager.findOne(User, {
-      email: loginData.email,
+      relations: ['role'],
+      where: {
+        email: loginData.email,
+      },
     });
 
     if (!user) {

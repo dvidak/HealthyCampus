@@ -40,8 +40,8 @@ const ActivityTypePage = () => {
   );
 
   return (
-    <div style={{ width: '100%' }}>
-      <div style={{ height: 800, width: '100%' }}>
+    <div style={{ width: '80%', margin: '5rem auto' }}>
+      <div style={{ height: 800, width: '100%', backgroundColor: 'white' }}>
         <DataGrid
           rows={activityTypes}
           columns={columns}

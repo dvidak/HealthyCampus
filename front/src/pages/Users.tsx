@@ -27,20 +27,12 @@ const UsersPage = () => {
   }, [fetchUsers]);
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer
+      sx={{ width: '80%', margin: '5rem auto' }}
+      component={Paper}
+    >
       <Table>
         <TableHead>
-          <TableRow>
-            <TableCell>
-              <Typography color="secondary" variant="h5">
-                All users
-              </Typography>
-            </TableCell>
-            <TableCell align="right"></TableCell>
-            <TableCell align="right"></TableCell>
-            <TableCell align="right"></TableCell>
-            <TableCell align="right"></TableCell>
-          </TableRow>
           <TableRow>
             <TableCell>
               <Typography color="secondary" variant="subtitle1">

@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
+import { Not } from 'typeorm';
 import { connection } from '../connection/Connection';
 import { Unit } from '../entity/Unit';
 import { User } from '../entity/User';
@@ -12,6 +13,11 @@ class UserController {
     try {
       const users: User[] = await conn.manager.find(User, {
         relations: ['userUnit', 'role', 'fitbit'],
+        where: {
+          role: {
+            id: Not(1),
+          },
+        },
       });
       res.status(200).json(users);
     } catch (error) {

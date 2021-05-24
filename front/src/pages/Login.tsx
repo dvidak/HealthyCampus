@@ -21,9 +21,20 @@ const Login = () => {
     const loginResponse = await authService.login(data);
     if (loginResponse.statusCode === 400) {
       setErrorMessage(loginResponse.message);
-    } else {
-      localStorage.setItem('token', loginResponse.token);
-      localStorage.setItem('userId', loginResponse.user.id);
+    }
+
+    localStorage.setItem('token', loginResponse.token);
+    localStorage.setItem('userId', loginResponse.user.id);
+
+    if (loginResponse.user.role.id === 1) {
+      navigate('/app/admin', { replace: true });
+    }
+
+    if (loginResponse.user.role.id === 2) {
+      navigate('/app/dashboard', { replace: true });
+    }
+
+    if (loginResponse.user.role.id === 3) {
       navigate('/app/home', { replace: true });
     }
   };

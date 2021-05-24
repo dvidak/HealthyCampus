@@ -38,8 +38,14 @@ const UserProfile = ({ user, handleFitbitLogin }: Props) => (
           {user.firstName} {user.lastName}
         </Typography>
         {user?.fitbit?.fitbitId && (
-          <Typography>
-            <CheckCircleIcon color="secondary" /> Connected to fitbit
+          <Typography
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <CheckCircleIcon sx={{ marginRight: 1 }} color="secondary" />{' '}
+            Connected to fitbit
           </Typography>
         )}
 
@@ -51,7 +57,7 @@ const UserProfile = ({ user, handleFitbitLogin }: Props) => (
     <Divider />
     {!user?.fitbit?.fitbitId && (
       <CardActions>
-        <Button color="secondary" onClick={handleFitbitLogin}>
+        <Button variant="contained" fullWidth onClick={handleFitbitLogin}>
           Connect to FitBit
         </Button>
       </CardActions>
@@ -59,7 +65,7 @@ const UserProfile = ({ user, handleFitbitLogin }: Props) => (
 
     <Divider />
     <CardActions>
-      <Button color="primary" fullWidth variant="text">
+      <Button color="primary" fullWidth>
         Upload picture
       </Button>
     </CardActions>
