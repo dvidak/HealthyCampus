@@ -95,6 +95,49 @@ class FitbitActivityService {
       }
     }
   }
+
+  public async getPeriodicData(user: User, endpoint: string) {
+    const key = `activities-${endpoint}`;
+
+    const endpointToday = await this.getActivities(
+      user,
+      `activities/${endpoint}/date/today/1d.json`,
+    );
+
+    const endpoint7dayData = await this.getActivities(
+      user,
+      `activities/${endpoint}/date/today/7d.json`,
+    );
+
+    const sum7days = endpoint7dayData[key]
+      .map((a) => Number(a.value))
+      .reduce((a, b) => a + b);
+
+    const endpointMonthData = await this.getActivities(
+      user,
+      `activities/${endpoint}/date/today/1m.json`,
+    );
+
+    const sumMonthData = endpointMonthData[key]
+      .map((a) => Number(a.value))
+      .reduce((a, b) => a + b);
+
+    const endpointYearData = await this.getActivities(
+      user,
+      `activities/${endpoint}/date/today/1m.json`,
+    );
+
+    const sumYearData = endpointYearData[key]
+      .map((a) => Number(a.value))
+      .reduce((a, b) => a + b);
+
+    return {
+      today: endpointToday[key][0].value,
+      lastWeek: sum7days,
+      lastMonth: sumMonthData,
+      lastYear: sumYearData,
+    };
+  }
 }
 
 export = new FitbitActivityService();

@@ -1,8 +1,6 @@
-import e from 'cors';
 import { Request, Response } from 'express';
 import { connection } from '../connection/Connection';
 import { Activity } from '../entity/Activity';
-import { User } from '../entity/User';
 import { UserActivity } from '../entity/UserActivity';
 import { UserUnit } from '../entity/UserUnit';
 
