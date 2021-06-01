@@ -4,11 +4,10 @@ import { User } from '../entity/User';
 import fitbitActivityService from '../service/fitbit-activity.service';
 
 class FitbitController {
-  public async getBasic(req: Request, res: Response) {
+  public async getPeriodicCaloriesData(req: Request, res: Response) {
     const conn = await connection;
 
     try {
-      console.log('try');
       const user = await conn.manager.findOne(User, req.params.id, {
         relations: ['fitbit'],
       });
@@ -18,16 +17,44 @@ class FitbitController {
         'activityCalories',
       );
 
+      res.json({
+        statusCode: 200,
+        data: caloriesData,
+      });
+    } catch (error) {
+      res.json({ statusCode: 400, error });
+    }
+  }
+
+  public async getPeriodicStepsData(req: Request, res: Response) {
+    const conn = await connection;
+
+    try {
+      const user = await conn.manager.findOne(User, req.params.id, {
+        relations: ['fitbit'],
+      });
+
       const stepsData = await fitbitActivityService.getPeriodicData(
         user,
         'steps',
       );
 
-      const minutesLightlyActiveData =
-        await fitbitActivityService.getPeriodicData(
-          user,
-          'minutesLightlyActive',
-        );
+      res.json({
+        statusCode: 200,
+        data: stepsData,
+      });
+    } catch (error) {
+      res.json({ statusCode: 400, error });
+    }
+  }
+
+  public async getPeriodicMinutesFairlyActiveData(req: Request, res: Response) {
+    const conn = await connection;
+
+    try {
+      const user = await conn.manager.findOne(User, req.params.id, {
+        relations: ['fitbit'],
+      });
 
       const minutesFairlyActiveData =
         await fitbitActivityService.getPeriodicData(
@@ -37,10 +64,33 @@ class FitbitController {
 
       res.json({
         statusCode: 200,
-        caloriesData,
-        stepsData,
-        minutesLightlyActiveData,
-        minutesFairlyActiveData,
+        data: minutesFairlyActiveData,
+      });
+    } catch (error) {
+      res.json({ statusCode: 400, error });
+    }
+  }
+
+  public async getPeriodicminutesLightlyActiveData(
+    req: Request,
+    res: Response,
+  ) {
+    const conn = await connection;
+
+    try {
+      const user = await conn.manager.findOne(User, req.params.id, {
+        relations: ['fitbit'],
+      });
+
+      const minutesLightlyActiveData =
+        await fitbitActivityService.getPeriodicData(
+          user,
+          'minutesLightlyActive',
+        );
+
+      res.json({
+        statusCode: 200,
+        data: minutesLightlyActiveData,
       });
     } catch (error) {
       res.json({ statusCode: 400, error });
