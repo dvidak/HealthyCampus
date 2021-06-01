@@ -4,7 +4,7 @@ import { User } from '../entity/User';
 import fitbitActivityService from '../service/fitbit-activity.service';
 
 class FitbitController {
-  public async getPeriodicCaloriesData(req: Request, res: Response) {
+  public async getPeriodicResourceData(req: Request, res: Response) {
     const conn = await connection;
 
     try {
@@ -12,85 +12,22 @@ class FitbitController {
         relations: ['fitbit'],
       });
 
-      const caloriesData = await fitbitActivityService.getPeriodicData(
-        user,
-        'activityCalories',
-      );
-
-      res.json({
-        statusCode: 200,
-        data: caloriesData,
-      });
-    } catch (error) {
-      res.json({ statusCode: 400, error });
-    }
-  }
-
-  public async getPeriodicStepsData(req: Request, res: Response) {
-    const conn = await connection;
-
-    try {
-      const user = await conn.manager.findOne(User, req.params.id, {
-        relations: ['fitbit'],
-      });
-
-      const stepsData = await fitbitActivityService.getPeriodicData(
-        user,
-        'steps',
-      );
-
-      res.json({
-        statusCode: 200,
-        data: stepsData,
-      });
-    } catch (error) {
-      res.json({ statusCode: 400, error });
-    }
-  }
-
-  public async getPeriodicMinutesFairlyActiveData(req: Request, res: Response) {
-    const conn = await connection;
-
-    try {
-      const user = await conn.manager.findOne(User, req.params.id, {
-        relations: ['fitbit'],
-      });
-
-      const minutesFairlyActiveData =
-        await fitbitActivityService.getPeriodicData(
+      const resourceData =
+        await fitbitActivityService.getPeriodicDataBasedOnDates(
           user,
-          'minutesFairlyActive',
+          req.params.resource,
+          req.params.baseDate,
+          req.params.endDate,
         );
 
-      res.json({
-        statusCode: 200,
-        data: minutesFairlyActiveData,
-      });
-    } catch (error) {
-      res.json({ statusCode: 400, error });
-    }
-  }
-
-  public async getPeriodicminutesLightlyActiveData(
-    req: Request,
-    res: Response,
-  ) {
-    const conn = await connection;
-
-    try {
-      const user = await conn.manager.findOne(User, req.params.id, {
-        relations: ['fitbit'],
-      });
-
-      const minutesLightlyActiveData =
-        await fitbitActivityService.getPeriodicData(
-          user,
-          'minutesLightlyActive',
-        );
+      const resourceDataMapped = resourceData.map((e) => ({
+        dateTime: e.dateTime,
+        [req.params.resource]: e.value,
+      }));
 
       res.json({
         statusCode: 200,
-        data: minutesLightlyActiveData,
+        data: resourceDataMapped,
       });
     } catch (error) {
       res.json({ statusCode: 400, error });

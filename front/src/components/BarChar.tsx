@@ -14,9 +14,11 @@ import {
 interface Props {
   data: any;
   title: string;
+  dataKeyX: string;
+  dataKeyBar: string;
 }
 
-const BarChartWrapper = ({ data, title }: Props) => {
+const BarChartWrapper = ({ data, dataKeyX, dataKeyBar, title }: Props) => {
   const isMobile = useMedia('(max-width: 767px)');
   const [width, setWidth] = useState(500);
 
@@ -51,12 +53,12 @@ const BarChartWrapper = ({ data, title }: Props) => {
           bottom: 5,
         }}
       >
-        <CartesianGrid strokeDasharray="4 4" />
-        <XAxis dataKey="name" />
+        <CartesianGrid strokeDasharray="4 10" />
+        <XAxis dataKey={dataKeyX} />
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="students" fill="#326771" />
+        <Bar dataKey={dataKeyBar} fill="#326771" />
       </BarChart>
     </div>
   );

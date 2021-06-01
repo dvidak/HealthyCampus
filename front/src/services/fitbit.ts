@@ -1,30 +1,62 @@
 import { get } from './api';
 
-const getPeriodicCaloriesData = async (userId: number) => {
-  const response = await get(`fitbit/calories/${userId}`);
+const getPeriodicCaloriesData = async (
+  userId: number,
+  baseDate: string,
+  endDate: string,
+) => {
+  const response = await get(
+    `fitbit/activityCalories/${userId}/${baseDate}/${endDate}`,
+  );
   return response.data;
 };
 
-const getPeriodicStepsData = async (userId: number) => {
-  const response = await get(`fitbit/steps/${userId}`);
+const getPeriodicStepsData = async (
+  userId: number,
+  baseDate: string,
+  endDate: string,
+) => {
+  const response = await get(`fitbit/steps/${userId}/${baseDate}/${endDate}`);
   return response.data;
 };
 
-const getPeriodicMinutesLightlyActiveData = async (userId: number) => {
-  const response = await get(`fitbit/minutes-lightly-active/${userId}`);
+const getPeriodicFloorsData = async (
+  userId: number,
+  baseDate: string,
+  endDate: string,
+) => {
+  const response = await get(`fitbit/floors/${userId}/${baseDate}/${endDate}`);
   return response.data;
 };
 
-const getPeriodicMinutesFairlyActiveData = async (userId: number) => {
-  const response = await get(`fitbit/minutes-fairly-active/${userId}`);
+const getPeriodicElevationData = async (
+  userId: number,
+  baseDate: string,
+  endDate: string,
+) => {
+  const response = await get(
+    `fitbit/elevation/${userId}/${baseDate}/${endDate}`,
+  );
+  return response.data;
+};
+
+const getPeriodicDistanceData = async (
+  userId: number,
+  baseDate: string,
+  endDate: string,
+) => {
+  const response = await get(
+    `fitbit/distance/${userId}/${baseDate}/${endDate}`,
+  );
   return response.data;
 };
 
 const fitbitService = {
   getPeriodicCaloriesData,
   getPeriodicStepsData,
-  getPeriodicMinutesLightlyActiveData,
-  getPeriodicMinutesFairlyActiveData,
+  getPeriodicFloorsData,
+  getPeriodicElevationData,
+  getPeriodicDistanceData,
 };
 
 export default fitbitService;

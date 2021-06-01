@@ -88,18 +88,24 @@ const ActivityStatisticForStudent = () => {
         <BarChartWrapper
           title="Calories statistic"
           data={activityCalories}
+          dataKeyX="name"
+          dataKeyBar="students"
         ></BarChartWrapper>
       </Grid>
       <Grid item md={4} xs={12}>
         <BarChartWrapper
           title="Distance statistic"
           data={activityDistance}
+          dataKeyX="name"
+          dataKeyBar="students"
         ></BarChartWrapper>
       </Grid>
       <Grid item md={4} xs={12}>
         <BarChartWrapper
           title="Duration statistic"
           data={activityDuration}
+          dataKeyX="name"
+          dataKeyBar="students"
         ></BarChartWrapper>
       </Grid>
     </Grid>

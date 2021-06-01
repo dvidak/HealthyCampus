@@ -96,6 +96,22 @@ class FitbitActivityService {
     }
   }
 
+  public async getPeriodicDataBasedOnDates(
+    user: User,
+    endpoint: string,
+    baseDate: string,
+    endDate: string,
+  ) {
+    const key = `activities-${endpoint}`;
+
+    const response = await this.getActivities(
+      user,
+      `activities/${endpoint}/date/${baseDate}/${endDate}.json`,
+    );
+
+    return response[key];
+  }
+
   public async getPeriodicData(user: User, endpoint: string) {
     const key = `activities-${endpoint}`;
 
