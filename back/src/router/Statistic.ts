@@ -33,6 +33,11 @@ class StatisticRouter {
       '/activity/:id/duration',
       this.controller.getActivityDurationPercentagesByUser,
     );
+
+    this._router.get(
+      '/dashboard/:userId',
+      this.controller.getUnitActivityCompletionRateForUser,
+    );
   }
 }
 

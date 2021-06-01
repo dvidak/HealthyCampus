@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { connection } from '../connection/Connection';
 import { Activity } from '../entity/Activity';
+import { User } from '../entity/User';
 import { UserActivity } from '../entity/UserActivity';
 import { UserUnit } from '../entity/UserUnit';
 
@@ -302,6 +303,37 @@ class StatisticController {
     } catch (error) {
       res.json({ statusCode: 400, error });
     }
+  }
+
+  public async getUnitActivityCompletionRateForUser(
+    req: Request,
+    res: Response,
+  ) {
+    const conn = await connection;
+
+    const user: User = await conn.manager.findOne(User, req.params.userId);
+    const userUnit: UserUnit = await conn.manager.findOne(UserUnit, {
+      user: user,
+    });
+
+    const activities: Activity[] = await conn.manager.find(Activity, {
+      relations: ['createdBy'],
+    });
+
+    const unitActivitiesCount = activities
+      .filter((activity) => activity.createdBy.unit.id === userUnit.unit.id)
+      .map((a) => a.id).length;
+
+    const studentActivitiesCount = await conn.manager.count(UserActivity, {
+      relations: ['activity', 'student'],
+      where: {
+        student: userUnit,
+      },
+    });
+
+    const percentage = (studentActivitiesCount / unitActivitiesCount) * 100;
+
+    res.json({ statusCode: 200, percentage });
   }
 }
 
