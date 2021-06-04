@@ -2,6 +2,8 @@ import { Activity } from '../models/Activity';
 import { Unit } from '../models/Unit';
 import { University } from '../models/University';
 
+export const COLORS = ['#2C8C99', '#42D9C8', '#28464B', '#326771'];
+
 export const universityGroupOptions = (
   universities: University[],
 ): Record<string, Record<number, string>> => {

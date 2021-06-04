@@ -59,6 +59,19 @@ const buckets = [
   },
 ];
 
+const getCurrentUserBucketName = (currentValue: number) => {
+  let name;
+  buckets.forEach((bucket) => {
+    if (
+      currentValue > bucket.min &&
+      (currentValue < bucket.max || currentValue === bucket.max)
+    ) {
+      name = bucket.name;
+    }
+  });
+  return name;
+};
+
 class StatisticController {
   public async getActivityCompletionRate(req: Request, res: Response) {
     const conn = await connection;
@@ -91,11 +104,11 @@ class StatisticController {
 
       const data = [
         {
-          name: 'Other',
+          name: 'Did not participate',
           value: unitStudentsCount - studentActivityCount,
         },
         {
-          name: 'Connected users',
+          name: 'Participate',
           value: studentActivityCount,
         },
       ];
@@ -113,6 +126,17 @@ class StatisticController {
     const conn = await connection;
 
     try {
+      const user = await conn.manager.findOne(User, req.params.userId, {
+        relations: ['userUnit'],
+      });
+
+      if (!user) {
+        res.json({
+          statusCode: 404,
+          error: 'User with given id does not exist',
+        });
+      }
+
       const activity = await conn.manager.findOne(Activity, req.params.id, {
         relations: ['createdBy'],
       });
@@ -132,12 +156,28 @@ class StatisticController {
       });
 
       const studentActivities = await conn.manager.find(UserActivity, {
+        relations: ['student'],
         where: {
           activity: activity,
         },
       });
 
       const maxCalories = activity.goalCalories;
+
+      const currentUserActivity = studentActivities.find(
+        (a) => a.student.id === user.userUnit.id,
+      );
+
+      const currentUserValue = Math.round(
+        (currentUserActivity.calories / maxCalories) * 100,
+      );
+
+      const currentUserValueFormatted =
+        currentUserValue > 100 ? 100 : currentUserValue;
+
+      const currentUserBucketName = getCurrentUserBucketName(
+        currentUserValueFormatted,
+      );
 
       let mapCalories: Record<string, number> = {};
 
@@ -166,7 +206,13 @@ class StatisticController {
         students: e[1],
       }));
 
-      res.json({ statusCode: 200, data: returnValue });
+      res.json({
+        statusCode: 200,
+        data: {
+          statistic: returnValue,
+          currentUserBucketName,
+        },
+      });
     } catch (error) {
       res.json({ statusCode: 400, error });
     }
@@ -179,6 +225,17 @@ class StatisticController {
     const conn = await connection;
 
     try {
+      const user = await conn.manager.findOne(User, req.params.userId, {
+        relations: ['userUnit'],
+      });
+
+      if (!user) {
+        res.json({
+          statusCode: 404,
+          error: 'User with given id does not exist',
+        });
+      }
+
       const activity = await conn.manager.findOne(Activity, req.params.id, {
         relations: ['createdBy'],
       });
@@ -198,12 +255,28 @@ class StatisticController {
       });
 
       const studentActivities = await conn.manager.find(UserActivity, {
+        relations: ['student'],
         where: {
           activity: activity,
         },
       });
 
       const maxDistance = activity.goalDistance;
+
+      const currentUserActivity = studentActivities.find(
+        (a) => a.student.id === user.userUnit.id,
+      );
+
+      const currentUserValue = Math.round(
+        (currentUserActivity.distance / maxDistance) * 100,
+      );
+
+      const currentUserValueFormatted =
+        currentUserValue > 100 ? 100 : currentUserValue;
+
+      const currentUserBucketName = getCurrentUserBucketName(
+        currentUserValueFormatted,
+      );
 
       let mapDistance: Record<string, number> = {};
 
@@ -233,7 +306,13 @@ class StatisticController {
         students: e[1],
       }));
 
-      res.json({ statusCode: 200, data: returnValue });
+      res.json({
+        statusCode: 200,
+        data: {
+          statistic: returnValue,
+          currentUserBucketName,
+        },
+      });
     } catch (error) {
       res.json({ statusCode: 400, error });
     }
@@ -246,6 +325,17 @@ class StatisticController {
     const conn = await connection;
 
     try {
+      const user = await conn.manager.findOne(User, req.params.userId, {
+        relations: ['userUnit'],
+      });
+
+      if (!user) {
+        res.json({
+          statusCode: 404,
+          error: 'User with given id does not exist',
+        });
+      }
+
       const activity = await conn.manager.findOne(Activity, req.params.id, {
         relations: ['createdBy'],
       });
@@ -265,12 +355,28 @@ class StatisticController {
       });
 
       const studentActivities = await conn.manager.find(UserActivity, {
+        relations: ['student'],
         where: {
           activity: activity,
         },
       });
 
       const maxDuration = activity.goalDuration;
+
+      const currentUserActivity = studentActivities.find(
+        (a) => a.student.id === user.userUnit.id,
+      );
+
+      const currentUserValue = Math.round(
+        (currentUserActivity.duration / maxDuration) * 100,
+      );
+
+      const currentUserValueFormatted =
+        currentUserValue > 100 ? 100 : currentUserValue;
+
+      const currentUserBucketName = getCurrentUserBucketName(
+        currentUserValueFormatted,
+      );
 
       let mapDuration: Record<string, number> = {};
 
@@ -300,7 +406,13 @@ class StatisticController {
         students: e[1],
       }));
 
-      res.json({ statusCode: 200, data: returnValue });
+      res.json({
+        statusCode: 200,
+        data: {
+          statistic: returnValue,
+          currentUserBucketName,
+        },
+      });
     } catch (error) {
       res.json({ statusCode: 400, error });
     }

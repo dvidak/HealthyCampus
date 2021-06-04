@@ -2,13 +2,12 @@ import { Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useMedia } from 'react-use';
 import { Cell, Pie, PieChart, Sector } from 'recharts';
+import { COLORS } from '../shared/helpers';
 
 interface Props {
   data: any;
   title: string;
 }
-
-const COLORS = ['#2C8C99', '#42D9C8', '#28464B', '#326771'];
 
 const renderActiveShape = ({
   cx,
@@ -107,6 +106,9 @@ const PieChartWrapper = ({ data, title }: Props) => {
       </Typography>
       <PieChart width={400} height={400}>
         <Pie
+          style={{
+            fontFamily: 'Arial',
+          }}
           activeIndex={activeIndex}
           activeShape={renderActiveShape}
           data={data}
@@ -115,7 +117,7 @@ const PieChartWrapper = ({ data, title }: Props) => {
           dataKey="value"
           onMouseEnter={onPieEnter}
         >
-          {data.map((_: any, index: number) => (
+          {data.map((_: unknown, index: number) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>

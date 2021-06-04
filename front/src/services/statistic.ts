@@ -7,19 +7,28 @@ const getActivityCompletionRate = async (activityId: number) => {
 };
 
 const getActivityCaloriesPercentagesPerUsers = async (activityId: number) => {
-  const response = await get(`statistic/activity/${activityId}/calories`);
+  const userId = Number(localStorage.getItem('userId'));
+  const response = await get(
+    `statistic/activity/${activityId}/calories/${userId}`,
+  );
 
   return response.data;
 };
 
 const getActivityDistancePercentagesByUser = async (activityId: number) => {
-  const response = await get(`statistic/activity/${activityId}/distance`);
+  const userId = Number(localStorage.getItem('userId'));
+  const response = await get(
+    `statistic/activity/${activityId}/distance/${userId}`,
+  );
 
   return response.data;
 };
 
 const getActivityDurationPercentagesByUser = async (activityId: number) => {
-  const response = await get(`statistic/activity/${activityId}/duration`);
+  const userId = Number(localStorage.getItem('userId'));
+  const response = await get(
+    `statistic/activity/${activityId}/duration/${userId}`,
+  );
 
   return response.data;
 };

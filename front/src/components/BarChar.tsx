@@ -9,16 +9,25 @@ import {
   Tooltip,
   XAxis,
   YAxis,
+  Cell,
 } from 'recharts';
+import { COLORS } from '../shared/helpers';
 
 interface Props {
   data: any;
   title: string;
   dataKeyX: string;
   dataKeyBar: string;
+  currentBucket?: string | undefined;
 }
 
-const BarChartWrapper = ({ data, dataKeyX, dataKeyBar, title }: Props) => {
+const BarChartWrapper = ({
+  data,
+  dataKeyX,
+  dataKeyBar,
+  title,
+  currentBucket,
+}: Props) => {
   const isMobile = useMedia('(max-width: 767px)');
   const [width, setWidth] = useState(500);
 
@@ -43,6 +52,9 @@ const BarChartWrapper = ({ data, dataKeyX, dataKeyBar, title }: Props) => {
         {title}
       </Typography>
       <BarChart
+        style={{
+          fontFamily: 'Arial',
+        }}
         width={width}
         height={300}
         data={data}
@@ -58,7 +70,15 @@ const BarChartWrapper = ({ data, dataKeyX, dataKeyBar, title }: Props) => {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey={dataKeyBar} fill="#326771" />
+        <Bar dataKey={dataKeyBar} fill="#326771">
+          {data &&
+            data.map((entry: any, index: number) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={currentBucket === entry.name ? COLORS[1] : COLORS[3]}
+              />
+            ))}
+        </Bar>
       </BarChart>
     </div>
   );

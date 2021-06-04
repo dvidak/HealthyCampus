@@ -20,17 +20,17 @@ class StatisticRouter {
     );
 
     this._router.get(
-      '/activity/:id/calories',
+      '/activity/:id/calories/:userId',
       this.controller.getActivityCaloriesPercentagesPerUsers,
     );
 
     this._router.get(
-      '/activity/:id/distance',
+      '/activity/:id/distance/:userId',
       this.controller.getActivityDistancePercentagesByUser,
     );
 
     this._router.get(
-      '/activity/:id/duration',
+      '/activity/:id/duration/:userId',
       this.controller.getActivityDurationPercentagesByUser,
     );
 

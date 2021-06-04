@@ -7,6 +7,12 @@ import statisticService from '../services/statistic';
 
 const ActivityStatisticForStudent = () => {
   let { id } = useParams();
+  const [caloriesPercentage, setCaloriesPercentage] =
+    useState<string | undefined>();
+  const [distancePercentage, setDistancePercentage] =
+    useState<string | undefined>();
+  const [durationPercentage, setDurationPercentage] =
+    useState<string | undefined>();
   const [activityCompletitionRate, setActivityCompletitionRate] = useState([]);
   const [activityCalories, setActivityCalories] = useState([]);
   const [activityDistance, setActivityDistance] = useState([]);
@@ -22,19 +28,22 @@ const ActivityStatisticForStudent = () => {
   const fetchActivityCalories = useCallback(async () => {
     const response =
       await statisticService.getActivityCaloriesPercentagesPerUsers(Number(id));
-    setActivityCalories(response);
+    setActivityCalories(response?.statistic);
+    setCaloriesPercentage(response?.currentUserBucketName);
   }, [id]);
 
   const fetchActivityDistances = useCallback(async () => {
     const response =
       await statisticService.getActivityDistancePercentagesByUser(Number(id));
-    setActivityDistance(response);
+    setActivityDistance(response?.statistic);
+    setDistancePercentage(response?.currentUserBucketName);
   }, [id]);
 
   const fetchActivityDuration = useCallback(async () => {
     const response =
       await statisticService.getActivityDurationPercentagesByUser(Number(id));
-    setActivityDuration(response);
+    setActivityDuration(response?.statistic);
+    setDurationPercentage(response?.currentUserBucketName);
   }, [id]);
 
   useEffect(() => {
@@ -53,7 +62,7 @@ const ActivityStatisticForStudent = () => {
     <Grid container sx={{ width: '80%', margin: 'auto' }} spacing={3}>
       <Grid item md={6} xs={12}>
         <PieChartWrapper
-          title="Completition rate"
+          title=""
           data={activityCompletitionRate}
         ></PieChartWrapper>
       </Grid>
@@ -63,6 +72,7 @@ const ActivityStatisticForStudent = () => {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
+          alignItems: 'center',
         }}
         md={6}
         xs={12}
@@ -90,6 +100,7 @@ const ActivityStatisticForStudent = () => {
           data={activityCalories}
           dataKeyX="name"
           dataKeyBar="students"
+          currentBucket={caloriesPercentage}
         ></BarChartWrapper>
       </Grid>
       <Grid item md={4} xs={12}>
@@ -98,6 +109,7 @@ const ActivityStatisticForStudent = () => {
           data={activityDistance}
           dataKeyX="name"
           dataKeyBar="students"
+          currentBucket={distancePercentage}
         ></BarChartWrapper>
       </Grid>
       <Grid item md={4} xs={12}>
@@ -106,6 +118,7 @@ const ActivityStatisticForStudent = () => {
           data={activityDuration}
           dataKeyX="name"
           dataKeyBar="students"
+          currentBucket={durationPercentage}
         ></BarChartWrapper>
       </Grid>
     </Grid>
