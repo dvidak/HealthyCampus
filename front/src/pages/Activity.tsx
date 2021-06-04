@@ -26,22 +26,20 @@ const ActivityPage = () => {
   return (
     <Box
       sx={{
+        position: 'relative',
         backgroundColor: 'background.default',
-        minHeight: '100%',
+        width: '80%',
+        margin: '2rem auto',
       }}
     >
       <AcitivtyTable activities={activities}></AcitivtyTable>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          p: 3,
-        }}
+      <Button
+        sx={{ position: 'absolute', right: 0, margin: '1rem 0' }}
+        variant="contained"
+        onClick={onCreateClick}
       >
-        <Button variant="contained" onClick={onCreateClick}>
-          Create
-        </Button>
-      </Box>
+        Create
+      </Button>
     </Box>
   );
 };

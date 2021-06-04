@@ -38,7 +38,7 @@ const ConnectedActivitiesTable = ({ activities }: Props) => {
         <TableHead>
           <TableRow>
             <TableCell>
-              <Typography color="secondary" variant="h3">
+              <Typography color="secondary" variant="h4">
                 Tracked activities
               </Typography>
             </TableCell>

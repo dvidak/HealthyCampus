@@ -25,6 +25,7 @@ const Login = () => {
 
     localStorage.setItem('token', loginResponse.token);
     localStorage.setItem('userId', loginResponse.user.id);
+    localStorage.setItem('roleId', loginResponse.user.role.id);
 
     if (loginResponse.user.role.id === 1) {
       navigate('/app/admin', { replace: true });

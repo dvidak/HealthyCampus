@@ -1,10 +1,10 @@
 import { Grid, TextField, Typography } from '@material-ui/core';
+import NotInterestedIcon from '@material-ui/icons/NotInterested';
 import React, { useCallback, useEffect, useState } from 'react';
 import { usePrevious } from 'react-use';
 import BarChartWrapper from '../components/BarChar';
 import fitbitService from '../services/fitbit';
 import statisticService from '../services/statistic';
-import NotInterestedIcon from '@material-ui/icons/NotInterested';
 
 const Dashboard = () => {
   const userId = Number(localStorage.getItem('userId'));
@@ -19,12 +19,16 @@ const Dashboard = () => {
   const [distancePeriodicData, setDistancePeriodicData] = useState(null);
   const [stepsPeriodicData, setStepsPeriodicData] = useState(null);
   const [floorsData, setFloorsData] = useState(null);
-  const [elevationData, setElevationData] = useState(null);
+  const [lightlyActiveMinutesData, setLightlyActiveMinutesData] =
+    useState(null);
+  const [veryActiveMinutesData, setVeryActiveMinutesData] = useState(null);
 
+  // Todo set start and enddate from today
   const fetchUnitActivityCompletionRate = useCallback(async () => {
     const response =
       await statisticService.getUnitActivityCompletionRateForUser(userId);
-    setCaloriesPeriodicData(response);
+    console.log({ response });
+    // set activtiy completition rate
   }, [userId]);
 
   const fetchPeriodicCaloriesData = useCallback(
@@ -64,14 +68,26 @@ const Dashboard = () => {
     [userId],
   );
 
-  const fetchPeriodicElevationData = useCallback(
+  const fetchPeriodicVeryActiveMinutesData = useCallback(
     async (startDate: string, endDate: string) => {
-      const response = await fitbitService.getPeriodicElevationData(
+      const response = await fitbitService.getVeryActiveMinutesData(
         userId,
         startDate,
         endDate,
       );
-      setElevationData(response);
+      setVeryActiveMinutesData(response);
+    },
+    [userId],
+  );
+
+  const fetchPeriodicLightlyActiveMinutesData = useCallback(
+    async (startDate: string, endDate: string) => {
+      const response = await fitbitService.getLightlyActiveMinutesData(
+        userId,
+        startDate,
+        endDate,
+      );
+      setLightlyActiveMinutesData(response);
     },
     [userId],
   );
@@ -106,8 +122,9 @@ const Dashboard = () => {
       fetchPeriodicCaloriesData(startDate, endDate);
       fetchPeriodicStepsData(startDate, endDate);
       fetchPeriodicDataFloors(startDate, endDate);
-      fetchPeriodicElevationData(startDate, endDate);
+      fetchPeriodicVeryActiveMinutesData(startDate, endDate);
       fetchPeriodicDataDistance(startDate, endDate);
+      fetchPeriodicLightlyActiveMinutesData(startDate, endDate);
     }
   }, [
     startDate,
@@ -118,7 +135,8 @@ const Dashboard = () => {
     fetchPeriodicStepsData,
     fetchPeriodicDataDistance,
     fetchPeriodicDataFloors,
-    fetchPeriodicElevationData,
+    fetchPeriodicVeryActiveMinutesData,
+    fetchPeriodicLightlyActiveMinutesData,
   ]);
 
   return (
@@ -187,7 +205,7 @@ const Dashboard = () => {
           ></BarChartWrapper>
         )}
       </Grid>
-      <Grid item md={6} xs={12}>
+      <Grid item md={4} xs={12}>
         {floorsData && (
           <BarChartWrapper
             title="Floors"
@@ -197,15 +215,50 @@ const Dashboard = () => {
           ></BarChartWrapper>
         )}
       </Grid>
-      <Grid item md={6} xs={12}>
-        {elevationData && (
+      <Grid item md={4} xs={12}>
+        {veryActiveMinutesData && (
           <BarChartWrapper
-            title="Elevation"
-            data={elevationData}
+            title="Very active minutes"
+            data={veryActiveMinutesData}
             dataKeyX="dateTime"
-            dataKeyBar="elevation"
+            dataKeyBar="minutesVeryActive"
           ></BarChartWrapper>
         )}
+      </Grid>
+      <Grid item md={4} xs={12}>
+        {lightlyActiveMinutesData && (
+          <BarChartWrapper
+            title="Lightly active minutes"
+            data={lightlyActiveMinutesData}
+            dataKeyX="dateTime"
+            dataKeyBar="minutesLightlyActive"
+          ></BarChartWrapper>
+        )}
+      </Grid>
+      <Grid item md={12} xs={12}>
+        {!caloriesPeriodicData &&
+          !floorsData &&
+          !stepsPeriodicData &&
+          !distancePeriodicData &&
+          !veryActiveMinutesData &&
+          !lightlyActiveMinutesData && (
+            <Typography
+              color="primary"
+              variant="h2"
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              No data
+              <NotInterestedIcon
+                sx={{ margin: 1 }}
+                color="primary"
+                fontSize="large"
+              />
+            </Typography>
+          )}
       </Grid>
     </Grid>
   );

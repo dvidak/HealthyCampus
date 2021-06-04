@@ -32,15 +32,12 @@ const ActivityTable = ({ activities }: Props) => {
   };
 
   return (
-    <TableContainer
-      sx={{ width: '80%', margin: '5rem auto' }}
-      component={Paper}
-    >
+    <TableContainer component={Paper}>
       <Table>
         <TableHead>
           <TableRow>
             <TableCell>
-              <Typography color="secondary" variant="h5">
+              <Typography color="secondary" variant="h4">
                 Activities
               </Typography>
             </TableCell>

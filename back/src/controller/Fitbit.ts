@@ -22,7 +22,7 @@ class FitbitController {
 
       const resourceDataMapped = resourceData.map((e) => ({
         dateTime: e.dateTime,
-        [req.params.resource]: e.value,
+        [req.params.resource]: Number(e.value),
       }));
 
       res.json({

@@ -29,13 +29,24 @@ const getPeriodicFloorsData = async (
   return response.data;
 };
 
-const getPeriodicElevationData = async (
+const getVeryActiveMinutesData = async (
   userId: number,
   baseDate: string,
   endDate: string,
 ) => {
   const response = await get(
-    `fitbit/elevation/${userId}/${baseDate}/${endDate}`,
+    `fitbit/minutesVeryActive/${userId}/${baseDate}/${endDate}`,
+  );
+  return response.data;
+};
+
+const getLightlyActiveMinutesData = async (
+  userId: number,
+  baseDate: string,
+  endDate: string,
+) => {
+  const response = await get(
+    `fitbit/minutesLightlyActive/${userId}/${baseDate}/${endDate}`,
   );
   return response.data;
 };
@@ -55,8 +66,9 @@ const fitbitService = {
   getPeriodicCaloriesData,
   getPeriodicStepsData,
   getPeriodicFloorsData,
-  getPeriodicElevationData,
+  getVeryActiveMinutesData,
   getPeriodicDistanceData,
+  getLightlyActiveMinutesData,
 };
 
 export default fitbitService;
