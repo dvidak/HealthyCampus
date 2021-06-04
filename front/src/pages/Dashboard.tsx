@@ -24,10 +24,9 @@ const Dashboard = () => {
   const [veryActiveMinutesData, setVeryActiveMinutesData] = useState(null);
 
   // Todo set start and enddate from today
+  // set activtiy completition rate
   const fetchUnitActivityCompletionRate = useCallback(async () => {
-    const response =
-      await statisticService.getUnitActivityCompletionRateForUser(userId);
-    // set activtiy completition rate
+    await statisticService.getUnitActivityCompletionRateForUser(userId);
   }, [userId]);
 
   const fetchPeriodicCaloriesData = useCallback(

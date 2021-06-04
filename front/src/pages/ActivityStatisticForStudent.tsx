@@ -3,7 +3,11 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import BarChartWrapper from '../components/BarChar';
 import PieChartWrapper from '../components/PieChart';
+import { Activity } from '../models/Activity';
+import activityService from '../services/activity';
 import statisticService from '../services/statistic';
+import { minuteInMs } from '../shared/const';
+import { getDate } from '../shared/helpers';
 
 const ActivityStatisticForStudent = () => {
   let { id } = useParams();
@@ -17,6 +21,12 @@ const ActivityStatisticForStudent = () => {
   const [activityCalories, setActivityCalories] = useState([]);
   const [activityDistance, setActivityDistance] = useState([]);
   const [activityDuration, setActivityDuration] = useState([]);
+  const [activity, setActivity] = useState<Activity>();
+
+  const fetchActivity = useCallback(async () => {
+    const response = await activityService.getActivityById(Number(id));
+    setActivity(response);
+  }, [id]);
 
   const fetchActivityCompletionRate = useCallback(async () => {
     const response = await statisticService.getActivityCompletionRate(
@@ -47,11 +57,13 @@ const ActivityStatisticForStudent = () => {
   }, [id]);
 
   useEffect(() => {
+    fetchActivity();
     fetchActivityCompletionRate();
     fetchActivityCalories();
     fetchActivityDistances();
     fetchActivityDuration();
   }, [
+    fetchActivity,
     fetchActivityCalories,
     fetchActivityCompletionRate,
     fetchActivityDistances,
@@ -60,12 +72,6 @@ const ActivityStatisticForStudent = () => {
 
   return (
     <Grid container sx={{ width: '80%', margin: 'auto' }} spacing={3}>
-      <Grid item md={6} xs={12}>
-        <PieChartWrapper
-          title=""
-          data={activityCompletitionRate}
-        ></PieChartWrapper>
-      </Grid>
       <Grid
         item
         sx={{
@@ -78,20 +84,37 @@ const ActivityStatisticForStudent = () => {
         xs={12}
       >
         <Card sx={{ width: '80%' }} variant="outlined">
-          <CardContent>
-            <Typography color="textSecondary" gutterBottom>
-              More details about activitiy
-            </Typography>
-            <Typography variant="h5" component="h2">
-              {' '}
-              some
-            </Typography>
-            <Typography color="primary">blablabla</Typography>
-            <Typography variant="body2" component="p">
-              blablabla
-            </Typography>
-          </CardContent>
+          {activity && (
+            <CardContent>
+              <Typography variant="h4" color="secondary" gutterBottom>
+                {activity.name} - {activity.description}
+              </Typography>
+              <Typography color="primary" variant="body1" component="p">
+                Participated {activity.userActivities?.length} students
+              </Typography>
+              <Typography color="primary" variant="body1">
+                From {getDate(activity.startDate)} to{' '}
+                {getDate(activity.endDate)}
+              </Typography>
+              <br></br>
+              <Typography variant="body1" component="p">
+                Gaol calories: {activity.goalCalories} kcal
+              </Typography>{' '}
+              <Typography variant="body1" component="p">
+                Goal duration: {activity.goalDistance} meters
+              </Typography>{' '}
+              <Typography variant="body1" component="p">
+                Goal distance: {activity.goalDuration / minuteInMs} minutes
+              </Typography>
+            </CardContent>
+          )}
         </Card>
+      </Grid>
+      <Grid item md={6} xs={12}>
+        <PieChartWrapper
+          title=""
+          data={activityCompletitionRate}
+        ></PieChartWrapper>
       </Grid>
 
       <Grid item md={4} xs={12}>

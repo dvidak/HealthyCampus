@@ -1,6 +1,5 @@
 import React from 'react';
 import DashboardLayout from './components/layout/DashboardLayout';
-import Admin from './pages/Admin';
 import Home from './pages/Home';
 import ActivityType from './pages/ActivityType';
 import Login from './pages/Login';
@@ -24,7 +23,6 @@ const routes = (isLoggedIn: boolean) => [
     path: 'app',
     element: isLoggedIn ? <DashboardLayout /> : <Navigate to="/login" />,
     children: [
-      { path: 'admin', element: <Admin /> },
       { path: 'home', element: <Home /> },
       { path: 'dashboard', element: <Dashboard /> },
       { path: 'activity', element: <ActivityPage /> },

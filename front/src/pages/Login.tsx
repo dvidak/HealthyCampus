@@ -28,7 +28,7 @@ const Login = () => {
     localStorage.setItem('roleId', loginResponse.user.role.id);
 
     if (loginResponse.user.role.id === 1) {
-      navigate('/app/admin', { replace: true });
+      navigate('/app/universities', { replace: true });
     }
 
     if (loginResponse.user.role.id === 2) {
