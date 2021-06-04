@@ -4,6 +4,7 @@ import { Activity } from '../entity/Activity';
 import { User } from '../entity/User';
 import { UserActivity } from '../entity/UserActivity';
 import { UserUnit } from '../entity/UserUnit';
+import ActivityType from './ActivityType';
 
 const buckets = [
   {
@@ -334,6 +335,81 @@ class StatisticController {
     const percentage = (studentActivitiesCount / unitActivitiesCount) * 100;
 
     res.json({ statusCode: 200, percentage });
+  }
+
+  public async getProfesorActivitiesStatistic(req: Request, res: Response) {
+    const conn = await connection;
+
+    const user: User = await conn.manager.findOne(User, req.params.userId, {
+      relations: ['role'],
+    });
+
+    if (user.role.id !== 3) {
+      res.json({ statusCode: 401, message: 'Only profesor can access.' });
+    }
+
+    const userUnit: UserUnit = await conn.manager.findOne(UserUnit, {
+      user: user,
+    });
+
+    // Activities created by some user
+    const activities: Activity[] = await conn.manager.find(Activity, {
+      relations: ['createdBy', 'userActivities'],
+      where: {
+        createdBy: userUnit,
+      },
+    });
+
+    //Count students on that university
+    const users: User[] = await conn.manager.find(User, {
+      relations: ['userUnit', 'role'],
+      where: {
+        role: {
+          id: 2,
+        },
+      },
+    });
+
+    const filteredUsersIds = users
+      .filter((user) => user.userUnit.unit.id === userUnit.unit.id)
+      .map((user) => user.id);
+
+    const popular = {};
+    activities.forEach((activity) => {
+      const percentage = Math.floor(
+        (activity.userActivities.length / filteredUsersIds.length) * 100,
+      );
+      popular[activity.id] = {
+        name: activity.name,
+        type: activity.type,
+        percentage: percentage,
+      };
+    });
+
+    const completed = {};
+    activities.forEach((activity) => {
+      let counter = 0;
+      activity.userActivities.forEach((userActivity) => {
+        if (
+          userActivity.distance > activity.goalDistance &&
+          userActivity.duration > activity.goalDuration &&
+          userActivity.calories > activity.goalCalories
+        ) {
+          counter++;
+        }
+      });
+      const percentage = Math.floor((counter / filteredUsersIds.length) * 100);
+      completed[activity.id] = {
+        name: activity.name,
+        type: activity.type,
+        percentage: percentage,
+      };
+    });
+
+    res.json({
+      statusCode: 200,
+      data: { popularity: popular, completionRate: completed },
+    });
   }
 }
 

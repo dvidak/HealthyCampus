@@ -38,6 +38,11 @@ class StatisticRouter {
       '/dashboard/:userId',
       this.controller.getUnitActivityCompletionRateForUser,
     );
+
+    this._router.get(
+      '/dashboard/profesor/:userId',
+      this.controller.getProfesorActivitiesStatistic,
+    );
   }
 }
 

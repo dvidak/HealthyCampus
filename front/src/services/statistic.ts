@@ -30,12 +30,19 @@ const getUnitActivityCompletionRateForUser = async (userId: number) => {
   return response;
 };
 
+const getProfesorActivitiesStatistic = async (userId: number) => {
+  const response = await get(`statistic/dashboard/profesor/${userId}`);
+
+  return response.data;
+};
+
 const statisticService = {
   getActivityCompletionRate,
   getActivityCaloriesPercentagesPerUsers,
   getActivityDistancePercentagesByUser,
   getActivityDurationPercentagesByUser,
   getUnitActivityCompletionRateForUser,
+  getProfesorActivitiesStatistic,
 };
 
 export default statisticService;

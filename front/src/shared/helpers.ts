@@ -1,3 +1,4 @@
+import { Activity } from '../models/Activity';
 import { Unit } from '../models/Unit';
 import { University } from '../models/University';
 
@@ -14,6 +15,13 @@ export const universityGroupOptions = (
   });
 
   return options;
+};
+
+export const activityOptions = (activities: Activity[]): any[] => {
+  return activities.map((a) => ({
+    id: a.id,
+    name: a.name,
+  }));
 };
 
 export const getDate = (date: string) => {

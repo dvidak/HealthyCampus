@@ -27,7 +27,6 @@ const Dashboard = () => {
   const fetchUnitActivityCompletionRate = useCallback(async () => {
     const response =
       await statisticService.getUnitActivityCompletionRateForUser(userId);
-    console.log({ response });
     // set activtiy completition rate
   }, [userId]);
 
