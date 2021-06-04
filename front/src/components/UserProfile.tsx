@@ -9,67 +9,122 @@ import {
   Typography,
 } from '@material-ui/core';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import { User } from '../models/User';
 import moment from 'moment';
+import React, { useEffect, useRef, useState } from 'react';
+import { User } from '../models/User';
+import userService from '../services/user';
 
 interface Props {
   user: User;
   handleFitbitLogin: () => void;
 }
 
-const UserProfile = ({ user, handleFitbitLogin }: Props) => (
-  <Card>
-    <CardContent>
-      <Box
-        sx={{
-          alignItems: 'center',
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        <Avatar
-          src={user.avatar}
+const UserProfile = ({ user, handleFitbitLogin }: Props) => {
+  const hiddenFileInput = useRef(null);
+  const [imagePreview, setImagePreview] = useState<string | null>('');
+
+  const handleClick = (event: any) => {
+    (hiddenFileInput.current as any).click();
+  };
+
+  useEffect(() => {}, [imagePreview]);
+
+  const handleSave = async () => {
+    if (imagePreview) {
+      await userService.updateUserImage({
+        id: user.id,
+        url: imagePreview,
+      });
+
+      setImagePreview(null);
+    }
+  };
+
+  const handleImageChange = (e: any) => {
+    e.preventDefault();
+
+    let reader = new FileReader();
+    let file = e.target.files[0];
+
+    reader.onloadend = () => {
+      const url = reader.result as any;
+      setImagePreview(url);
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  return (
+    <Card>
+      <CardContent>
+        <Box
           sx={{
-            height: 100,
-            width: 100,
+            alignItems: 'center',
+            display: 'flex',
+            flexDirection: 'column',
           }}
-        />
-        <Typography color="textPrimary" gutterBottom variant="h3">
-          {user.firstName} {user.lastName}
-        </Typography>
-        {user?.fitbit?.fitbitId && (
-          <Typography
+        >
+          <input
+            type="file"
+            ref={hiddenFileInput}
+            onChange={handleImageChange}
+            style={{ display: 'none' }}
+          />
+          <Avatar
+            src={imagePreview ? imagePreview : user.avatar}
             sx={{
-              display: 'flex',
-              alignItems: 'center',
+              height: 100,
+              width: 100,
             }}
-          >
-            <CheckCircleIcon sx={{ marginRight: 1 }} color="secondary" />{' '}
-            Connected to fitbit
+          />
+          <Typography color="textPrimary" gutterBottom variant="h3">
+            {user.firstName} {user.lastName}
           </Typography>
-        )}
+          {user?.fitbit?.fitbitId && (
+            <Typography
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <CheckCircleIcon sx={{ marginRight: 1 }} color="secondary" />{' '}
+              Connected to fitbit
+            </Typography>
+          )}
+          <Typography color="textSecondary" variant="body1">
+            {`${moment().format('hh:mm A')}`}
+          </Typography>
+        </Box>
+      </CardContent>
+      <Divider />
+      {!user?.fitbit?.fitbitId && (
+        <CardActions>
+          <Button variant="contained" fullWidth onClick={handleFitbitLogin}>
+            Connect to FitBit
+          </Button>
+        </CardActions>
+      )}
 
-        <Typography color="textSecondary" variant="body1">
-          {`${moment().format('hh:mm A')}`}
-        </Typography>
-      </Box>
-    </CardContent>
-    <Divider />
-    {!user?.fitbit?.fitbitId && (
+      <Divider />
       <CardActions>
-        <Button variant="contained" fullWidth onClick={handleFitbitLogin}>
-          Connect to FitBit
-        </Button>
+        {imagePreview && (
+          <Button
+            onClick={handleSave}
+            color="secondary"
+            variant="contained"
+            fullWidth
+          >
+            Save
+          </Button>
+        )}
+        {!imagePreview && (
+          <Button onClick={handleClick} color="primary" fullWidth>
+            Upload picture
+          </Button>
+        )}
       </CardActions>
-    )}
-
-    <Divider />
-    <CardActions>
-      <Button color="primary" fullWidth>
-        Upload picture
-      </Button>
-    </CardActions>
-  </Card>
-);
+    </Card>
+  );
+};
 
 export default UserProfile;

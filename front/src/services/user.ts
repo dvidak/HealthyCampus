@@ -19,10 +19,16 @@ const updateUser = async (data: UserUpdateData) => {
   return response;
 };
 
+const updateUserImage = async (data: { id: number; url: string }) => {
+  const response = await put(`user/${data.id}/image`, data);
+  return response;
+};
+
 const userService = {
   getUserById,
   getUsers,
   updateUser,
+  updateUserImage,
 };
 
 export default userService;

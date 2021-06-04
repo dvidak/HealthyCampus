@@ -81,6 +81,22 @@ class UserController {
     }
   }
 
+  public async updateUserImage(req: Request, res: Response) {
+    const conn = await connection;
+
+    try {
+      let oldUser = await conn.manager.findOne(User, req.params.id);
+
+      if (oldUser) {
+        oldUser.avatar = req.body.url;
+        await conn.manager.save(oldUser);
+      }
+      res.json({ statusCode: 204, message: 'Successfully updated.' });
+    } catch (error) {
+      res.json({ statusCode: 400, message: 'Image to large' });
+    }
+  }
+
   // TODO: Delete fitbit account?
   public async deleteUser(req: Request, res: Response) {
     const conn = await connection;
