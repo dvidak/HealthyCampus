@@ -56,7 +56,7 @@ const UsersPage = () => {
             </TableCell>
             <TableCell align="right">
               <Typography color="secondary" variant="subtitle1">
-                Connected to Fitbit
+                Connect to Fitbit
               </Typography>
             </TableCell>
           </TableRow>

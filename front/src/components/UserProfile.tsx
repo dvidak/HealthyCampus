@@ -88,7 +88,7 @@ const UserProfile = ({ user, handleFitbitLogin }: Props) => {
               }}
             >
               <CheckCircleIcon sx={{ marginRight: 1 }} color="secondary" />{' '}
-              Connected to fitbit
+              Connected to Fitbit
             </Typography>
           )}
           <Typography color="textSecondary" variant="body1">

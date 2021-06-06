@@ -11,7 +11,7 @@ const getUserById = async () => {
 const getUsers = async () => {
   const response = await get('user');
 
-  return response;
+  return response as User[];
 };
 
 const updateUser = async (data: UserUpdateData) => {

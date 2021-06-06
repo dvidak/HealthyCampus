@@ -29,6 +29,7 @@ export const put = async (model: unknown, body: unknown) => {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
+      Authorization: localStorage.getItem('token') as string,
     },
   });
 
@@ -42,6 +43,7 @@ export const post = async (model: unknown, body: unknown) => {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
+      Authorization: localStorage.getItem('token') as string,
     },
   });
 
@@ -54,6 +56,7 @@ export const remove = async (model: unknown) => {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
+      Authorization: localStorage.getItem('token') as string,
     },
   });
 

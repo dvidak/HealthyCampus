@@ -20,7 +20,7 @@ import Dashboard from './pages/Dashboard';
 
 const routes = (isLoggedIn: boolean) => [
   {
-    path: 'app',
+    path: '/app',
     element: isLoggedIn ? <DashboardLayout /> : <Navigate to="/login" />,
     children: [
       { path: 'home', element: <Home /> },

@@ -26,11 +26,14 @@ const Home = () => {
     const response = await statisticService.getProfesorActivitiesStatistic(
       userId,
     );
-    const sortedPercentage = orderBy(response.popularity, (a) => a.percentage, [
-      'desc',
-    ]);
+
+    const sortedPercentage = orderBy(
+      response?.popularity,
+      (a) => a.percentage,
+      ['desc'],
+    );
     const sortedCompletitionRate = orderBy(
-      response.completionRate,
+      response?.completionRate,
       (a) => a.percentage,
       ['desc'],
     );
@@ -42,7 +45,7 @@ const Home = () => {
     const response = await activityService.getActivitiesForProf();
     const options = activityOptions(response);
     setActivitiesOptions(options);
-    setSelectedActivityId(options[0].id);
+    setSelectedActivityId(options[0]?.id);
   }, []);
 
   const fetchActivityCalories = useCallback(async () => {
@@ -51,7 +54,7 @@ const Home = () => {
         await statisticService.getActivityCaloriesPercentagesPerUsers(
           selectedActivityId,
         );
-      setActivityCalories(response);
+      setActivityCalories(response?.statistic);
     }
   }, [selectedActivityId]);
 
@@ -61,7 +64,7 @@ const Home = () => {
         await statisticService.getActivityDistancePercentagesByUser(
           selectedActivityId,
         );
-      setActivityDistance(response);
+      setActivityDistance(response?.statistic);
     }
   }, [selectedActivityId]);
 
@@ -71,15 +74,9 @@ const Home = () => {
         await statisticService.getActivityDurationPercentagesByUser(
           selectedActivityId,
         );
-      setActivityDuration(response);
+      setActivityDuration(response?.statistic);
     }
   }, [selectedActivityId]);
-
-  useEffect(() => {
-    fetchActivityCalories();
-    fetchActivityDistances();
-    fetchActivityDuration();
-  }, [fetchActivityCalories, fetchActivityDistances, fetchActivityDuration]);
 
   useEffect(() => {
     if (roleId === 1) {
@@ -91,6 +88,12 @@ const Home = () => {
     fetchActivities();
     fetchProfesorActivitiesStatistic();
   }, [fetchActivities, fetchProfesorActivitiesStatistic, navigate, roleId]);
+
+  useEffect(() => {
+    fetchActivityCalories();
+    fetchActivityDistances();
+    fetchActivityDuration();
+  }, [fetchActivityCalories, fetchActivityDistances, fetchActivityDuration]);
 
   const handleChange = (event: React.ChangeEvent<{ value: number }>) => {
     setSelectedActivityId(Number(event.target.value));

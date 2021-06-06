@@ -127,7 +127,7 @@ class StatisticController {
 
     try {
       const user = await conn.manager.findOne(User, req.params.userId, {
-        relations: ['userUnit'],
+        relations: ['userUnit', 'role'],
       });
 
       if (!user) {
@@ -164,20 +164,24 @@ class StatisticController {
 
       const maxCalories = activity.goalCalories;
 
-      const currentUserActivity = studentActivities.find(
-        (a) => a.student.id === user.userUnit.id,
-      );
+      let currentUserBucketName;
 
-      const currentUserValue = Math.round(
-        (currentUserActivity.calories / maxCalories) * 100,
-      );
+      if (user.role.id === 2) {
+        const currentUserActivity = studentActivities.find(
+          (a) => a.student.id === user.userUnit.id,
+        );
 
-      const currentUserValueFormatted =
-        currentUserValue > 100 ? 100 : currentUserValue;
+        const currentUserValue = Math.round(
+          (currentUserActivity.calories / maxCalories) * 100,
+        );
 
-      const currentUserBucketName = getCurrentUserBucketName(
-        currentUserValueFormatted,
-      );
+        const currentUserValueFormatted =
+          currentUserValue > 100 ? 100 : currentUserValue;
+
+        currentUserBucketName = getCurrentUserBucketName(
+          currentUserValueFormatted,
+        );
+      }
 
       let mapCalories: Record<string, number> = {};
 
@@ -226,7 +230,7 @@ class StatisticController {
 
     try {
       const user = await conn.manager.findOne(User, req.params.userId, {
-        relations: ['userUnit'],
+        relations: ['userUnit', 'role'],
       });
 
       if (!user) {
@@ -263,20 +267,24 @@ class StatisticController {
 
       const maxDistance = activity.goalDistance;
 
-      const currentUserActivity = studentActivities.find(
-        (a) => a.student.id === user.userUnit.id,
-      );
+      let currentUserBucketName;
 
-      const currentUserValue = Math.round(
-        (currentUserActivity.distance / maxDistance) * 100,
-      );
+      if (user.role.id === 2) {
+        const currentUserActivity = studentActivities.find(
+          (a) => a.student.id === user.userUnit.id,
+        );
 
-      const currentUserValueFormatted =
-        currentUserValue > 100 ? 100 : currentUserValue;
+        const currentUserValue = Math.round(
+          (currentUserActivity.distance / maxDistance) * 100,
+        );
 
-      const currentUserBucketName = getCurrentUserBucketName(
-        currentUserValueFormatted,
-      );
+        const currentUserValueFormatted =
+          currentUserValue > 100 ? 100 : currentUserValue;
+
+        currentUserBucketName = getCurrentUserBucketName(
+          currentUserValueFormatted,
+        );
+      }
 
       let mapDistance: Record<string, number> = {};
 
@@ -326,7 +334,7 @@ class StatisticController {
 
     try {
       const user = await conn.manager.findOne(User, req.params.userId, {
-        relations: ['userUnit'],
+        relations: ['userUnit', 'role'],
       });
 
       if (!user) {
@@ -363,20 +371,24 @@ class StatisticController {
 
       const maxDuration = activity.goalDuration;
 
-      const currentUserActivity = studentActivities.find(
-        (a) => a.student.id === user.userUnit.id,
-      );
+      let currentUserBucketName;
 
-      const currentUserValue = Math.round(
-        (currentUserActivity.duration / maxDuration) * 100,
-      );
+      if (user.role.id === 2) {
+        const currentUserActivity = studentActivities.find(
+          (a) => a.student.id === user.userUnit.id,
+        );
 
-      const currentUserValueFormatted =
-        currentUserValue > 100 ? 100 : currentUserValue;
+        const currentUserValue = Math.round(
+          (currentUserActivity.duration / maxDuration) * 100,
+        );
 
-      const currentUserBucketName = getCurrentUserBucketName(
-        currentUserValueFormatted,
-      );
+        const currentUserValueFormatted =
+          currentUserValue > 100 ? 100 : currentUserValue;
+
+        currentUserBucketName = getCurrentUserBucketName(
+          currentUserValueFormatted,
+        );
+      }
 
       let mapDuration: Record<string, number> = {};
 

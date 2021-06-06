@@ -75,7 +75,11 @@ const BarChartWrapper = ({
             data.map((entry: any, index: number) => (
               <Cell
                 key={`cell-${index}`}
-                fill={currentBucket === entry.name ? COLORS[1] : COLORS[3]}
+                fill={
+                  currentBucket && currentBucket === entry.name
+                    ? COLORS[1]
+                    : COLORS[0]
+                }
               />
             ))}
         </Bar>
