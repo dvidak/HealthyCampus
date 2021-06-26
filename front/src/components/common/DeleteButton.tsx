@@ -7,7 +7,7 @@ interface Props {
 }
 
 const DeleteButton = ({ onDelete }: Props) => (
-  <IconButton color="secondary" onClick={onDelete}>
+  <IconButton color="primary" onClick={onDelete}>
     <DeleteIcon />
   </IconButton>
 );

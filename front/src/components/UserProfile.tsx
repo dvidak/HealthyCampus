@@ -40,6 +40,10 @@ const UserProfile = ({ user, handleFitbitLogin }: Props) => {
     }
   };
 
+  const handleCancel = async () => {
+    setImagePreview(null);
+  };
+
   const handleImageChange = (e: any) => {
     e.preventDefault();
 
@@ -108,14 +112,19 @@ const UserProfile = ({ user, handleFitbitLogin }: Props) => {
       <Divider />
       <CardActions>
         {imagePreview && (
-          <Button
-            onClick={handleSave}
-            color="secondary"
-            variant="contained"
-            fullWidth
-          >
-            Save
-          </Button>
+          <>
+            <Button onClick={handleCancel} color="secondary" fullWidth>
+              Cancel
+            </Button>
+            <Button
+              onClick={handleSave}
+              color="secondary"
+              variant="contained"
+              fullWidth
+            >
+              Save
+            </Button>
+          </>
         )}
         {!imagePreview && (
           <Button onClick={handleClick} color="primary" fullWidth>

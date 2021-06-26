@@ -118,7 +118,7 @@ const Login = () => {
                 <Box sx={{ py: 2 }}>
                   <Button
                     color="primary"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || (errors.email && errors.password)}
                     fullWidth
                     size="large"
                     type="submit"

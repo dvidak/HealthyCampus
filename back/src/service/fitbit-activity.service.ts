@@ -83,10 +83,10 @@ class FitbitActivityService {
 
         // Fetch and return
         try {
-          const fitbitResponse2 = await Axios.get(requestUrl, {
+          const fitbitResponse = await Axios.get(requestUrl, {
             headers: { Authorization: `Bearer ${user.fitbit.accessToken}` },
           });
-          return fitbitResponse2.data;
+          return fitbitResponse.data;
         } catch (error) {
           throw error;
         }

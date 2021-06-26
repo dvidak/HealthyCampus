@@ -3,7 +3,6 @@ import { experimentalStyled } from '@material-ui/core/styles';
 import MainNavbar from './MainNavbar';
 
 const MainLayoutRoot = experimentalStyled('div')(({ theme }: any) => ({
-  backgroundColor: theme.palette.background.paper,
   display: 'flex',
   height: '100%',
   overflow: 'hidden',

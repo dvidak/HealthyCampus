@@ -48,6 +48,7 @@ const routes = (isLoggedIn: boolean) => [
     path: '/',
     element: !isLoggedIn ? <MainLayout /> : <Navigate to="/app/home" />,
     children: [
+      { path: '', element: <Login /> },
       { path: 'login', element: <Login /> },
       { path: 'register', element: <SignUp /> },
     ],

@@ -7,7 +7,7 @@ interface Props {
 }
 
 const CancelButton = ({ onCancel }: Props) => (
-  <IconButton color="secondary" onClick={onCancel}>
+  <IconButton onClick={onCancel}>
     <ClearIcon />
   </IconButton>
 );
