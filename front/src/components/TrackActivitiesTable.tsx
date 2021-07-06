@@ -39,7 +39,7 @@ const TrackActivitiesTable = ({ activities, onTrackActivity }: Props) => {
           <TableRow>
             <TableCell>
               <Typography color="secondary" variant="h3">
-                All available activities
+                Assigned tasks
               </Typography>
             </TableCell>
             <TableCell></TableCell>
@@ -54,7 +54,7 @@ const TrackActivitiesTable = ({ activities, onTrackActivity }: Props) => {
           </TableRow>
           <TableRow>
             <TableCell>
-              <Typography color="secondary">Profesor</Typography>
+              <Typography color="secondary">Professor</Typography>
             </TableCell>
             <TableCell>
               <Typography color="secondary">Name</Typography>
@@ -63,22 +63,22 @@ const TrackActivitiesTable = ({ activities, onTrackActivity }: Props) => {
               <Typography color="secondary">Description</Typography>
             </TableCell>
             <TableCell>
-              <Typography align="center" color="secondary">
+              <Typography align="right" color="secondary">
                 Period
               </Typography>
             </TableCell>
             <TableCell>
-              <Typography align="center" color="secondary">
+              <Typography align="right" color="secondary">
                 Distance
               </Typography>
             </TableCell>
             <TableCell>
-              <Typography align="center" color="secondary">
+              <Typography align="right" color="secondary">
                 Duration
               </Typography>
             </TableCell>
             <TableCell>
-              <Typography align="center" color="secondary">
+              <Typography align="right" color="secondary">
                 Calories
               </Typography>
             </TableCell>
@@ -105,11 +105,11 @@ const TrackActivitiesTable = ({ activities, onTrackActivity }: Props) => {
               <TableCell align="center">
                 {getDate(a.startDate)} - {getDate(a.endDate)}
               </TableCell>
-              <TableCell align="center">{a.goalDistance} meter</TableCell>
-              <TableCell align="center">
-                {a.goalDuration / minuteInMs} minute
+              <TableCell align="right">{a.goalDistance} meters</TableCell>
+              <TableCell align="right">
+                {a.goalDuration / minuteInMs} minutes
               </TableCell>
-              <TableCell align="center">{a.goalCalories} kcal</TableCell>
+              <TableCell align="right">{a.goalCalories} kcal</TableCell>
               <TableCell>
                 <IconButton
                   color="primary"

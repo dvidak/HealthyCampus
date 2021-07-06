@@ -44,7 +44,7 @@ const items = [
     href: '/app/home',
     icon: HomeIcon,
     title: 'Home',
-    roles: [Role.PROFESOR],
+    roles: [Role.PROFESSOR],
   },
   {
     href: '/app/dashboard',
@@ -62,13 +62,13 @@ const items = [
     href: '/app/activity',
     icon: ActivityIcon,
     title: 'Activities',
-    roles: [Role.PROFESOR],
+    roles: [Role.PROFESSOR],
   },
   {
     href: '/app/types',
     icon: ActivityIcon,
     title: 'ActivityTypes',
-    roles: [Role.PROFESOR, Role.ADMIN],
+    roles: [Role.PROFESSOR, Role.ADMIN],
   },
   {
     href: '/app/activity/all',
@@ -92,7 +92,7 @@ const items = [
     href: '/app/profile',
     icon: UserIcon,
     title: 'Profile',
-    roles: [Role.STUDENT, Role.PROFESOR],
+    roles: [Role.STUDENT, Role.PROFESSOR],
   },
 ];
 

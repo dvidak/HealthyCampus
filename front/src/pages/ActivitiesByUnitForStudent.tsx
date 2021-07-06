@@ -127,7 +127,7 @@ const ActivitiesByUnitForStudent = () => {
   const body = (
     <div style={{ width: 900, position: 'relative' }}>
       <Typography color="secondary" variant="h3">
-        Choose activities you want to use
+        Map fitbit recorded data to task
       </Typography>
       <div style={{ height: 500, width: '100%' }}>
         {fitBitAcctivities !== [] && (

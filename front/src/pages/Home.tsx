@@ -109,13 +109,13 @@ const Home = () => {
         <Grid item md={3} xs={12}></Grid>
         <Grid item md={3} xs={12}>
           <ActivitiesDetailsTable
-            title="Activities completion rate"
+            title="Activity completion rate"
             activities={activtiesCompletionRate}
           />
         </Grid>
         <Grid item md={3} xs={12}>
           <ActivitiesDetailsTable
-            title="Activities popularity"
+            title="Activity popularity"
             activities={activitiesPopularity}
           />
         </Grid>

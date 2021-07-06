@@ -34,6 +34,6 @@ export interface UserUpdateData {
 export enum Role {
   ADMIN = 'Admin',
   STUDENT = 'Student',
-  PROFESOR = 'Profesor',
+  PROFESSOR = 'Professor',
   NONE = 'None',
 }

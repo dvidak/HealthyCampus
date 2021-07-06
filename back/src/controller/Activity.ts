@@ -264,7 +264,7 @@ class ActivityController {
         });
       }
 
-      if (user.role.roleName !== 'Profesor') {
+      if (user.role.roleName !== 'Professor') {
         res.json({
           statusCode: 400,
           message: 'Failed. Invalid user role',

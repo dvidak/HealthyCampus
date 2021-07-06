@@ -469,7 +469,7 @@ class StatisticController {
     });
 
     if (user.role.id !== 3) {
-      res.json({ statusCode: 401, message: 'Only profesor can access.' });
+      res.json({ statusCode: 401, message: 'Only professor can access.' });
     }
 
     const userUnit: UserUnit = await conn.manager.findOne(UserUnit, {

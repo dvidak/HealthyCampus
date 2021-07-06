@@ -65,17 +65,17 @@ const ActivityTable = ({ activities }: Props) => {
               </Typography>
             </TableCell>
             <TableCell>
-              <Typography align="center" color="secondary" variant="subtitle1">
+              <Typography align="right" color="secondary" variant="subtitle1">
                 Goal distance
               </Typography>
             </TableCell>
             <TableCell>
-              <Typography align="center" color="secondary" variant="subtitle1">
+              <Typography align="right" color="secondary" variant="subtitle1">
                 Goal duration
               </Typography>
             </TableCell>{' '}
             <TableCell>
-              <Typography align="center" color="secondary" variant="subtitle1">
+              <Typography align="right" color="secondary" variant="subtitle1">
                 Goal calories
               </Typography>
             </TableCell>{' '}
@@ -91,13 +91,13 @@ const ActivityTable = ({ activities }: Props) => {
                 <TableCell align="center">
                   {getDate(activity.startDate)} - {getDate(activity.endDate)}
                 </TableCell>
-                <TableCell align="center">
+                <TableCell align="right">
                   {activity.goalDistance} meter
                 </TableCell>
-                <TableCell align="center">
+                <TableCell align="right">
                   {activity.goalDuration / minuteInMs} minute
                 </TableCell>
-                <TableCell align="center">
+                <TableCell align="right">
                   {activity.goalCalories} kcal
                 </TableCell>
                 <TableCell>

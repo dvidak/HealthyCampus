@@ -54,7 +54,7 @@ const ConnectedActivitiesTable = ({ activities }: Props) => {
           <TableRow>
             <TableCell>
               <Typography color="secondary" variant="subtitle1">
-                Profesor
+                Professor
               </Typography>
             </TableCell>
             <TableCell>
@@ -68,22 +68,22 @@ const ConnectedActivitiesTable = ({ activities }: Props) => {
               </Typography>
             </TableCell>
             <TableCell>
-              <Typography align="center" color="secondary" variant="subtitle1">
+              <Typography align="right" color="secondary" variant="subtitle1">
                 Period
               </Typography>
             </TableCell>
             <TableCell>
-              <Typography align="center" color="secondary" variant="subtitle1">
+              <Typography align="right" color="secondary" variant="subtitle1">
                 Distance
               </Typography>
             </TableCell>
             <TableCell>
-              <Typography align="center" color="secondary" variant="subtitle1">
+              <Typography align="right" color="secondary" variant="subtitle1">
                 Duration
               </Typography>
             </TableCell>{' '}
             <TableCell>
-              <Typography align="center" color="secondary" variant="subtitle1">
+              <Typography align="right" color="secondary" variant="subtitle1">
                 Calories
               </Typography>
             </TableCell>{' '}
@@ -106,19 +106,19 @@ const ConnectedActivitiesTable = ({ activities }: Props) => {
               <TableCell align="center">
                 {getDate(a.startDate)} - {getDate(a.endDate)}
               </TableCell>
-              <TableCell align="center">
+              <TableCell align="right">
                 <span style={{ color: '#2c8c99' }}>
                   {Math.round(a.userActivities[0].distance)}
                 </span>
                 /{a.goalDistance} meter
               </TableCell>
-              <TableCell align="center">
+              <TableCell align="right">
                 <span style={{ color: '#2c8c99' }}>
                   {Math.round(a.userActivities[0].duration / minuteInMs)}
                 </span>
                 /{a.goalDuration / minuteInMs} minute
               </TableCell>
-              <TableCell align="center">
+              <TableCell align="right">
                 <span style={{ color: '#2c8c99' }}>
                   {Math.round(a.userActivities[0].calories)}
                 </span>

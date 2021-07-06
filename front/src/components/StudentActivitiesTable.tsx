@@ -23,7 +23,7 @@ const StudentActivitiesTable = ({ studentActivities }: Props) => {
           <TableRow>
             <TableCell>
               <Typography color="secondary" variant="h3">
-                Student activities
+                Student activity
               </Typography>
             </TableCell>
             <TableCell></TableCell>
@@ -38,18 +38,18 @@ const StudentActivitiesTable = ({ studentActivities }: Props) => {
               </Typography>
             </TableCell>
             <TableCell>
-              <Typography align="center" color="secondary" variant="subtitle1">
-                Distance
+              <Typography align="right" color="secondary" variant="subtitle1">
+                Distance (m)
               </Typography>
             </TableCell>
             <TableCell>
-              <Typography align="center" color="secondary" variant="subtitle1">
-                Duration
+              <Typography align="right" color="secondary" variant="subtitle1">
+                Duration (min)
               </Typography>
             </TableCell>{' '}
             <TableCell>
-              <Typography align="center" color="secondary" variant="subtitle1">
-                Calories
+              <Typography align="right" color="secondary" variant="subtitle1">
+                Calories (kcal)
               </Typography>
             </TableCell>{' '}
             <TableCell></TableCell>
@@ -61,13 +61,11 @@ const StudentActivitiesTable = ({ studentActivities }: Props) => {
               <TableCell>
                 {a.student.user.firstName} {a.student.user.lastName}
               </TableCell>
-              <TableCell align="center">
-                {Math.round(a.distance)} meter
+              <TableCell align="right">{Math.round(a.distance)}</TableCell>
+              <TableCell align="right">
+                {Math.round(a.duration / minuteInMs)}
               </TableCell>
-              <TableCell align="center">
-                {Math.round(a.duration / minuteInMs)} minute
-              </TableCell>
-              <TableCell align="center">{a.calories} kcal</TableCell>
+              <TableCell align="right">{a.calories}</TableCell>
               <TableCell></TableCell>
             </TableRow>
           ))}

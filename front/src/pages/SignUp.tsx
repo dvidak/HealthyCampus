@@ -64,7 +64,6 @@ const Register = () => {
       >
         <Container maxWidth="sm">
           <Formik
-            // True for student, false for profesor
             initialValues={{
               email: '',
               firstName: '',
@@ -197,7 +196,7 @@ const Register = () => {
                     onChange={handleChange}
                   />
                   <Typography color="textSecondary" variant="body1">
-                    {values.roleId ? 'Student' : 'Profesor'}
+                    {values.roleId ? 'Student' : 'Professor'}
                   </Typography>
                 </Box>
 
