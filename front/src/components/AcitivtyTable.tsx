@@ -92,10 +92,10 @@ const ActivityTable = ({ activities }: Props) => {
                   {getDate(activity.startDate)} - {getDate(activity.endDate)}
                 </TableCell>
                 <TableCell align="right">
-                  {activity.goalDistance} meter
+                  {activity.goalDistance} meters
                 </TableCell>
                 <TableCell align="right">
-                  {activity.goalDuration / minuteInMs} minute
+                  {activity.goalDuration / minuteInMs} minutes
                 </TableCell>
                 <TableCell align="right">
                   {activity.goalCalories} kcal

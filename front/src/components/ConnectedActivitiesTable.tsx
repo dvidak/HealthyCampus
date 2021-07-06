@@ -110,13 +110,13 @@ const ConnectedActivitiesTable = ({ activities }: Props) => {
                 <span style={{ color: '#2c8c99' }}>
                   {Math.round(a.userActivities[0].distance)}
                 </span>
-                /{a.goalDistance} meter
+                /{a.goalDistance} meters
               </TableCell>
               <TableCell align="right">
                 <span style={{ color: '#2c8c99' }}>
                   {Math.round(a.userActivities[0].duration / minuteInMs)}
                 </span>
-                /{a.goalDuration / minuteInMs} minute
+                /{a.goalDuration / minuteInMs} minutes
               </TableCell>
               <TableCell align="right">
                 <span style={{ color: '#2c8c99' }}>
