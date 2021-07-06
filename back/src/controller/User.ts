@@ -19,7 +19,16 @@ class UserController {
           },
         },
       });
-      res.status(200).json(users);
+
+      const mappedUsers = users.map((user) => ({
+        fullName: user.firstName + user.lastName,
+        email: user.email,
+        unitName: user.userUnit.unit.name,
+        roleName: user.role.roleName,
+        fitbit: user.fitbit,
+      }));
+
+      res.status(200).json(mappedUsers);
     } catch (error) {
       res.status(400).json({ error });
     }

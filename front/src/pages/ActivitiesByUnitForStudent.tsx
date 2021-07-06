@@ -9,26 +9,41 @@ import userActivityService from '../services/user-activity';
 import { minuteInMs } from '../shared/const';
 
 const columns: GridColumns = [
-  { field: 'name', headerName: 'Name', width: 200 },
+  { field: 'name', headerName: 'Name', width: 180 },
   {
     field: 'calories',
-    headerName: 'Calories',
+    headerName: 'Calories(kcal)',
+    headerAlign: 'right',
+    align: 'right',
+    sortable: false,
+    width: 120,
   },
   {
     field: 'duration',
-    headerName: 'Duration',
+    headerName: 'Duration(min)',
+    headerAlign: 'right',
+    align: 'right',
+    sortable: false,
+    width: 120,
   },
   {
     field: 'distance',
-    headerName: 'Distance',
+    headerName: 'Distance(m)',
     sortable: false,
+    headerAlign: 'right',
+    align: 'right',
+    width: 115,
   },
   {
     field: 'steps',
     headerName: 'Steps',
+    headerAlign: 'right',
+    align: 'right',
+    sortable: false,
+    width: 90,
   },
-  { field: 'startDate', headerName: 'Date', width: 105 },
-  { field: 'startTime', headerName: 'Start time' },
+  { field: 'startDate', headerName: 'Date', headerAlign: 'center', width: 105 },
+  { field: 'startTime', headerName: 'Start time', headerAlign: 'center' },
 ];
 
 const ActivitiesByUnitForStudent = () => {
@@ -126,7 +141,11 @@ const ActivitiesByUnitForStudent = () => {
 
   const body = (
     <div style={{ width: 900, position: 'relative' }}>
-      <Typography color="secondary" variant="h3">
+      <Typography
+        color="secondary"
+        variant="h3"
+        style={{ padding: '0 0 10px 0' }}
+      >
         Map fitbit recorded data to task
       </Typography>
       <div style={{ height: 500, width: '100%' }}>

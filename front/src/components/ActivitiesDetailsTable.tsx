@@ -31,7 +31,7 @@ const ActivitiesDetailsTable = ({ activities, title }: Props) => {
               </Typography>
             </TableCell>
             <TableCell>
-              <Typography color="secondary" variant="subtitle1">
+              <Typography color="secondary" variant="subtitle1" align="right">
                 Percentage
               </Typography>
             </TableCell>
@@ -46,7 +46,7 @@ const ActivitiesDetailsTable = ({ activities, title }: Props) => {
               }) => (
                 <TableRow>
                   <TableCell>{activity.name}</TableCell>
-                  <TableCell>{activity.percentage}%</TableCell>
+                  <TableCell align="right">{activity.percentage}%</TableCell>
                 </TableRow>
               ),
             )}

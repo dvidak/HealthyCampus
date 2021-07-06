@@ -22,6 +22,15 @@ export interface User {
   };
 }
 
+export interface UserListType {
+  id: number;
+  email: string;
+  fullName: string;
+  unitName: string;
+  roleName: string;
+  fitbit: boolean;
+}
+
 export interface UserUpdateData {
   id: number;
   firstName: string;

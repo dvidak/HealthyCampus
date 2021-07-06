@@ -11,11 +11,11 @@ import {
 import LockIcon from '@material-ui/icons/Lock';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import React, { useCallback, useEffect, useState } from 'react';
-import { User } from '../models/User';
+import { UserListType } from '../models/User';
 import userService from '../services/user';
 
 const UsersPage = () => {
-  const [users, setUsers] = useState<User[] | null>(null);
+  const [users, setUsers] = useState<UserListType[]>([]);
 
   const fetchUsers = useCallback(async () => {
     const fetchedUsers = await userService.getUsers();
@@ -63,14 +63,14 @@ const UsersPage = () => {
         </TableHead>
         <TableBody>
           {users &&
-            users.map((row) => (
-              <TableRow key={row.firstName}>
+            users.map((row: UserListType) => (
+              <TableRow key={row.fullName}>
                 <TableCell component="th" scope="row">
-                  {row.firstName} {row.lastName}
+                  {row.fullName}
                 </TableCell>
                 <TableCell>{row.email}</TableCell>
-                <TableCell>{row.userUnit?.unit?.name}</TableCell>
-                <TableCell>{row.role.roleName}</TableCell>
+                <TableCell>{row.unitName}</TableCell>
+                <TableCell>{row.roleName}</TableCell>
                 <TableCell align="right">
                   {row.fitbit ? <LockIcon /> : <LockOpenIcon />}
                 </TableCell>

@@ -1,4 +1,4 @@
-import { User, UserUpdateData } from '../models/User';
+import { User, UserListType, UserUpdateData } from '../models/User';
 import { get, put } from './api';
 
 const getUserById = async () => {
@@ -11,7 +11,7 @@ const getUserById = async () => {
 const getUsers = async () => {
   const response = await get('user');
 
-  return response as User[];
+  return response as UserListType[];
 };
 
 const updateUser = async (data: UserUpdateData) => {
