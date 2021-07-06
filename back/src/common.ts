@@ -24,7 +24,7 @@ export const getDatesBetweenDates = (startDate: Date, endDate: Date) => {
   return formated;
 };
 
-const formatDate = (date: Date) => {
+export const formatDate = (date: Date) => {
   var d = new Date(date),
     month = '' + (d.getMonth() + 1),
     day = '' + d.getDate(),

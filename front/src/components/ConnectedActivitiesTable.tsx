@@ -68,7 +68,7 @@ const ConnectedActivitiesTable = ({ activities }: Props) => {
               </Typography>
             </TableCell>
             <TableCell>
-              <Typography align="right" color="secondary" variant="subtitle1">
+              <Typography align="center" color="secondary" variant="subtitle1">
                 Period
               </Typography>
             </TableCell>

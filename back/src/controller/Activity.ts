@@ -1,20 +1,11 @@
 import { Request, Response } from 'express';
-import { getDatesBetweenDates } from '../common';
+import { formatDate, getDatesBetweenDates } from '../common';
 import { connection } from '../connection/Connection';
 import { Activity } from '../entity/Activity';
 import { ActivityType } from '../entity/ActivityType';
 import { User } from '../entity/User';
 import { UserUnit } from '../entity/UserUnit';
 import fitbitActivityService from '../service/fitbit-activity.service';
-
-const formatDate = (input) => {
-  var datePart = input.match(/\d+/g),
-    year = datePart[0].substring(2),
-    month = datePart[1],
-    day = datePart[2];
-
-  return day + '.' + month + '.' + year + '.';
-};
 
 interface FitbitActivity {
   activityId: number;

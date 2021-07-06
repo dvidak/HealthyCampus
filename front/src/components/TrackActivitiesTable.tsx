@@ -63,7 +63,7 @@ const TrackActivitiesTable = ({ activities, onTrackActivity }: Props) => {
               <Typography color="secondary">Description</Typography>
             </TableCell>
             <TableCell>
-              <Typography align="right" color="secondary">
+              <Typography align="center" color="secondary">
                 Period
               </Typography>
             </TableCell>
