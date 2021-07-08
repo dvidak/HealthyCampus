@@ -59,7 +59,7 @@ const UsersPage = () => {
   }, [fetchUsers]);
 
   return (
-    <div style={{ width: '80%', margin: '5rem auto' }}>
+    <div style={{ width: '70%', margin: '5rem auto' }}>
       <TableContainer component={Paper}>
         <TextField
           size="small"
@@ -91,7 +91,7 @@ const UsersPage = () => {
                   Role
                 </Typography>
               </TableCell>
-              <TableCell align="right">
+              <TableCell align="center">
                 <Typography color="secondary" variant="subtitle1">
                   Connect to Fitbit
                 </Typography>
@@ -110,7 +110,7 @@ const UsersPage = () => {
                     <TableCell>{row.email}</TableCell>
                     <TableCell>{row.unitName}</TableCell>
                     <TableCell>{row.roleName}</TableCell>
-                    <TableCell align="right">
+                    <TableCell align="center">
                       {row.fitbit ? <LockIcon /> : <LockOpenIcon />}
                     </TableCell>
                   </TableRow>
