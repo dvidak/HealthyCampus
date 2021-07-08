@@ -21,7 +21,7 @@ class UserController {
       });
 
       const mappedUsers = users.map((user) => ({
-        fullName: user.firstName + user.lastName,
+        fullName: user.firstName + ' ' + user.lastName,
         email: user.email,
         unitName: user.userUnit.unit.name,
         roleName: user.role.roleName,

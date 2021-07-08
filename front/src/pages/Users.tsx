@@ -7,23 +7,30 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  TextField,
   Typography,
 } from '@material-ui/core';
 import LockIcon from '@material-ui/icons/Lock';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { UserListType } from '../models/User';
 import userService from '../services/user';
 
 const UsersPage = () => {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [searchValue, setSearchValue] = useState('');
 
   const [users, setUsers] = useState<UserListType[]>([]);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
+
+  const onSearchValueChange = useCallback((event: any) => {
+    console.log(event.target.value);
+    setSearchValue(event.target.value);
+  }, []);
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -37,6 +44,16 @@ const UsersPage = () => {
     setUsers(fetchedUsers);
   }, []);
 
+  const filteredUsers = useMemo(
+    () =>
+      users.filter(
+        (user) =>
+          user.fullName.toLocaleLowerCase().includes(searchValue) ||
+          user.unitName.toLocaleLowerCase().includes(searchValue),
+      ),
+    [searchValue, users],
+  );
+
   useEffect(() => {
     fetchUsers();
   }, [fetchUsers]);
@@ -44,6 +61,13 @@ const UsersPage = () => {
   return (
     <div style={{ width: '80%', margin: '5rem auto' }}>
       <TableContainer component={Paper}>
+        <TextField
+          size="small"
+          label="Search by name or unit"
+          sx={{ margin: '10px' }}
+          value={searchValue}
+          onChange={onSearchValueChange}
+        ></TextField>
         <Table>
           <TableHead>
             <TableRow>
@@ -75,8 +99,8 @@ const UsersPage = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {users &&
-              users
+            {filteredUsers &&
+              filteredUsers
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row: UserListType) => (
                   <TableRow key={row.fullName}>
@@ -97,7 +121,7 @@ const UsersPage = () => {
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={users.length}
+        count={filteredUsers.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
